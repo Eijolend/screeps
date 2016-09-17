@@ -17,13 +17,17 @@ module.exports = {
 	    }
 		
 		if(creep.room.name != creep.memory.home){
-			if(!creep.pos.findInRange(FIND_STRUCTURES,0,{filter: (s) => s.structureType == STRUCTURE_ROAD}).length){
+			var roadatpoint = creep.pos.findInRange(FIND_STRUCTURES,0,{filter: (s) => s.structureType == STRUCTURE_ROAD});
+			if(!roadatpoint.length){
 				creep.pos.createConstructionSite(STRUCTURE_ROAD);
 			}
 			if(creep.memory.delivering){
 				var targets = creep.room.find(FIND_CONSTRUCTION_SITES,{filter : (s) => s.structureType == STRUCTURE_ROAD});
 				if (targets.length){
 					tasks.construct(creep,targets[0]);
+				}
+				else if( _.filter(roadatpoint, (s) => s.hits < s.hitsMax).length){
+					creep.repair(roadatpoint[0]);
 				}
 				else{
 					creep.moveTo(Game.spawns['Spawn1']);
