@@ -9,7 +9,7 @@
 
 module.exports = {
     run : function() {
-        var harvester_target = 0;
+        var harvester_target = 2; //harvesters per remote site
         var upgrader_target = 6;
         var builder_target = 3;
         var miner_target = 2;
@@ -22,7 +22,6 @@ module.exports = {
 			hunter_target=Math.ceil(hostiles.length/2)
 		}
 		
-        var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
         var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
         var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
         var miners = _.filter(Game.creeps, (creep) => creep.memory.role == 'miner');
@@ -37,14 +36,6 @@ module.exports = {
 		if(runners.length < runner_target){
 			Game.spawns['Spawn1'].createCreep([CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],undefined,{role:'runner'});
 		}
-		if(harvesters.length < harvester_target) {
-            if (Game.spawns['Spawn1'].room.energyAvailable < 400 && harvesters.length < 2){
-                Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE],undefined,{role: 'harvester'});
-            }
-            else {
-				Game.spawns['Spawn1'].createCreep([WORK,WORK,CARRY,CARRY,MOVE,MOVE],undefined,{role: 'harvester'});
-            }
-        }
         if(upgraders.length < upgrader_target) {
             if (Game.spawns['Spawn1'].room.energyAvailable < 600 && upgraders.length < 1){
                 Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE],undefined,{role: 'upgrader'});
@@ -71,5 +62,19 @@ module.exports = {
                 Game.spawns['Spawn1'].createCreep([CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],undefined,{role: 'thief'});
             }
         }
+		
+		for (var flag in Game.flags){ //see that every remote site has enough harvesters
+			if(/harvest/.test(flag){
+				var harvesters = _.filter(Game.creeps, (creep) => 
+					creep.memory.role == 'harvester' && creep.memory.myflag == flag
+				);
+				if (harvesters < harvester_target){
+					Game.spawns['Spawn1'].createCreep([MOVE,MOVE,MOVE,WORK,WORK,WORK,CARRY,CARRY,CARRY],undefined,{
+						role: 'harvester', myflag: flag, home: Game.spawns['Spawn1'].room.name
+					});
+				}
+			}
+		}
+		
     }
 };

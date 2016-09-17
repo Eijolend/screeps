@@ -7,11 +7,10 @@
  * mod.thing == 'a thing'; // true
  */
 
-var roleBuilder = require('role.builder');
+var tasks = require('tasks');
 
 module.exports = {
 	run: function(creep){
-		
 	    if(creep.memory.delivering && creep.carry.energy == 0) {
             creep.memory.delivering = false;
             creep.say('harvesting');
