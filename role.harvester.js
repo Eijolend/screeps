@@ -33,7 +33,7 @@ module.exports = {
 				tasks.mine(Game.flags[creep.memory.myflag].pos.lookFor(LOOK_SOURCES)[0]);
 			}
 		}
-		else if (creep.room.name != creep.memory.home){
+		else if (creep.room.name = creep.memory.home){
 			tasks.fill(creep,[STRUCTURE_STORAGE]);
 		}
 	}
