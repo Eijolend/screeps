@@ -33,7 +33,10 @@ module.exports = {
 			var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
 			
 			var targets = mysource.pos.findInRange(FIND_DROPPED_ENERGY,3);
-			if (targets.length){
+			if (mycontainer && mycontainer.store.energy == mycontainer.storeCapacity){ //fixes container overflowing
+				tasks.get(creep,mycontainer);
+			}
+			else if (targets.length){
 				tasks.pick(creep,targets[0]);
 			}
 			else if(mycontainer && mycontainer.store.energy >= creep.carryCapacity){
