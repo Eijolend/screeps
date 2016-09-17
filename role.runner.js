@@ -15,19 +15,21 @@ module.exports = {
 			tasks.fill(creep,mylist);
 		}
 		else{
-			// if(creep.room.find(FIND_DROPPED_ENERGY).length){
-				// tasks.pick(creep);
-			// }
-			// else{
-			var containers = creep.room.find(FIND_STRUCTURES, { filter : (structure) => structure.structureType == STRUCTURE_CONTAINER});
-			var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
-			if(containers[0].store.energy >= creep.carryCapacity){
-    		    tasks.get(creep,containers[0]);
-            }
-            else if(stock.length){
-                tasks.get(creep,stock[0])
-    		}
-			// }
+			sources = creep.room.find(FIND_SOURCES);
+			target = sources[0].pos.findInRange(FIND_DROPPED_ENERGY,3);
+			if (targets.length){
+				tasks.pick(creep,target)
+			}
+			else{
+				var containers = creep.room.find(FIND_STRUCTURES, { filter : (structure) => structure.structureType == STRUCTURE_CONTAINER});
+				var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
+				if(containers[0].store.energy >= creep.carryCapacity){
+					tasks.get(creep,containers[0]);
+				}
+				else if(stock.length){
+					tasks.get(creep,stock[0])
+				}
+			}
 		}
 	}
 }

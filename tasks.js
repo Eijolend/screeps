@@ -17,10 +17,9 @@ module.exports = {
 		}
 	},
 	
-	pick : function(creep){
-		targets = creep.room.find(FIND_DROPPED_ENERGY)
-		if(creep.pickup(targets[0]) == ERR_NOT_IN_RANGE){
-			creep.moveTo(targets[0]);
+	pick : function(creep,target){
+		if(creep.pickup(target) == ERR_NOT_IN_RANGE){
+			creep.moveTo(target);
 		}
 	},
 	
