@@ -63,8 +63,8 @@ module.exports = {
             }
         }
 		
-		for (var flag in Game.flags){ //see that every remote site has enough harvesters
-			if(/harvest/.test(flag){
+		for (var flag in Game.flags){ 
+			if(/harvest/.test(flag){ //see that every remote site has enough harvesters
 				var harvesters = _.filter(Game.creeps, (creep) => 
 					creep.memory.role == 'harvester' && creep.memory.myflag == flag
 				);
@@ -72,6 +72,29 @@ module.exports = {
 					Game.spawns['Spawn1'].createCreep([MOVE,MOVE,MOVE,WORK,WORK,WORK,CARRY,CARRY,CARRY],undefined,{
 						role: 'harvester', myflag: flag, home: Game.spawns['Spawn1'].room.name
 					});
+				}
+			}
+			if(/reserve/.test(flag){ //logic to spawn reservers
+				var reservers = _.filter(Game.creeps, (creep) => 
+					creep.memory.role == 'reserver' && creep.memory.myflag == flag
+				);
+				if (reservers.length < 1){
+					var tospawn = false
+					if (Game.flags[flag].memory.reserved){
+						var con Game.flags[flag].pos.lookFor(LOOK_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_CONTROLLER})[0];
+						if(con.reservation.ticksToEnd < 500){
+							tospawn = true;
+						}
+					}
+					else{
+						tospawn = true;
+						Game.flags[flag].memory.reserved = true;
+					}
+					if(tospawn){
+						Game.spawns['Spawn1'].createCreep([MOVE,CLAIM,CLAIM,MOVE],undefined,{
+							role: 'reserver', myflag: flag
+						});
+					}
 				}
 			}
 		}
