@@ -16,9 +16,9 @@ module.exports = {
 		}
 		else{
 			sources = creep.room.find(FIND_SOURCES);
-			target = sources[0].pos.findInRange(FIND_DROPPED_ENERGY,3);
+			targets = sources[0].pos.findInRange(FIND_DROPPED_ENERGY,3);
 			if (targets.length){
-				tasks.pick(creep,target)
+				tasks.pick(creep,target[0])
 			}
 			else{
 				var containers = creep.room.find(FIND_STRUCTURES, { filter : (structure) => structure.structureType == STRUCTURE_CONTAINER});

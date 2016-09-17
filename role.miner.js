@@ -11,12 +11,7 @@ module.exports = {
 				creep.memory.mine = 0;
 			}
 		}
-		if (creep.carry.energy < creep.carryCapacity){
-			var sources = creep.room.find(FIND_SOURCES)
-			tasks.mine(creep,sources[creep.memory.mine]);
-		}
-		else{
-			tasks.contain(creep);
-		}
+		var sources = creep.room.find(FIND_SOURCES)
+		tasks.mine(creep,sources[creep.memory.mine]);
 	}
 }
