@@ -7,7 +7,7 @@
  * mod.thing == 'a thing'; // true
  */
 
-tasks=require('tasks')
+var tasks=require('tasks')
  
  
 module.exports = {
