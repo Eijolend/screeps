@@ -58,8 +58,8 @@ module.exports = {
 	    }
 	    else { //get energy in priority: dropped, container, storage, harvest
 			var sources = creep.room.find(FIND_SOURCES);
-			var mysource = sources[1]
-			var mycontainer = mysource.pos.findInRange(FIND_MY_STRUCTURES,3,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+			var mysource = sources[1];
+			var mycontainer = mysource.pos.findInRange(FIND_STRUCTURES,3,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
 			var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
 			
 			var targets = mysource.pos.findInRange(FIND_DROPPED_ENERGY,3);
