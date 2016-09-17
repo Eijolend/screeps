@@ -34,7 +34,12 @@ module.exports = {
 			}
 		}
 		else if (creep.room.name = creep.memory.home){
-			tasks.fill(creep,[STRUCTURE_STORAGE]);
+			if (creep.memory.delivering){
+				tasks.fill(creep,[STRUCTURE_STORAGE]);
+			}
+			else{
+				creep.moveTo(Game.flags[creep.memory.myflag]);
+			}
 		}
 	}
 
