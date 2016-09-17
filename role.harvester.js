@@ -26,7 +26,7 @@ module.exports = {
 					tasks.construct(creep,targets[0]);
 				}
 				else{
-					creep.moveTo(Game.spawns['Spawn1]);
+					creep.moveTo(Game.spawns['Spawn1']);
 				}
 			}
 			else{
