@@ -88,7 +88,7 @@ module.exports = {
 					}
 					else{
 						tospawn = true;
-						Game.flags[flag].memory.reserved = true;
+						Game.flags[flag].memory.reserved = true; //should have some kind of check to prevent breaking
 					}
 					if(tospawn){
 						Game.spawns['Spawn1'].createCreep([MOVE,CLAIM,CLAIM,MOVE],undefined,{
