@@ -1,7 +1,12 @@
+function mine(creep,target){
+	if(creep.harvest(target) == ERR_NOT_IN_RANGE ){
+		creep.moveTo(target);
+	}
+}
+
 module.exports = {
 	mine : function(creep,target){
-		if(creep.harvest(target) == ERR_NOT_IN_RANGE ){
-			creep.moveTo(target)
+		mine(creep,target);
 		}
 	},
 	
@@ -29,27 +34,27 @@ module.exports = {
 		}
 	},
 	
-	getenergy : function(creep,mysource){ //get energy in priority: dropped, container, storage, harvest
-		var mycontainer = mysource.pos.findInRange(FIND_STRUCTURES,3,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
-		var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
+	// getenergy : function(creep,mysource){ //get energy in priority: dropped, container, storage, harvest
+		// var mycontainer = mysource.pos.findInRange(FIND_STRUCTURES,3,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+		// var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
 		
-		var targets = mysource.pos.findInRange(FIND_DROPPED_ENERGY,3);
-		if (mycontainer != undefined && mycontainer.store.energy == mycontainer.storeCapacity){ //fixes container overflowing
-			tasks.get(creep,mycontainer);
-		}
-		else if (targets.length){
-			pick(creep,targets[0]);
-		}
-		else if(mycontainer != undefined && mycontainer.store.energy >= creep.carryCapacity){
-			get(creep,mycontainer);
-		}
-		else if(stock.length){
-			get(creep,stock[0]);
-		}
-		else if(creep.getActiveBodyparts(WORK)){
-			mine(creep,mysource);
-		}
-	},
+		// var targets = mysource.pos.findInRange(FIND_DROPPED_ENERGY,3);
+		// if (mycontainer != undefined && mycontainer.store.energy == mycontainer.storeCapacity){ //fixes container overflowing
+			// tasks.get(creep,mycontainer);
+		// }
+		// else if (targets.length){
+			// pick(creep,targets[0]);
+		// }
+		// else if(mycontainer != undefined && mycontainer.store.energy >= creep.carryCapacity){
+			// get(creep,mycontainer);
+		// }
+		// else if(stock.length){
+			// get(creep,stock[0]);
+		// }
+		// else if(creep.getActiveBodyparts(WORK)){
+			// mine(creep,mysource);
+		// }
+	// },
 	
 	fill : function(creep,prioritylist){
 		for(i=0; i<prioritylist.length; i++){
