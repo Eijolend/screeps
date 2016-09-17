@@ -24,7 +24,7 @@ module.exports = {
 			if(creep.memory.delivering){
 				var target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES,{filter : (s) => s.structureType == STRUCTURE_ROAD});
 				if (target != null){
-					tasks.construct(creep,targets[0]);
+					tasks.construct(creep,target);
 				}
 				else if( _.filter(roadatpoint, (s) => s.hits < s.hitsMax).length){
 					creep.repair(roadatpoint[0]);
