@@ -10,7 +10,7 @@
 module.exports = {
     run : function() {
         var harvester_target = 2; //harvesters per remote site
-        var upgrader_target = 6;
+        var upgrader_target = 4;
         var builder_target = 3;
         var miner_target = 2;
         var runner_target = 2;
@@ -41,7 +41,7 @@ module.exports = {
                 Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE],undefined,{role: 'upgrader'});
             }
             else {
-				Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],undefined,{role: 'upgrader'});
+				Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],undefined,{role: 'upgrader'});
             }
         }
         if(builders.length < builder_target) {
