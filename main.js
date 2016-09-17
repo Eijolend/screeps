@@ -4,6 +4,7 @@ var roleUpgrader = require('role.upgrader');
 var roleHunter = require('role.hunter');
 var roleMiner = require('role.miner');
 var roleRunner = require('role.runner');
+var roleReserver = require('role.reserver')
 var respawn = require('respawn');
 var tasks = require('tasks');
 
@@ -59,6 +60,9 @@ module.exports.loop = function(){
 		}
 		if(creep.memory.role == 'runner'){
 			roleRunner.run(creep);
+		}
+		if(creep.memory.role == 'reserver'){
+			roleReserver.run(creep);
 		}
 		if(creep.memory.role == 'shield'){
 		    creep.moveTo(Game.flags['Rally']);
