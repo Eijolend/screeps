@@ -35,7 +35,7 @@ module.exports = {
 		
 		var targets = mysource.pos.findInRange(FIND_DROPPED_ENERGY,3);
 		if (mycontainer != undefined && mycontainer.store.energy == mycontainer.storeCapacity){ //fixes container overflowing
-			get(creep,mycontainer);
+			tasks.get(creep,mycontainer);
 		}
 		else if (targets.length){
 			pick(creep,targets[0]);
