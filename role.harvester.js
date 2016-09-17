@@ -30,7 +30,7 @@ module.exports = {
 				}
 			}
 			else{
-				tasks.mine(Game.flags[creep.memory.myflag].pos.lookFor(LOOK_SOURCES)[0]);
+				tasks.mine(creep,Game.flags[creep.memory.myflag].pos.lookFor(LOOK_SOURCES)[0]);
 			}
 		}
 		else if (creep.room.name = creep.memory.home){
