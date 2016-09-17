@@ -29,8 +29,8 @@ module.exports = {
         else{
             var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
             var containers = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_CONTAINER});
-            if(containers[1].store.energy > creep.carryCapacity){
-    		    tasks.get(creep,containers[1]);
+            if(containers[0].store.energy > creep.carryCapacity){
+    		    tasks.get(creep,containers[0]);
             }
             else if(stock.length){
                 tasks.get(creep,stock[0])
