@@ -31,7 +31,7 @@ module.exports = {
 //        console.log(harvesters.length + ' ' + upgraders.length + ' ' + builders.length)
         
 		if(miners.length < miner_target){
-			Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,WORK,CARRY,MOVE],undefined,{role:'miner'});
+			Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,WORK,MOVE],undefined,{role:'miner'});
 		}
 		if(runners.length < runner_target){
 			Game.spawns['Spawn1'].createCreep([CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],undefined,{role:'runner'});
