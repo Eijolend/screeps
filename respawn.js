@@ -64,7 +64,7 @@ module.exports = {
         }
 		
 		for (var flag in Game.flags){ 
-			if(/harvest/.test(flag){ //see that every remote site has enough harvesters
+			if(/harvest/.test(flag)){ //see that every remote site has enough harvesters
 				var harvesters = _.filter(Game.creeps, (creep) => 
 					creep.memory.role == 'harvester' && creep.memory.myflag == flag
 				);
@@ -74,7 +74,7 @@ module.exports = {
 					});
 				}
 			}
-			if(/reserve/.test(flag){ //logic to spawn reservers
+			if(/reserve/.test(flag)){ //logic to spawn reservers
 				var reservers = _.filter(Game.creeps, (creep) => 
 					creep.memory.role == 'reserver' && creep.memory.myflag == flag
 				);
