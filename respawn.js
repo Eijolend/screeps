@@ -81,7 +81,7 @@ module.exports = {
 				if (reservers.length < 1){
 					var tospawn = false
 					if (Game.flags[flag].memory.reserved){
-						var con Game.flags[flag].pos.lookFor(LOOK_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_CONTROLLER})[0];
+						var con = Game.flags[flag].pos.lookFor(LOOK_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_CONTROLLER})[0];
 						if(con.reservation.ticksToEnd < 500){
 							tospawn = true;
 						}
