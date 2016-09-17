@@ -1,19 +1,19 @@
-roleHarvester = require('role.harvester');
-roleBuilder = require('role.builder');
-roleUpgrader = require('role.upgrader');
-roleHunter = require('role.hunter');
-roleMiner = require('role.miner');
-roleRunner = require('role.runner');
-respawn = require('respawn');
-tasks = require('tasks');
+var roleHarvester = require('role.harvester');
+var roleBuilder = require('role.builder');
+var roleUpgrader = require('role.upgrader');
+var roleHunter = require('role.hunter');
+var roleMiner = require('role.miner');
+var roleRunner = require('role.runner');
+var respawn = require('respawn');
+var tasks = require('tasks');
 
 module.exports.loop = function(){
 
     for(var i in Memory.creeps) {
-    if(!Game.creeps[i]) {
-        delete Memory.creeps[i];
-    }
-}
+		if(!Game.creeps[i]) {
+			delete Memory.creeps[i];
+		}
+	}
     respawn.run();
     
     if(Game.rooms['W52S17'].controller.level > 2){

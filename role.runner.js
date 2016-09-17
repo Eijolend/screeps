@@ -1,4 +1,4 @@
-tasks = require('tasks')
+var tasks = require('tasks')
 
 module.exports = {
 	run : function(creep){

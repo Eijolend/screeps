@@ -16,7 +16,8 @@ module.exports = {
         var runner_target = 2;
 		var thief_target = 0;
         var hunter_target = 0;
-		hostiles = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS)
+		
+		var hostiles = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS)
 		if(hostiles.length){
 			hunter_target=Math.ceil(hostiles.length/2)
 		}
