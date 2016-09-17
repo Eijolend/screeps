@@ -26,20 +26,25 @@ module.exports = {
 	            creep.moveTo(creep.room.controller);
 	        }
 	    }
-        else{
-            var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
-            var containers = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_CONTAINER});
-            if(containers[1].store.energy > creep.carryCapacity){
-    		    tasks.get(creep,containers[1]);
-            }
+         else { //get energy in priority: dropped, container, storage, harvest
+			var sources = creep.room.find(FIND_SOURCES);
+			var mysource = sources[1];
+			var mycontainer = mysource.pos.findInRange(FIND_MY_STRUCTURES,3,{filter : (s) => s.structureType == STRUCTURE_CONTAINER});
+			var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
+			
+			var targets = mysource.pos.findInRange(FIND_DROPPED_ENERGY,3);
+			if (targets.length){
+				tasks.pick(creep,targets[0]);
+			}
+			else if(mycontainer.store.energy >= creep.carryCapacity){
+				tasks.get(creep,mycontainer);
+			}
             else if(stock.length){
                 tasks.get(creep,stock[0])
     		}
 			else{
-				var sources = creep.room.find(FIND_SOURCES);
-				tasks.mine(creep,sources[1])
+				tasks.mine(creep,mysource)
 			}
-        }
-        
+	    }
     }
 };
