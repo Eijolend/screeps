@@ -80,7 +80,7 @@ module.exports = {
 				);
 				if (reservers.length < 1){
 					var tospawn = false
-					if (Game.flags[flag].memory.reserved){
+					if (Game.flags[flag].memory.reserved && Game.flags[flag].pos.roomName in Game.rooms){ //second check is to prevent breaking from no vision
 						var con = Game.flags[flag].pos.lookFor(LOOK_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_CONTROLLER})[0];
 						if(con.reservation.ticksToEnd < 500){
 							tospawn = true;
