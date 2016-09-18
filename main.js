@@ -15,7 +15,6 @@ module.exports.loop = function(){
 			delete Memory.creeps[i];
 		}
 	}
-    respawn.run();
     
     if(Game.rooms['W52S17'].controller.level > 2){
         Game.rooms['W52S17'].createConstructionSite(4,19,STRUCTURE_TOWER);
@@ -108,4 +107,6 @@ module.exports.loop = function(){
 			// creep.say(creep.room.name)
 	    }
     }
+	
+	respawn.run();
 }
