@@ -31,7 +31,7 @@ module.exports = {
 				tasks.fill(creep,[STRUCTURE_TOWER]);
 			}
 			else{
-				tasks.rep(creep,50000)
+				tasks.rep(creep,500000)
 			}
 			
 	        // 
