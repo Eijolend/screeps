@@ -17,15 +17,10 @@ module.exports.loop = function(){
 		}
 	}
     
-    if(Game.rooms['W52S17'].controller.level > 2){
-        Game.rooms['W52S17'].createConstructionSite(4,19,STRUCTURE_TOWER);
-        // Game.rooms['W52S17'].createConstructionSite(33,31,STRUCTURE_EXTENSION);
-        // Game.rooms['W52S17'].createConstructionSite(32,32,STRUCTURE_EXTENSION);
-        // Game.rooms['W52S17'].createConstructionSite(32,31,STRUCTURE_EXTENSION);
-        // Game.rooms['W52S17'].createConstructionSite(35,36,STRUCTURE_EXTENSION);
-        // Game.rooms['W52S17'].createConstructionSite(36,36,STRUCTURE_EXTENSION);
-        var towers = Game.rooms['W52S17'].find(FIND_STRUCTURES, {filter : (structure) => structure.structureType == STRUCTURE_TOWER});
-        if(towers.length){
+	var myrooms = _.filter(Game.rooms, (r) => r.controller.level > 0 );
+	for(i in myrooms){
+		var towers = Game.rooms[i].find(FIND_STRUCTURES, {filter : (structure) => structure.structureType == STRUCTURE_TOWER});
+		if(towers.length){
             for(i=0;i<towers.length;i++){
                 tower = towers[i];
                 tower.attack(tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS));
@@ -39,7 +34,7 @@ module.exports.loop = function(){
                 }
             }
         }
-    }
+	}
     
     for(var name in Game.creeps){
         var creep = Game.creeps[name];
