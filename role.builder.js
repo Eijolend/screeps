@@ -7,8 +7,8 @@
  * mod.thing == 'a thing'; // true
  */
 
-var tasks=require('tasks')
- 
+var tasks=require('tasks');
+var wallMax=Math.pow(10,6);
  
 module.exports = {
      run: function(creep) {
@@ -31,7 +31,7 @@ module.exports = {
 				tasks.fill(creep,[STRUCTURE_TOWER]);
 			}
 			else{
-				tasks.rep(creep,Math.pow(10,6));
+				tasks.rep(creep,wallMax);
 			}
 			
 	        // 

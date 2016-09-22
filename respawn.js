@@ -11,7 +11,8 @@ module.exports = {
     run : function() {
         var harvester_target = 2; //harvesters per remote site
         var upgrader_target = 4;
-        var builder_target = 3;
+        var builder_target = 2;
+        var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
         var miner_target = 2;
         var runner_target = 2;
 		var thief_target = 0;
@@ -51,6 +52,9 @@ module.exports = {
             else {
 				Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],undefined,{role: 'builder'});
             }
+        }
+        if(repairers.length < repairer_target) {
+				Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],undefined,{role: 'repairer'});
         }
 		if(hunters.length < hunter_target) {
 			if (Game.spawns['Spawn1'].room.energyAvailable > 600){

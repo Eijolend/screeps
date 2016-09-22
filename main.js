@@ -4,7 +4,8 @@ var roleUpgrader = require('role.upgrader');
 var roleHunter = require('role.hunter');
 var roleMiner = require('role.miner');
 var roleRunner = require('role.runner');
-var roleReserver = require('role.reserver')
+var roleReserver = require('role.reserver');
+var roleRepairer = require('role.repairer');
 var respawn = require('respawn');
 var tasks = require('tasks');
 
@@ -47,6 +48,9 @@ module.exports.loop = function(){
         }
         if(creep.memory.role == 'builder'){
             roleBuilder.run(creep);
+        }
+        if(creep.memory.role == 'repairer'){
+            roleRepairer.run(creep);
         }
         if(creep.memory.role == 'upgrader'){
             roleUpgrader.run(creep);
