@@ -17,7 +17,7 @@ module.exports = {
 		else{
 			var sources = creep.room.find(FIND_SOURCES);
 			var mysource = sources[0]
-			task.getenergy(creep,mysource);
+			tasks.getenergy(creep,mysource);
 		}
 	}
 }

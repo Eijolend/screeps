@@ -59,7 +59,7 @@ module.exports = {
 	    else { //get energy in priority: dropped, container, storage, harvest
 			var sources = creep.room.find(FIND_SOURCES);
 			var mysource = sources[1];
-			task.getenergy(creep,mysource);
+			tasks.getenergy(creep,mysource);
 	    }
      }
 };
