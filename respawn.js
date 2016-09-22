@@ -25,6 +25,7 @@ module.exports = {
 		
         var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
         var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
+        var repairers = _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer');
         var miners = _.filter(Game.creeps, (creep) => creep.memory.role == 'miner');
 		var runners = _.filter(Game.creeps, (creep) => creep.memory.role == 'runner');
 		var hunters = _.filter(Game.creeps, (creep) => creep.memory.role == 'hunter');
