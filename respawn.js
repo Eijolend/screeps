@@ -41,7 +41,7 @@ module.exports = {
                 Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE],undefined,{role: 'upgrader'});
             }
             else {
-				Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],undefined,{role: 'upgrader'});
+				Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],undefined,{role: 'upgrader'});
             }
         }
         if(builders.length < builder_target) {
