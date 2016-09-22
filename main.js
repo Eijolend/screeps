@@ -17,7 +17,7 @@ module.exports.loop = function(){
 		}
 	}
     
-	var myrooms = _.filter(Game.rooms, (r) => r.controller.level > 0 );
+	var myrooms = _.filter(Game.rooms, (r) => r.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN}).length > 0 );
 	for(i in myrooms){
 		var towers = Game.rooms[i].find(FIND_STRUCTURES, {filter : (structure) => structure.structureType == STRUCTURE_TOWER});
 		if(towers.length){
@@ -107,5 +107,5 @@ module.exports.loop = function(){
 	    }
     }
 	
-	respawn.run();
+	respawn.run(myrooms);
 }
