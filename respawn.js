@@ -36,7 +36,12 @@ module.exports = {
 			Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,WORK,MOVE],undefined,{role:'miner'});
 		}
 		if(runners.length < runner_target){
-			Game.spawns['Spawn1'].createCreep([CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],undefined,{role:'runner'});
+			if(Game.spawns['Spawn1'].room.energyAvailable < 600 && runners.length < 0){
+				Game.spawns['Spawn1'].createCreep([CARRY,MOVE,CARRY,MOVE],undefined,{role:'runner'});
+			}
+			else{
+				Game.spawns['Spawn1'].createCreep([CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],undefined,{role:'runner'});
+			}
 		}
         if(upgraders.length < upgrader_target) {
             if (Game.spawns['Spawn1'].room.energyAvailable < 600 && upgraders.length < 1){
