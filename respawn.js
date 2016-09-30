@@ -1,14 +1,6 @@
-/*
- * Module code goes here. Use 'module.exports' to export things:
- * module.exports.thing = 'a thing';
- *
- * You can import it from another modules like this:
- * var mod = require('respawn');
- * mod.thing == 'a thing'; // true
- */
-
 module.exports = {
     run : function(myrooms) {
+    	//room based spawning
 		for(i in myrooms){
 			var room = Game.rooms[i]
 			var spawn = room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_SPAWN})[0];
@@ -72,7 +64,7 @@ module.exports = {
 				// }
 			// }
 		}
-		
+		//flag based spawning
 		for (var flag in Game.flags){ 
 			if(/harvest/.test(flag)){ //see that every remote site has enough harvesters
 				var harvesters = _.filter(Game.creeps, (creep) => 
@@ -114,5 +106,6 @@ module.exports = {
 				}
 			}
 		}
+		
     }
 };
