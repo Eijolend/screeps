@@ -102,7 +102,7 @@ module.exports.loop = function(){
 			}
 			else{
 				target=Game.flags['Steal'].pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{
-					filter: (s) => s.energy >0
+					filter: (s) => s.energy >20 || s.store.energy > 20
 				});
 				if(creep.withdraw(target,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
 					creep.moveTo(target);
