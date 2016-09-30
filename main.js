@@ -97,7 +97,7 @@ module.exports.loop = function(){
 			else if(creep.room.name == Game.spawns['Spawn1'].room.name && creep.carry.energy > 0){
 			    tasks.fill(creep,[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,STRUCTURE_STORAGE,STRUCTURE_CONTAINER])
 			}
-			else if(creep.room.name != 'W54S17' ){
+			else if(creep.room.name != Game.flags['Steal'].pos.roomName){
 				creep.moveTo(Game.flags['Steal'],{reusePath:5});
 			}
 			else{
