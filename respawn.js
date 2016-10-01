@@ -15,7 +15,7 @@ module.exports = {
         var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
         var miner_target = 2;
         var runner_target = 2;
-		var thief_target = 2;
+		var thief_target = 0;
         var hunter_target = 0;
 		
 		var hostiles = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS)
