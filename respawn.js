@@ -1,6 +1,6 @@
 var cost = function(body){
 	var mycost = 0;
-	for(var bodypart in body){
+	for(var bodypart of body){
 		mycost += BODYPART_COST[bodypart]
 	}
 	return mycost
@@ -75,7 +75,6 @@ module.exports = {
 			var hunters = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'hunter'});
 			// var thiefs = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'thief'});
 	//        console.log(harvesters.length + ' ' + upgraders.length + ' ' + builders.length)
-			
 			var maxEnergy = room.energyCapacityAvailable;
 			
 			//first ensure 1 miner, 1 runner, 1 upgrader are always available
@@ -83,6 +82,7 @@ module.exports = {
 				spawn.createCreep(bodies.miner(room.energyAvailable),undefined,{role:'miner'});
 			}
 			else if(runners.length < 1 && spawn.canCreateCreep(bodies.runner(maxEnergy/2),undefined) == ERR_NOT_ENOUGH_ENERGY){
+				console.log('a');
 				spawn.createCreep(bodies.runner(room.energyAvailable),undefined,{role:'runner'});
 			}
 			else if(upgraders.length < 1 && spawn.canCreateCreep(bodies.upgrader(maxEnergy),undefined) == ERR_NOT_ENOUGH_ENERGY){
