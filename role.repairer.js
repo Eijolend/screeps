@@ -18,7 +18,7 @@ module.exports = {
 	        //creep.say('repairing');
 	    }
 	    if(creep.memory.repairing){
-			reptargets=creep.room.find(FIND_STRUCTURES, {filter: (s) => s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART && s.hits < s.hitsMax});
+			var reptargets=creep.room.find(FIND_STRUCTURES, {filter: (s) => s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART && s.hits < s.hitsMax});
 			if(reptargets.length){
 				tasks.rep(creep,0);
 			}

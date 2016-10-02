@@ -11,7 +11,7 @@ module.exports = {
 	        creep.say('delivering');
 		}
 		if(creep.memory.delivering){
-			mylist=[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,STRUCTURE_TOWER,STRUCTURE_STORAGE];
+			var mylist=[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,STRUCTURE_TOWER,STRUCTURE_STORAGE];
 			tasks.fill(creep,mylist);
 		}
 		else{

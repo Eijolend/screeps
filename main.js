@@ -6,6 +6,8 @@ var roleMiner = require('role.miner');
 var roleRunner = require('role.runner');
 var roleReserver = require('role.reserver');
 var roleRepairer = require('role.repairer');
+var remoteUpgrader = require('remote.upgrader');
+var roleClaimer = require('role.claimer');
 var respawn = require('respawn');
 var tasks = require('tasks');
 
@@ -17,17 +19,12 @@ module.exports.loop = function(){
 		}
 	}
     
-    if(Game.rooms['W52S17'].controller.level > 2){
-        Game.rooms['W52S17'].createConstructionSite(4,19,STRUCTURE_TOWER);
-        // Game.rooms['W52S17'].createConstructionSite(33,31,STRUCTURE_EXTENSION);
-        // Game.rooms['W52S17'].createConstructionSite(32,32,STRUCTURE_EXTENSION);
-        // Game.rooms['W52S17'].createConstructionSite(32,31,STRUCTURE_EXTENSION);
-        // Game.rooms['W52S17'].createConstructionSite(35,36,STRUCTURE_EXTENSION);
-        // Game.rooms['W52S17'].createConstructionSite(36,36,STRUCTURE_EXTENSION);
-        var towers = Game.rooms['W52S17'].find(FIND_STRUCTURES, {filter : (structure) => structure.structureType == STRUCTURE_TOWER});
-        if(towers.length){
+	var myrooms = _.filter(Game.rooms, (r) => r.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN}).length > 0 );
+	for(var room of myrooms){
+		var towers = room.find(FIND_STRUCTURES, {filter : (structure) => structure.structureType == STRUCTURE_TOWER});
+		if(towers.length){
             for(i=0;i<towers.length;i++){
-                tower = towers[i];
+                var tower = towers[i];
                 tower.attack(tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS));
                 if(tower.energy > 800){
                     tower.repair(tower.pos.findClosestByRange(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_RAMPART && s.hits < 5000}));
@@ -39,7 +36,7 @@ module.exports.loop = function(){
                 }
             }
         }
-    }
+	}
     
     for(var name in Game.creeps){
         var creep = Game.creeps[name];
@@ -110,7 +107,13 @@ module.exports.loop = function(){
 			}
 			// creep.say(creep.room.name)
 	    }
+	    if(creep.memory.role == 'remoteUpgrader'){
+	    	remoteUpgrader.run(creep);
+	    }
+	    if(creep.memory.role == 'claimer'){
+	    	roleClaimer.run(creep);
+	    }
     }
 	
-	respawn.run();
+	respawn.run(myrooms);
 }

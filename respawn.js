@@ -1,78 +1,124 @@
-/*
- * Module code goes here. Use 'module.exports' to export things:
- * module.exports.thing = 'a thing';
- *
- * You can import it from another modules like this:
- * var mod = require('respawn');
- * mod.thing == 'a thing'; // true
- */
+var cost = function(body){
+	var mycost = 0;
+	for(var bodypart of body){
+		mycost += BODYPART_COST[bodypart]
+	}
+	return mycost
+}
+
+var bodies = {
+	miner : function(maxEnergy){
+		var body=[WORK];
+		var minEnergy = cost([WORK,MOVE])
+		if(maxEnergy > minEnergy){
+			var n = Math.min(Math.floor((maxEnergy - minEnergy)/BODYPART_COST[WORK]),4); //a maximum of 5 WORK parts
+			for(i=0; i<n; i++){
+				body.push(WORK);
+			}
+		}
+		body.push(MOVE);
+		return body
+	},
+	upgrader : function(maxEnergy){
+		var template = [WORK,CARRY,MOVE];
+		var intervalEnergy = cost(template);
+		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),6); //currently hardcapped at 6
+		var body = [];
+		for(i=0;i<n;i++){
+			body.push(WORK,CARRY,MOVE);
+		}
+		return body
+	},
+	builder : function(maxEnergy){
+		return this.upgrader(maxEnergy);
+	},
+	repairer : function(maxEnergy){
+		return this.upgrader(maxEnergy);
+	},
+	runner : function(maxEnergy){
+		var template = [CARRY,MOVE];
+		var intervalEnergy=cost(template);
+		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),6); //currently hardcapped at 6
+		var body = [];
+		for(i=0;i<n;i++){
+			body.push(CARRY,MOVE);
+		}
+		return body
+	}
+}
 
 module.exports = {
-    run : function() {
-        var harvester_target = 2; //harvesters per remote site
-        var upgrader_target = 4;
-        var builder_target = 2;
-        var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
-        var miner_target = 2;
-        var runner_target = 2;
-		var thief_target = 0;
-        var hunter_target = 0;
+    run : function(myrooms) {
+    	// room based spawning
+		for(var room of myrooms){
+			var spawn = room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_SPAWN})[0];
 		
-		var hostiles = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS)
-		if(hostiles.length){
-			hunter_target=Math.ceil(hostiles.length/2)
-		}
-		
-        var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
-        var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
-        var repairers = _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer');
-        var miners = _.filter(Game.creeps, (creep) => creep.memory.role == 'miner');
-		var runners = _.filter(Game.creeps, (creep) => creep.memory.role == 'runner');
-		var hunters = _.filter(Game.creeps, (creep) => creep.memory.role == 'hunter');
-		var thiefs = _.filter(Game.creeps, (creep) => creep.memory.role == 'thief');
-//        console.log(harvesters.length + ' ' + upgraders.length + ' ' + builders.length)
-        
-		if(miners.length < miner_target){
-			Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,WORK,MOVE],undefined,{role:'miner'});
-		}
-		if(runners.length < runner_target){
-			if(Game.spawns['Spawn1'].room.energyAvailable < 600 && runners.length < 0){
-				Game.spawns['Spawn1'].createCreep([CARRY,MOVE,CARRY,MOVE],undefined,{role:'runner'});
+			var harvester_target = 2; //harvesters per remote site
+			var upgrader_target = 4;
+			var builder_target = 2;
+			var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
+			var miner_target = 2;
+			var runner_target = 2;
+			var thief_target = 0;
+			var hunter_target = 0;
+			
+			var hostiles = room.find(FIND_HOSTILE_CREEPS)
+			if(hostiles.length){
+				hunter_target=Math.ceil(hostiles.length/2)
 			}
-			else{
-				Game.spawns['Spawn1'].createCreep([CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],undefined,{role:'runner'});
+			
+			var upgraders = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'upgrader'});
+			var builders = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'builder'});
+			var repairers = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'repairer'});
+			var miners = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'miner'});
+			var runners = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'runner'});
+			var hunters = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'hunter'});
+			// var thiefs = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'thief'});
+	       // console.log(miners.length + ' ' + runners.length + ' ' + upgraders.length + ' ' + repairers.length)
+			var maxEnergy = room.energyCapacityAvailable;
+			
+			//first ensure 1 miner, 1 runner, 1 upgrader are always available
+			if(miners.length < 1){
+				spawn.createCreep(bodies.miner(room.energyAvailable),undefined,{role:'miner'});
 			}
+			else if(runners.length < 1){
+				spawn.createCreep(bodies.runner(room.energyAvailable),undefined,{role:'runner'});
+			}
+			else if(upgraders.length < 1){
+				spawn.createCreep(bodies.upgrader(room.energyAvailable),undefined,{role:'upgrader'});
+			}
+			//prioritize first repairer so we have something to build early on
+			else if(repairers.length < 1){
+				spawn.createCreep(bodies.repairer(room.energyAvailable),undefined,{role:'repairer'});
+			}
+			//now proceed with the rest in priority order
+			else if(miners.length < miner_target){
+				spawn.createCreep(bodies.miner(maxEnergy),undefined,{role:'miner'});
+			}
+			else if(runners.length < runner_target){
+				spawn.createCreep(bodies.runner(maxEnergy/2),undefined,{role:'runner'});
+			}
+			else if(upgraders.length < upgrader_target) {
+				spawn.createCreep(bodies.upgrader(maxEnergy),undefined,{role:'upgrader'});
+			}
+			else if(builders.length < builder_target) {
+				spawn.createCreep(bodies.builder(maxEnergy),undefined,{role:'builder'});
+			}
+			else if(repairers.length < repairer_target) {
+				spawn.createCreep(bodies.repairer(maxEnergy),undefined,{role: 'repairer'});
+			}
+			else if(hunters.length < hunter_target) {
+				if (spawn.room.energyAvailable > 600){
+					spawn.createCreep([TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,MOVE],undefined,{role: 'hunter'});
+				}
+			}
+			// if(thiefs.length < thief_target) {
+				// if (spawn.room.energyAvailable > 600){
+					// spawn.createCreep([CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],undefined,{role: 'thief'});
+				// }
+			// }
 		}
-        if(upgraders.length < upgrader_target) {
-            if (Game.spawns['Spawn1'].room.energyAvailable < 600 && upgraders.length < 1){
-                Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE],undefined,{role: 'upgrader'});
-            }
-            else {
-				Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],undefined,{role: 'upgrader'});
-            }
-        }
-        if(builders.length < builder_target) {
-			if (Game.spawns['Spawn1'].room.energyAvailable < 600 && builders.length < 1){
-                Game.spawns['Spawn1'].createCreep([WORK,CARRY,MOVE],undefined,{role: 'builder'});
-            }
-            else {
-				Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],undefined,{role: 'builder'});
-            }
-        }
-        if(repairers.length < repairer_target) {
-				Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],undefined,{role: 'repairer'});
-        }
-		if(hunters.length < hunter_target) {
-			if (Game.spawns['Spawn1'].room.energyAvailable > 600){
-                Game.spawns['Spawn1'].createCreep([TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,MOVE],undefined,{role: 'hunter'});
-            }
-        }
-		if(thiefs.length < thief_target) {
-			if (Game.spawns['Spawn1'].room.energyAvailable > 600){
-                Game.spawns['Spawn1'].createCreep([CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],undefined,{role: 'thief'});
-            }
-        }
-		
+		//flag based spawning
 		for (var flag in Game.flags){ 
 			if(/harvest/.test(flag)){ //see that every remote site has enough harvesters
 				var harvesters = _.filter(Game.creeps, (creep) => 
