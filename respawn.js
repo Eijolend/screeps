@@ -74,22 +74,21 @@ module.exports = {
 			var runners = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'runner'});
 			var hunters = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'hunter'});
 			// var thiefs = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'thief'});
-	//        console.log(harvesters.length + ' ' + upgraders.length + ' ' + builders.length)
+	       // console.log(miners.length + ' ' + runners.length + ' ' + upgraders.length + ' ' + repairers.length)
 			var maxEnergy = room.energyCapacityAvailable;
 			
 			//first ensure 1 miner, 1 runner, 1 upgrader are always available
-			if(miners.length < 1 && spawn.canCreateCreep(bodies.miner(maxEnergy),undefined) == ERR_NOT_ENOUGH_ENERGY){
+			if(miners.length < 1){
 				spawn.createCreep(bodies.miner(room.energyAvailable),undefined,{role:'miner'});
 			}
-			else if(runners.length < 1 && spawn.canCreateCreep(bodies.runner(maxEnergy/2),undefined) == ERR_NOT_ENOUGH_ENERGY){
-				console.log('a');
+			else if(runners.length < 1){
 				spawn.createCreep(bodies.runner(room.energyAvailable),undefined,{role:'runner'});
 			}
-			else if(upgraders.length < 1 && spawn.canCreateCreep(bodies.upgrader(maxEnergy),undefined) == ERR_NOT_ENOUGH_ENERGY){
+			else if(upgraders.length < 1){
 				spawn.createCreep(bodies.upgrader(room.energyAvailable),undefined,{role:'upgrader'});
 			}
 			//prioritize first repairer so we have something to build early on
-			else if(repairers.length < 1 && spawn.canCreateCreep(bodies.repairer(maxEnergy),undefined) == ERR_NOT_ENOUGH_ENERGY){
+			else if(repairers.length < 1){
 				spawn.createCreep(bodies.repairer(room.energyAvailable),undefined,{role:'repairer'});
 			}
 			//now proceed with the rest in priority order
