@@ -20,11 +20,11 @@ module.exports.loop = function(){
 	}
     
 	var myrooms = _.filter(Game.rooms, (r) => r.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN}).length > 0 );
-	for(i in myrooms){
-		var towers = Game.rooms[i].find(FIND_STRUCTURES, {filter : (structure) => structure.structureType == STRUCTURE_TOWER});
+	for(var room of myrooms){
+		var towers = room.find(FIND_STRUCTURES, {filter : (structure) => structure.structureType == STRUCTURE_TOWER});
 		if(towers.length){
             for(i=0;i<towers.length;i++){
-                tower = towers[i];
+                var tower = towers[i];
                 tower.attack(tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS));
                 if(tower.energy > 800){
                     tower.repair(tower.pos.findClosestByRange(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_RAMPART && s.hits < 5000}));

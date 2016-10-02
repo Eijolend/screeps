@@ -1,4 +1,4 @@
-cost = function(body){
+var cost = function(body){
 	var mycost = 0;
 	for(var bodypart in body){
 		mycost += BODYPART_COST[bodypart]
@@ -6,7 +6,7 @@ cost = function(body){
 	return mycost
 }
 
-bodies = {
+var bodies = {
 	miner : function(maxEnergy){
 		var body=[WORK];
 		var minEnergy = cost([WORK,MOVE])
@@ -18,7 +18,7 @@ bodies = {
 		}
 		body.push(MOVE);
 		return body
-	}
+	},
 	upgrader : function(maxEnergy){
 		var template = [WORK,CARRY,MOVE];
 		var intervalEnergy = cost(template);
@@ -26,14 +26,15 @@ bodies = {
 		var body = [];
 		for(i=0;i<n;i++){
 			body.push(WORK,CARRY,MOVE);
+		}
 		return body
-	}
+	},
 	builder : function(maxEnergy){
 		return this.upgrader(maxEnergy);
-	}
+	},
 	repairer : function(maxEnergy){
 		return this.upgrader(maxEnergy);
-	}
+	},
 	runner : function(maxEnergy){
 		var template = [CARRY,MOVE];
 		var intervalEnergy=cost(template);
@@ -41,15 +42,15 @@ bodies = {
 		var body = [];
 		for(i=0;i<n;i++){
 			body.push(CARRY,MOVE);
+		}
 		return body
 	}
 }
 
 module.exports = {
     run : function(myrooms) {
-    	//room based spawning
-		for(i in myrooms){
-			var room = Game.rooms[i]
+    	// room based spawning
+		for(var room of myrooms){
 			var spawn = room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_SPAWN})[0];
 		
 			var harvester_target = 2; //harvesters per remote site
@@ -75,21 +76,21 @@ module.exports = {
 			// var thiefs = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'thief'});
 	//        console.log(harvesters.length + ' ' + upgraders.length + ' ' + builders.length)
 			
-			var maxEnergy = room.energyCapacityAvailable
+			var maxEnergy = room.energyCapacityAvailable;
 			
 			//first ensure 1 miner, 1 runner, 1 upgrader are always available
 			if(miners.length < 1 && spawn.canCreateCreep(bodies.miner(maxEnergy),undefined) == ERR_NOT_ENOUGH_ENERGY){
-				spawn.createCreep(bodies.miner(room.energyAvailable),undefined,{role:'miner'};
+				spawn.createCreep(bodies.miner(room.energyAvailable),undefined,{role:'miner'});
 			}
 			else if(runners.length < 1 && spawn.canCreateCreep(bodies.runner(maxEnergy/2),undefined) == ERR_NOT_ENOUGH_ENERGY){
-				spawn.createCreep(bodies.runner(room.energyAvailable),undefined,{role:'runner'};
+				spawn.createCreep(bodies.runner(room.energyAvailable),undefined,{role:'runner'});
 			}
 			else if(upgraders.length < 1 && spawn.canCreateCreep(bodies.upgrader(maxEnergy),undefined) == ERR_NOT_ENOUGH_ENERGY){
-				spawn.createCreep(bodies.upgrader(room.energyAvailable),undefined,{role:'upgrader'};
+				spawn.createCreep(bodies.upgrader(room.energyAvailable),undefined,{role:'upgrader'});
 			}
 			//prioritize first repairer so we have something to build early on
 			else if(repairers.length < 1 && spawn.canCreateCreep(bodies.repairer(maxEnergy),undefined) == ERR_NOT_ENOUGH_ENERGY){
-				spawn.createCreep(bodies.repairer(room.energyAvailable),undefined,{role:'repairer'};
+				spawn.createCreep(bodies.repairer(room.energyAvailable),undefined,{role:'repairer'});
 			}
 			//now proceed with the rest in priority order
 			else if(miners.length < miner_target){
