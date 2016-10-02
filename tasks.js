@@ -79,7 +79,7 @@ module.exports = {
 	},
 	
 	rep : function(creep,wallMax){
-		target=creep.pos.findClosestByRange(FIND_STRUCTURES, {filter : (structure) => (
+		var target=creep.pos.findClosestByRange(FIND_STRUCTURES, {filter : (structure) => (
                     structure.structureType != STRUCTURE_WALL && structure.structureType != STRUCTURE_RAMPART && structure.hits < structure.hitsMax) || (
                     (structure.structureType == STRUCTURE_WALL || structure.structureType == STRUCTURE_RAMPART) && structure.hits < wallMax)
 				});
