@@ -8,8 +8,9 @@
  */
 
 var tasks=require('tasks');
-var wallMax=Math.pow(10,6);
- 
+//var wallMax=Math.pow(10,6);
+var wallMax = creep.room.memory.wallMax;
+
 module.exports = {
      run: function(creep) {
 
