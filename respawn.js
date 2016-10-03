@@ -159,6 +159,16 @@ module.exports = {
 					}
 				}
 			}
+			if(/claim/.test(flag)){ //continously respawn remoteUpgraders to help establish the new room until flag is removed
+				var remoteUpgraders = _.filter(Game.creeps,(creep) => 
+					creep.memory.role == 'remoteUpgrader' && creep.memory.myflag == flag
+				);
+				if (remoteUpgraders.length < 1){
+					Game.spawns['Spawn1'].createCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],undefined,{
+						role : 'remoteUpgrader' , myflag : flag
+					});
+				}
+			}
 		}
 		
     }
