@@ -15,9 +15,16 @@ module.exports = {
 			tasks.fill(creep,mylist);
 		}
 		else{
-			var sources = creep.room.find(FIND_SOURCES);
-			var mysource = sources[0]
-			tasks.getenergy(creep,mysource);
+			var spawn = creep.room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_SPAWN});
+			var dropped = spawn.pos.findInRange(FIND_DROPPED_ENERGY,1); //energy dropped from recycling
+			if(dropped.length){
+				tasks.pick(creep,dropped[0]);
+			}
+			else{
+				var sources = creep.room.find(FIND_SOURCES);
+				var mysource = sources[0]
+				tasks.getenergy(creep,mysource);
+			}
 		}
 	}
 }
