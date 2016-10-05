@@ -4,7 +4,7 @@ module.exports ={
 		if (creep.attack(target) == ERR_NOT_IN_RANGE){
 			creep.moveTo(target);
 		}
-		if(target === null){
+		if(target === null && creep.ticksToLive < 1500){
 			creep.memory.role = 'recycler';
 		}
 	}
