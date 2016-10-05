@@ -86,6 +86,12 @@ module.exports = {
 				if(creep.repair(target) == ERR_NOT_IN_RANGE){
 					creep.moveTo(target);
 				}
+	},
+	
+	recycle : function(creep,spawn){
+		if(spawn.recycleCreep(creep) == ERR_NOT_IN_RANGE){
+			creep.moveTo(spawn);
+		}
 	}
 	
 	
