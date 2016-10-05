@@ -14,6 +14,9 @@ module.exports = {
 			var mylist=[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,STRUCTURE_TOWER,STRUCTURE_STORAGE];
 			tasks.fill(creep,mylist);
 		}
+		else if(creep.ticksToLive < 50){
+			creep.memory.role = 'recycler'
+		}
 		else{
 			var spawn = creep.room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_SPAWN})[0];
 			var dropped = spawn.pos.findInRange(FIND_DROPPED_ENERGY,1); //energy dropped from recycling
