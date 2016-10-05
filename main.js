@@ -8,6 +8,7 @@ var roleReserver = require('role.reserver');
 var roleRepairer = require('role.repairer');
 var remoteUpgrader = require('remote.upgrader');
 var roleClaimer = require('role.claimer');
+var roleRecycler = require('role.recycler');
 var respawn = require('respawn');
 var tasks = require('tasks');
 
@@ -113,6 +114,9 @@ module.exports.loop = function(){
 	    if(creep.memory.role == 'claimer'){
 	    	roleClaimer.run(creep);
 	    }
+		if(creep.memory.role == 'recycler'){
+			roleRecycler.run(creep);
+		}
     }
 	
 	respawn.run(myrooms);

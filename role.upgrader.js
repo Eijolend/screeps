@@ -26,7 +26,10 @@ module.exports = {
 	            creep.moveTo(creep.room.controller);
 	        }
 	    }
-         else { //get energy in priority: dropped, container, storage, harvest
+		else if(creep.ticksToLive < 100){
+			creep.memory.role = 'recycler';
+		}
+        else { //get energy in priority: dropped, container, storage, harvest
 			var sources = creep.room.find(FIND_SOURCES);
 			var mysource = sources[1];
 			tasks.getenergy(creep,mysource);
