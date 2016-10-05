@@ -22,7 +22,13 @@ var bodies = {
 	upgrader : function(maxEnergy){
 		var template = [WORK,CARRY,MOVE];
 		var intervalEnergy = cost(template);
-		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),6); //currently hardcapped at 6
+		var n = Math.floor(maxEnergy/intervalEnergy);
+		if(n >= 10){
+			n=10
+		}
+		else if(n>=5){
+			n=5
+		}
 		var body = [];
 		for(i=0;i<n;i++){
 			body.push(WORK,CARRY,MOVE);
@@ -30,10 +36,17 @@ var bodies = {
 		return body
 	},
 	builder : function(maxEnergy){
-		return this.upgrader(maxEnergy);
+		var template = [WORK,CARRY,MOVE];
+		var intervalEnergy = cost(template);
+		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),6); //hardcapped at 6
+		var body = [];
+		for(i=0;i<n;i++){
+			body.push(WORK,CARRY,MOVE);
+		}
+		return body
 	},
 	repairer : function(maxEnergy){
-		return this.upgrader(maxEnergy);
+		return this.builder(maxEnergy);
 	},
 	runner : function(maxEnergy){
 		var template = [CARRY,MOVE];
@@ -52,9 +65,10 @@ module.exports = {
     	// room based spawning
 		for(var room of myrooms){
 			var spawn = room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_SPAWN})[0];
-		
+			var maxEnergy = room.energyCapacityAvailable;
+			
 			var harvester_target = 2; //harvesters per remote site
-			var upgrader_target = 4;
+			var upgrader_target = Math.min(Math.ceil(Math.floor(maxEnergy/cost([WORK,CARRY,MOVE]))/10),4); //should be around 500 energy per 50 ticks
 			var builder_target = 2;
 			var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
 			var miner_target = 2;
@@ -62,7 +76,7 @@ module.exports = {
 			var thief_target = 0;
 			var hunter_target = 0;
 			
-			var hostiles = room.find(FIND_HOSTILE_CREEPS)
+			var hostiles = room.find(FIND_HOSTILE_CREEPS);
 			if(hostiles.length){
 				hunter_target=Math.ceil(hostiles.length/2)
 			}
@@ -75,7 +89,6 @@ module.exports = {
 			var hunters = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'hunter'});
 			// var thiefs = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'thief'});
 	       // console.log(miners.length + ' ' + runners.length + ' ' + upgraders.length + ' ' + repairers.length)
-			var maxEnergy = room.energyCapacityAvailable;
 			
 			//first ensure 1 miner, 1 runner, 1 upgrader are always available
 			if(miners.length < 1){
@@ -84,7 +97,7 @@ module.exports = {
 			else if(runners.length < 1){
 				spawn.createCreep(bodies.runner(room.energyAvailable),undefined,{role:'runner'});
 			}
-			else if(upgraders.length < 1){
+			else if(upgraders.length < 1 && room.controller.ticksToDowngrade < 500){
 				spawn.createCreep(bodies.upgrader(room.energyAvailable),undefined,{role:'upgrader'});
 			}
 			//prioritize first repairer so we have something to build early on
