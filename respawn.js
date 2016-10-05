@@ -138,7 +138,7 @@ module.exports = {
 					creep.memory.role == 'harvester' && creep.memory.myflag == flag
 				);
 				if (harvesters.length < harvester_target){
-					Game.spawns['Spawn1'].createCreep([MOVE,MOVE,MOVE,WORK,WORK,WORK,CARRY,CARRY,CARRY],undefined,{
+					Game.spawns['Spawn1'].createCreep([MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK],undefined,{
 						role: 'harvester', myflag: flag, home: Game.spawns['Spawn1'].room.name
 					});
 				}
