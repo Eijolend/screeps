@@ -15,7 +15,7 @@ module.exports = {
 			tasks.fill(creep,mylist);
 		}
 		else{
-			var spawn = creep.room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_SPAWN});
+			var spawn = creep.room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_SPAWN})[0];
 			var dropped = spawn.pos.findInRange(FIND_DROPPED_ENERGY,1); //energy dropped from recycling
 			if(dropped.length){
 				tasks.pick(creep,dropped[0]);
