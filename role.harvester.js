@@ -37,9 +37,12 @@ module.exports = {
 				tasks.mine(creep,Game.flags[creep.memory.myflag].pos.lookFor(LOOK_SOURCES)[0]);
 			}
 		}
-		else if (creep.room.name = creep.memory.home){
+		else if (creep.room.name == creep.memory.home){
 			if (creep.memory.delivering){
 				tasks.fill(creep,[STRUCTURE_STORAGE]);
+			}
+			else if(creep.ticksTolive < 200){
+				creep.memory.role = 'recycler';
 			}
 			else{
 				creep.moveTo(Game.flags[creep.memory.myflag]);
