@@ -12,7 +12,7 @@ module.exports = {
 			}
 		}
 		else{
-			creep.moveTo(Game.flags[creep.memory.myflag]);
+			creep.moveTo(Game.flags[creep.memory.myflag],{reusePath:25});
 		}
 	}
 }
