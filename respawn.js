@@ -51,7 +51,7 @@ var bodies = {
 	runner : function(maxEnergy){
 		var template = [CARRY,MOVE];
 		var intervalEnergy=cost(template);
-		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),8); //currently hardcapped at 8
+		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),10); //currently hardcapped at 10
 		var body = [];
 		for(i=0;i<n;i++){
 			body.push(CARRY,MOVE);
@@ -68,7 +68,7 @@ module.exports = {
 			var maxEnergy = room.energyCapacityAvailable;
 			
 			var harvester_target = 2; //harvesters per remote site
-			var upgrader_target = Math.min(Math.ceil(10/Math.floor(maxEnergy/cost([WORK,CARRY,MOVE]))),4); //should be around 500 energy per 50 ticks
+			var upgrader_target = Math.min(Math.ceil(20/(bodies.upgrader.length(maxEnergy)/3)),4); //should be around 500 energy per 50 ticks 
 			var builder_target = 2;
 			var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
 			var miner_target = 2;

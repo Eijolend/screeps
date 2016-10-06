@@ -54,18 +54,18 @@ module.exports = {
 	fill : function(creep,prioritylist){
 		for(i=0; i<prioritylist.length; i++){
 		    if(prioritylist[i]==STRUCTURE_CONTAINER || prioritylist[i]==STRUCTURE_STORAGE){
-		        var targets=creep.room.find(FIND_STRUCTURES, {
+		        var target=creep.room.find(FIND_STRUCTURES, {
 				    filter : (s) => s.structureType == prioritylist[i] && (s.store.energy<s.storeCapacity)
-			    });
+			    })[0];
 		    }
 		    else{
-    			var targets=creep.room.find(FIND_STRUCTURES, {
+    			var target=creep.room.findClosestByRange(FIND_STRUCTURES, {
     				filter : (s) => s.structureType == prioritylist[i] && (s.energy < s.energyCapacity)
     			});
 		    }
     		if(targets.length){
-				if(creep.transfer(targets[0],RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-					creep.moveTo(targets[0]);
+				if(creep.transfer(target,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+					creep.moveTo(target);
 				}
 				break
 			}
