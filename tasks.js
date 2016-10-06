@@ -59,7 +59,7 @@ module.exports = {
 			    })[0];
 		    }
 		    else{
-    			var target=creep.room.findClosestByRange(FIND_STRUCTURES, {
+    			var target=creep.pos.findClosestByRange(FIND_STRUCTURES, {
     				filter : (s) => s.structureType == prioritylist[i] && (s.energy < s.energyCapacity)
     			});
 		    }
