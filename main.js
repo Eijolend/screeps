@@ -69,7 +69,7 @@ module.exports.loop = function(){
 		    creep.moveTo(Game.flags['Rally']);
 		}
 		if(creep.memory.role == 'raider'){
-		    if(creep.room.name=='W54S17'){
+		    if(creep.room.name==Game.flags['Raid'].pos.roomName){
     			targets=Game.flags['Raid'].pos.findInRange(FIND_HOSTILE_STRUCTURES,0,{filter:(s) => s.structureType != STRUCTURE_ROAD && s.structureType != STRUCTURE_CONTROLLER});
     			if (targets.length){
     				target=targets[0]
