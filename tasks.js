@@ -63,7 +63,7 @@ module.exports = {
     				filter : (s) => s.structureType == prioritylist[i] && (s.energy < s.energyCapacity)
     			});
 		    }
-    		if(targets.length){
+    		if(target != null){
 				if(creep.transfer(target,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
 					creep.moveTo(target);
 				}
