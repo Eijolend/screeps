@@ -30,7 +30,7 @@ module.exports = {
 					creep.repair(roadatpoint[0]);
 				}
 				else{
-					creep.moveTo(Game.spawns['Spawn1']);
+					creep.moveTo(Game.rooms[creep.memory.homeRoom].find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE });
 				}
 			}
 			else{
@@ -49,5 +49,4 @@ module.exports = {
 			}
 		}
 	}
-
 };
