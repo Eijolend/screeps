@@ -74,7 +74,7 @@ module.exports = {
     run : function(myrooms) {
     	// room based spawning
 		for(var room of myrooms){
-			var spawn = room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_SPAWN && s.spawning == null})[0];
+			var spawns = room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_SPAWN});
 			if(spawn==undefined){
 				continue
 			}
@@ -94,12 +94,19 @@ module.exports = {
 				hunter_target=Math.ceil(hostiles.length/2)
 			}
 			
-			var upgraders = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'upgrader'});
-			var builders = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'builder'});
-			var repairers = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'repairer'});
-			var miners = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'miner'});
-			var runners = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'runner'});
-			var hunters = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'hunter'});
+			var creepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.pos.roomName == room.name),'memory.role'); //this also counts spawning creeps
+			var upgraders = creepsByRole.upgrader != undefined ? creepsByRole.upgrader : [];
+			var builders = creepsByRole.builder != undefined ? creepsByRole.builder : [];
+			var repairers = creepsByRole.repairer != undefined ? creepsByRole.repairer : [];
+			var miners = creepsByRole.miner != undefined ? creepsByRole.miner : [];
+			var runners = creepsByRole.runner != undefined ? creepsByRole.runner : [];
+			var hunters = creepsByRole.hunter != undefined ? creepsByRole.hunter : [];
+			// var upgraders = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'upgrader'});
+			// var builders = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'builder'});
+			// var repairers = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'repairer'});
+			// var miners = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'miner'});
+			// var runners = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'runner'});
+			// var hunters = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'hunter'});
 			// var thiefs = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'thief'});
 	       // console.log(miners.length + ' ' + runners.length + ' ' + upgraders.length + ' ' + repairers.length)
 			
