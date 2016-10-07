@@ -1,0 +1,13 @@
+(in no particular order)
+
+*!!!remote mining for multiple rooms!!!
+
+*shared role for builders and upgraders
+*dynamic amount of upgraders based on energy in storage/container(?)
+
+*a solution to the two-sources split
+
+combat related:
+*better tower code
+*defensive and offensive creep squads
+*siege code
