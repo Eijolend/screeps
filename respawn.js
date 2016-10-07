@@ -74,7 +74,7 @@ module.exports = {
     run : function(myrooms) {
     	// room based spawning
 		for(var room of myrooms){
-			var spawns = room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_SPAWN});
+			var spawn = room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_SPAWN && s.spawning == null})[0];
 			if(spawn==undefined){
 				continue
 			}
