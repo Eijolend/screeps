@@ -1,5 +1,5 @@
 /*
- * GOAL: harvester should go to their flag and harves there.
+ * GOAL: harvester should go to their flag and harvest there.
  * 			they also should build and maintain their own road to their destination.
  */
 
@@ -16,7 +16,7 @@ module.exports = {
 	        creep.say('delivering');
 	    }
 		
-		if(creep.room.name != creep.memory.home){
+		if(creep.room.name != creep.memory.homeRoom){
 			var roadatpoint = creep.pos.findInRange(FIND_STRUCTURES,0,{filter: (s) => s.structureType == STRUCTURE_ROAD});
 			if(!roadatpoint.length){
 				creep.pos.createConstructionSite(STRUCTURE_ROAD);
@@ -30,14 +30,14 @@ module.exports = {
 					creep.repair(roadatpoint[0]);
 				}
 				else{
-					creep.moveTo(Game.rooms[creep.memory.homeRoom].find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE }) );
+					creep.moveTo(Game.rooms[creep.memory.homeRoom].find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE })[0] );
 				}
 			}
 			else{
 				tasks.mine(creep,Game.flags[creep.memory.myflag].pos.lookFor(LOOK_SOURCES)[0]);
 			}
 		}
-		else if (creep.room.name == creep.memory.home){
+		else if (creep.room.name == creep.memory.homeRoom){
 			if (creep.memory.delivering){
 				tasks.fill(creep,[STRUCTURE_STORAGE]);
 			}
