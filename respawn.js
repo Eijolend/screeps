@@ -48,6 +48,16 @@ var bodies = {
 	repairer : function(maxEnergy){
 		return this.builder(maxEnergy);
 	},
+	harvester : function(maxEnergy){
+		var template = [WORK,CARRY,MOVE];
+		var intervalEnergy = cost(template);
+		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),10); //hardcapped at 10
+		var body = [];
+		for(i=0;i<n;i++){
+			body.push(WORK,CARRY,MOVE);
+		}
+		return body
+	},
 	runner : function(maxEnergy){
 		var template = [CARRY,MOVE];
 		var intervalEnergy=cost(template);
@@ -133,48 +143,52 @@ module.exports = {
 					// spawn.createCreep([CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],undefined,{role: 'thief'});
 				// }
 			// }
-		}
-		//flag based spawning
-		for (var flag in Game.flags){ 
-			if(/harvest/.test(flag)){ //see that every remote site has enough harvesters
-				var harvesters = _.filter(Game.creeps, (creep) => 
-					creep.memory.role == 'harvester' && creep.memory.myflag == flag
-				);
-				if (harvesters.length < harvester_target){
-					Game.spawns['Spawn1'].createCreep([MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK,MOVE,CARRY,WORK],undefined,{
-						role: 'harvester', myflag: flag, home: Game.spawns['Spawn1'].room.name
-					});
-				}
-			}
-			if(/reserve/.test(flag)){ //logic to spawn reservers
-				var reservers = _.filter(Game.creeps, (creep) => 
-					creep.memory.role == 'reserver' && creep.memory.myflag == flag
-				);
-				if (reservers.length < 1){
-					var tospawn = false
-					if (Game.flags[flag].memory.reserved && Game.flags[flag].pos.roomName in Game.rooms){ //second check is to prevent breaking from no vision
-						var con = Game.flags[flag].pos.lookFor(LOOK_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_CONTROLLER})[0];
-						if(con.reservation == undefined){ //yet more failsafes
-							Game.flags[flag].memory.reserved = false;
-						}
-						else if(con.reservation.ticksToEnd < 500){
-							tospawn = true;
-						}
-					}
-					else{
-						if(Game.spawns['Spawn1'].canCreateCreep([MOVE,CLAIM,CLAIM,MOVE],undefined,{
-								role: 'reserver', myflag: flag}) == OK){
-							tospawn = true;
-							Game.flags[flag].memory.reserved = true; //should have some kind of check to prevent breaking
-						}
-					}
-					if(tospawn){
-						Game.spawns['Spawn1'].createCreep([MOVE,CLAIM,CLAIM,MOVE],undefined,{
-							role: 'reserver', myflag: flag
+			
+			//flag based spawning with homeRoom
+			for (var flag of _.filter(Game.flags, (f)=>f.memory.homeRoom == room.name)){
+				if(/harvest/.test(flag.name)){ //see that every remote site has enough harvesters
+					var harvesters = _.filter(Game.creeps, (creep) => 
+						creep.memory.role == 'harvester' && creep.memory.myflag == flag.name
+					);
+					if (harvesters.length < harvester_target){
+						spawn.createCreep(bodies.harvester(maxEnergy),undefined,{
+							role: 'harvester', myflag: flag.name, homeRoom: room.name
 						});
 					}
 				}
+				if(/reserve/.test(flag.name)){ //logic to spawn reservers
+					var reservers = _.filter(Game.creeps, (creep) => 
+						creep.memory.role == 'reserver' && creep.memory.myflag == flag.name
+					);
+					if (reservers.length < 1){
+						var tospawn = false
+						if (flag.memory.reserved && flag.pos.roomName in Game.rooms){ //second check is to prevent breaking from no vision
+							var con = flag.pos.lookFor(LOOK_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_CONTROLLER})[0];
+							if(con.reservation == undefined){ //yet more failsafes
+								flag.memory.reserved = false;
+							}
+							else if(con.reservation.ticksToEnd < 500){
+								tospawn = true;
+							}
+						}
+						else{
+							if(spawn.canCreateCreep([MOVE,CLAIM,CLAIM,MOVE],undefined) == OK){
+								tospawn = true;
+								flag.memory.reserved = true; //should have some kind of check to prevent breaking
+							}
+						}
+						if(tospawn){
+							spawn.createCreep([MOVE,CLAIM,CLAIM,MOVE],undefined,{
+								role: 'reserver', myflag: flag.name, homeRoom : room.name
+							});
+						}
+					}
+				}
 			}
+		
+		}
+		//flag based spawning
+		for (var flag in Game.flags){ 
 			if(/claim/.test(flag)){ //continously respawn remoteUpgraders to help establish the new room until flag is removed
 				var remoteUpgraders = _.filter(Game.creeps,(creep) => 
 					creep.memory.role == 'remoteUpgrader' && creep.memory.myflag == flag
