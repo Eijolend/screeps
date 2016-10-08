@@ -4,7 +4,7 @@
  */
 
 var tasks=require('tasks');
-var roleBuilder=require('role.builder');
+// var roleBuilder=require('role.builder');
  
 module.exports = {
      run: function(creep) {
@@ -18,14 +18,11 @@ module.exports = {
 	        //creep.say('repairing');
 	    }
 	    if(creep.memory.repairing){
-			var reptargets=creep.room.find(FIND_STRUCTURES, {filter: (s) => s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART && s.hits < s.hitsMax});
-			if(reptargets.length){
-				tasks.rep(creep,0);
-			}
-			else{
-				roleBuilder.run(creep);
-			}
+			tasks.rep(creep);
 	    }
+		else if(creep.ticksToLive < 200){
+			creep.memory.role = 'recycler';
+		}
 	    else { //get energy in priority: dropped, container, storage, harvest
 			var sources = creep.room.find(FIND_SOURCES);
 			var mysource = sources[1];

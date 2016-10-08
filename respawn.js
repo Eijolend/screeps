@@ -111,7 +111,7 @@ module.exports = {
 				spawn.createCreep(bodies.upgrader(room.energyAvailable),undefined,{role:'upgrader'});
 			}
 			//prioritize first repairer so we have something to build early on
-			else if(repairers.length < 1){
+			else if(repairers.length < 1 && civilians.length == 0){
 				spawn.createCreep(bodies.repairer(room.energyAvailable),undefined,{role:'repairer'});
 			}
 			//now proceed with the rest in priority order
