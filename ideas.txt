@@ -1,6 +1,6 @@
 (in no particular order)
 
-*!!!remote mining for multiple rooms!!!
+!!!DEFENSE CODE for remote mining rooms!!!
 
 *shared role for builders and upgraders
 *dynamic amount of upgraders based on energy in storage/container(?)

@@ -210,3 +210,5 @@ module.exports = {
 		
     }
 };
+
+module.exports.bodies = bodies;

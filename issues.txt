@@ -1,0 +1,8 @@
+Some issues arise from refactoring the way builders and upgraders work.
+These need to be resolved before merging.
+
+* remoteUpgraders still switch to deprecated roles
+* remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles
+* repairers still use roleBuilder
+* currently no logic for filling towers by non-runners
+* currently no logic for wall repairing (move repairer role to civilian? or add additional condition when builders are needed?)
