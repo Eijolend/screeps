@@ -1,6 +1,5 @@
 var roleHarvester = require('role.harvester');
-var roleBuilder = require('role.builder');
-var roleUpgrader = require('role.upgrader');
+var roleCivilian = require('role.civilian');
 var roleHunter = require('role.hunter');
 var roleMiner = require('role.miner');
 var roleRunner = require('role.runner');
@@ -41,17 +40,11 @@ module.exports.loop = function(){
     
     for(var name in Game.creeps){
         var creep = Game.creeps[name];
-        if(creep.memory.role == 'harvester'){
-            roleHarvester.run(creep);
-        }
-        if(creep.memory.role == 'builder'){
-            roleBuilder.run(creep);
+        if(creep.memory.role == 'civilian'){
+            roleCivilian.run(creep);
         }
         if(creep.memory.role == 'repairer'){
             roleRepairer.run(creep);
-        }
-        if(creep.memory.role == 'upgrader'){
-            roleUpgrader.run(creep);
         }
 		if(creep.memory.role == 'hunter'){
 			roleHunter.run(creep);
@@ -62,9 +55,13 @@ module.exports.loop = function(){
 		if(creep.memory.role == 'runner'){
 			roleRunner.run(creep);
 		}
+		if(creep.memory.role == 'harvester'){
+            roleHarvester.run(creep);
+        }
 		if(creep.memory.role == 'reserver'){
 			roleReserver.run(creep);
 		}
+		
 		if(creep.memory.role == 'shield'){
 		    creep.moveTo(Game.flags['Rally']);
 		}
