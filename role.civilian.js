@@ -6,7 +6,16 @@ module.exports = {
 		var progLeft = _room.find(FIND_MY_CONSTRUCTION_SITES).sumBy( (cs) => cs.progressTotal - cs.progress);
 		var energyPerCiv = respawn.bodies.civilian(room.energyCapacityAvailable).length * 50 / 3;
 		var buildersNeeded = Math.ceil(progLeft/energyPerCiv); //if no spawn, will return Infinity, but Math.min can handle that
-		return Math.min(buildersNeeded,numCivs)
+		var numBuilders = Math.min(buildersNeeded,numCivs);
+		if(numBuilders == 0){ //if there are walls to be repaired, should have one builder even if no construction site
+			var lowWalls = creep.room.find(FIND_STRUCTURES,
+				{filter : (s) => (s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART) && s.hits < creep.room.memory.wallMax
+			});
+			if(lowWalls.length){
+				numBuilders = 1;
+			}
+		}
+		return numBuilders
 	},
 	run : function(creep){
 		//preparing
@@ -34,8 +43,14 @@ module.exports = {
 		//doing stuff
 		if(creep.memory.ontask && creep.memory.mytask == 'builder'){
 			var targets = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
+			var lowWalls = creep.room.find(FIND_STRUCTURES,
+				{filter : (s) => (s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART) && s.hits < creep.room.memory.wallMax
+			});	
 			if(targets.length){
 				tasks.construct(creep,targets[0]);
+			}
+			else if(lowWalls.length){
+				tasks.repWall(creep)
 			}
 			else{
 				creep.memory.ontask = false //switch back to getting if there is nothing left to build
