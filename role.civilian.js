@@ -6,7 +6,7 @@ module.exports = {
 		var progLeft = _room.find(FIND_MY_CONSTRUCTION_SITES).sumBy( (cs) => cs.progressTotal - cs.progress);
 		var energyPerCiv = respawn.bodies.civilian(room.energyCapacityAvailable).length * 50 / 3;
 		var buildersNeeded = Math.ceil(progLeft/energyPerCiv); //if no spawn, will return Infinity, but Math.min can handle that
-		return Math.min(buildersNeeded,numCivs - 1)
+		return Math.min(buildersNeeded,numCivs)
 	},
 	run : function(creep){
 		//preparing
@@ -20,9 +20,9 @@ module.exports = {
 			var civs = creep.room.find(FIND_CREEPS,{filter :(c) => c.memory.role == 'civilian'});
 			var civsByTask = _.groupBy(civs,'memory.mytask');
 			var numBuilders = civsByTask.builder != undefined ? civsByTask.builder.length : 0;
-			var numUpgraders= civsByTask.upgrader != undefined ? civsByTask.upgrader.length : 0;
+			// var numUpgraders= civsByTask.upgrader != undefined ? civsByTask.upgrader.length : 0;
 			
-			if(numUpgraders != 0 && numBuilders < this.builderTarget(creep.room,civs.length) ){
+			if(numBuilders < this.builderTarget(creep.room,civs.length) ){
 				creep.memory.mytask = 'builder'
 				creep.say('building');
 			}

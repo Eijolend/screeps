@@ -1,4 +1,5 @@
 var roleHarvester = require('role.harvester');
+var roleUpgrader = require('role.upgrader');
 var roleCivilian = require('role.civilian');
 var roleHunter = require('role.hunter');
 var roleMiner = require('role.miner');
@@ -40,6 +41,15 @@ module.exports.loop = function(){
     
     for(var name in Game.creeps){
         var creep = Game.creeps[name];
+		if(creep.memory.role == 'runner'){
+			roleRunner.run(creep);
+		}
+		if(creep.memory.role == 'miner'){
+			roleMiner.run(creep);
+		}
+		if(creep.memory.role == 'upgrader'){
+			roleUpgrader.run(creep);
+		}
         if(creep.memory.role == 'civilian'){
             roleCivilian.run(creep);
         }
@@ -48,12 +58,6 @@ module.exports.loop = function(){
         }
 		if(creep.memory.role == 'hunter'){
 			roleHunter.run(creep);
-		}
-		if(creep.memory.role == 'miner'){
-			roleMiner.run(creep);
-		}
-		if(creep.memory.role == 'runner'){
-			roleRunner.run(creep);
 		}
 		if(creep.memory.role == 'harvester'){
             roleHarvester.run(creep);
