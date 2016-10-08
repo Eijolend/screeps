@@ -4,6 +4,7 @@
 
 *shared role for builders and upgraders
 *dynamic amount of upgraders based on energy in storage/container(?)
+* remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles
 
 *a solution to the two-sources split
 

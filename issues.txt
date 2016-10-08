@@ -7,4 +7,4 @@ These need to be resolved before merging.
 * currently no logic for filling towers by non-runners
 * currently no logic for wall repairing (move repairer role to civilian? or add additional condition when builders are needed?)
 
-IMPORTANT: old roles will need to be switched once this is pushed (or maintain backwards compatibility!)
+IMPORTANT: old builders will need to be switched once this is pushed

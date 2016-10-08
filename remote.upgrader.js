@@ -28,13 +28,10 @@ module.exports = {
 		else{
 			if(creep.room.name == Game.flags[creep.memory.myflag].pos.roomName){
 				var spawns = creep.room.find(FIND_MY_STRUCTURES, {filter : (s) => s.structureType == STRUCTURE_SPAWN});
-				if (spawns.length){
-					creep.memory.role = 'upgrader';
-				}
-				else{
-					creep.memory.role = 'builder';
+				if(!spawns.length){
 					Game.flags['placespawn'].pos.createConstructionSite(STRUCTURE_SPAWN);
 				}
+				creep.memory.role = 'civilian'
 			}
 			else{
 				var sources = creep.room.find(FIND_SOURCES);
