@@ -70,8 +70,8 @@ module.exports = {
 			var harvester_target = 2; //harvesters per remote site
 			var upgrader_target = 1; //guarantees one upgrader
 			// number of civilians: at least 1, maximally 3, else enough to upgrade ca. 500 per 50 ticks, +1 for every 100k in storage
-			let storage = room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE)[0];
-			var civilian_target = Math.max(Math.min(Math.ceil(20/(bodies.civilian(maxEnergy).length/3))-1,3),1) + ( storage != undefined ? Math.floor(s.store.energy/100000) : 0 );
+			let storage = room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE})[0];
+			var civilian_target = Math.max(Math.min(Math.ceil(20/(bodies.civilian(maxEnergy).length/3))-1,3),1) + ( storage != undefined ? Math.floor(storage.store.energy/100000) : 0 );
 			var builder_target = 0;
 			var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
 			var miner_target = 2;
@@ -110,10 +110,10 @@ module.exports = {
 			else if(upgraders.length < 1 && room.controller.ticksToDowngrade < 500){
 				spawn.createCreep(bodies.upgrader(room.energyAvailable),undefined,{role:'upgrader'});
 			}
-			//prioritize first repairer so we have something to build early on
-			else if(repairers.length < 1 && civilians.length == 0){
-				spawn.createCreep(bodies.repairer(room.energyAvailable),undefined,{role:'repairer'});
-			}
+			// //prioritize first repairer so we have something to build early on
+			// else if(repairers.length < 1){
+				// spawn.createCreep(bodies.repairer(room.energyAvailable),undefined,{role:'repairer'});
+			// }
 			//now proceed with the rest in priority order
 			else if(miners.length < miner_target){
 				spawn.createCreep(bodies.miner(maxEnergy),undefined,{role:'miner'});
@@ -182,7 +182,6 @@ module.exports = {
 					}
 				}
 			}
-		
 		}
 		//flag based spawning
 		for (var flag in Game.flags){ 

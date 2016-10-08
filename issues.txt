@@ -1,6 +1,8 @@
 Some issues arise from refactoring the way builders and upgraders work.
 These need to be resolved before merging.
 
+* filling towers for repairers because of that see next point
+* robust task system that returns something when nothing to do, so not each role needs to check itself
 * currently no logic for filling towers by non-runners
 
 IMPORTANT: old builders will need to be switched once this is pushed
