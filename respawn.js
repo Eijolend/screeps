@@ -19,34 +19,21 @@ var bodies = {
 		body.push(MOVE);
 		return body
 	},
-	upgrader : function(maxEnergy){
+	civilian : function(maxEnergy){
 		var template = [WORK,CARRY,MOVE];
 		var intervalEnergy = cost(template);
-		var n = Math.floor(maxEnergy/intervalEnergy);
-		if(n >= 10){
-			n=10
-		}
-		else if(n>=5){
-			n=5
-		}
+		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),10); //hardcapped at 10
 		var body = [];
 		for(i=0;i<n;i++){
 			body.push(WORK,CARRY,MOVE);
 		}
 		return body
 	},
-	builder : function(maxEnergy){
-		var template = [WORK,CARRY,MOVE];
-		var intervalEnergy = cost(template);
-		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),6); //hardcapped at 6
-		var body = [];
-		for(i=0;i<n;i++){
-			body.push(WORK,CARRY,MOVE);
-		}
-		return body
+	upgrader : function(maxEnergy){
+		return this.civilian(maxEnergy);
 	},
 	repairer : function(maxEnergy){
-		return this.builder(maxEnergy);
+		return this.civilian(maxEnergy);
 	},
 	harvester : function(maxEnergy){
 		var template = [WORK,CARRY,MOVE];
@@ -81,8 +68,11 @@ module.exports = {
 			var maxEnergy = room.energyCapacityAvailable;
 			
 			var harvester_target = 2; //harvesters per remote site
-			var upgrader_target = Math.min(Math.ceil(20/(bodies.upgrader(maxEnergy).length/3)),4); //should be around 500 energy per 50 ticks 
-			var builder_target = 2;
+			var upgrader_target = 1; //guarantees one upgrader
+			// number of civilians: at least 1, maximally 3, else enough to upgrade ca. 500 per 50 ticks, +1 for every 100k in storage
+			let storage = room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE})[0];
+			var civilian_target = Math.max(Math.min(Math.ceil(20/(bodies.civilian(maxEnergy).length/3))-1,3),1) + ( storage != undefined ? Math.floor(storage.store.energy/100000) : 0 );
+			var builder_target = 0;
 			var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
 			var miner_target = 2;
 			var runner_target = 2;
@@ -96,7 +86,7 @@ module.exports = {
 			
 			var creepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.pos.roomName == room.name),'memory.role'); //this also counts spawning creeps
 			var upgraders = creepsByRole.upgrader != undefined ? creepsByRole.upgrader : [];
-			var builders = creepsByRole.builder != undefined ? creepsByRole.builder : [];
+			var civilians = creepsByRole.civilian != undefined ? creepsByRole.civilian : [];
 			var repairers = creepsByRole.repairer != undefined ? creepsByRole.repairer : [];
 			var miners = creepsByRole.miner != undefined ? creepsByRole.miner : [];
 			var runners = creepsByRole.runner != undefined ? creepsByRole.runner : [];
@@ -120,10 +110,10 @@ module.exports = {
 			else if(upgraders.length < 1 && room.controller.ticksToDowngrade < 500){
 				spawn.createCreep(bodies.upgrader(room.energyAvailable),undefined,{role:'upgrader'});
 			}
-			//prioritize first repairer so we have something to build early on
-			else if(repairers.length < 1){
-				spawn.createCreep(bodies.repairer(room.energyAvailable),undefined,{role:'repairer'});
-			}
+			// //prioritize first repairer so we have something to build early on
+			// else if(repairers.length < 1){
+				// spawn.createCreep(bodies.repairer(room.energyAvailable),undefined,{role:'repairer'});
+			// }
 			//now proceed with the rest in priority order
 			else if(miners.length < miner_target){
 				spawn.createCreep(bodies.miner(maxEnergy),undefined,{role:'miner'});
@@ -134,8 +124,8 @@ module.exports = {
 			else if(upgraders.length < upgrader_target) {
 				spawn.createCreep(bodies.upgrader(maxEnergy),undefined,{role:'upgrader'});
 			}
-			else if(builders.length < builder_target) {
-				spawn.createCreep(bodies.builder(maxEnergy),undefined,{role:'builder'});
+			else if(civilians.length < civilian_target) {
+				spawn.createCreep(bodies.civilian(maxEnergy),undefined,{role:'civilian'});
 			}
 			else if(repairers.length < repairer_target) {
 				spawn.createCreep(bodies.repairer(maxEnergy),undefined,{role: 'repairer'});
@@ -192,7 +182,6 @@ module.exports = {
 					}
 				}
 			}
-		
 		}
 		//flag based spawning
 		for (var flag in Game.flags){ 
@@ -210,3 +199,5 @@ module.exports = {
 		
     }
 };
+
+module.exports.bodies = bodies;

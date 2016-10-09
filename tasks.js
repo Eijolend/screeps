@@ -52,6 +52,7 @@ module.exports = {
 	},
 	
 	fill : function(creep,prioritylist){
+		var valid = false //use this to determine whether there was some sensible task to do
 		for(i=0; i<prioritylist.length; i++){
 		    if(prioritylist[i]==STRUCTURE_CONTAINER || prioritylist[i]==STRUCTURE_STORAGE){
 		        var target=creep.room.find(FIND_STRUCTURES, {
@@ -67,8 +68,12 @@ module.exports = {
 				if(creep.transfer(target,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
 					creep.moveTo(target);
 				}
+				valid = true
 				break
 			}
+		}
+		if(!valid){
+			return -1
 		}
 	},
 	
@@ -77,17 +82,33 @@ module.exports = {
 			creep.moveTo(target);
 		}
 	},
-	
-	rep : function(creep,wallMax){
-		var target=creep.pos.findClosestByRange(FIND_STRUCTURES, {filter : (structure) => (
-                    structure.structureType != STRUCTURE_WALL && structure.structureType != STRUCTURE_RAMPART && structure.hits < structure.hitsMax) || (
-                    (structure.structureType == STRUCTURE_WALL || structure.structureType == STRUCTURE_RAMPART) && structure.hits < wallMax)
-				});
-				if(creep.repair(target) == ERR_NOT_IN_RANGE){
-					creep.moveTo(target);
-				}
+
+	repWall : function(creep){
+		var target = creep.pos.findClosestByRange(FIND_STRUCTURES,{filter : (s) => (s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART) && s.hits < creep.room.memory.wallMax});
+		if(target != null){
+			if(creep.repair(target) == ERR_NOT_IN_RANGE){
+				creep.moveTo(target);
+			}
+		}
+		else{
+			return -1
+		}
 	},
 	
+	rep : function(creep){
+		var target=creep.pos.findClosestByRange(FIND_STRUCTURES, {filter : (structure) => (
+			structure.structureType != STRUCTURE_WALL && structure.structureType != STRUCTURE_RAMPART && structure.hits < structure.hitsMax)
+		});
+		if(target != null){
+			if(creep.repair(target) == ERR_NOT_IN_RANGE){
+				creep.moveTo(target);
+			}
+		}
+		else{
+			return -1
+		}
+	},
+
 	recycle : function(creep,spawn){
 		if(spawn.recycleCreep(creep) == ERR_NOT_IN_RANGE){
 			creep.moveTo(spawn);
