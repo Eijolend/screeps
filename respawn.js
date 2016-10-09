@@ -169,7 +169,7 @@ module.exports = {
 							}
 						}
 						else{
-							if(spawn.canCreateCreep([MOVE,CLAIM,CLAIM,MOVE],undefined) == OK){
+							if(!flag.memory.reserved && spawn.canCreateCreep([MOVE,CLAIM,CLAIM,MOVE],undefined) == OK){
 								tospawn = true;
 								flag.memory.reserved = true; //should have some kind of check to prevent breaking
 							}
