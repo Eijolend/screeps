@@ -18,7 +18,14 @@ module.exports = {
 	        //creep.say('repairing');
 	    }
 	    if(creep.memory.repairing){
-			tasks.rep(creep);
+			if(tasks.rep(creep) == -1){ //try, if unsuccessful try next task
+				if(tasks.repWall(creep) == -1){
+					if(tasks.fill(creep,[STRUCTURE_TOWER]) == -1){
+						var targets = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
+						tasks.construct(creep,targets[0]);
+					}
+				}
+			}
 	    }
 		else if(creep.ticksToLive < 200){
 			creep.memory.role = 'recycler';

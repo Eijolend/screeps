@@ -2,6 +2,7 @@
 
 !!!DEFENSE CODE for remote mining rooms!!!
 
+*monitor if not prioritizing repairers will repair enough
 *integrate repair into the civilian role
 *remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles
 

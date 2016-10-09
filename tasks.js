@@ -52,6 +52,7 @@ module.exports = {
 	},
 	
 	fill : function(creep,prioritylist){
+		var valid = false //use this to determine whether there was some sensible task to do
 		for(i=0; i<prioritylist.length; i++){
 		    if(prioritylist[i]==STRUCTURE_CONTAINER || prioritylist[i]==STRUCTURE_STORAGE){
 		        var target=creep.room.find(FIND_STRUCTURES, {
@@ -67,8 +68,12 @@ module.exports = {
 				if(creep.transfer(target,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
 					creep.moveTo(target);
 				}
+				valid = true
 				break
 			}
+		}
+		if(!valid){
+			return -1
 		}
 	},
 	
@@ -85,9 +90,8 @@ module.exports = {
 				creep.moveTo(target);
 			}
 		}
-		else if(creep.memory.role = 'repairer'){
-			var targets = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
-			this.construct(creep,targets[0]);
+		else{
+			return -1
 		}
 	},
 	
@@ -101,7 +105,7 @@ module.exports = {
 			}
 		}
 		else{
-			this.repWall(creep)
+			return -1
 		}
 	},
 
