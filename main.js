@@ -66,7 +66,7 @@ module.exports.loop = function(){
 		if(creep.memory.role == 'reserver'){
 			roleReserver.run(creep);
 		}
-		if(creep.memroy.role == 'remoteHunter'){
+		if(creep.memory.role == 'remoteHunter'){
 			remoteHunter.run(creep);
 		}
 		
