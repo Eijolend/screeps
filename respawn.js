@@ -67,7 +67,6 @@ module.exports = {
 			}
 			var maxEnergy = room.energyCapacityAvailable;
 			
-			var harvester_target = 2; //harvesters per remote site
 			var upgrader_target = 1; //guarantees one upgrader
 			// number of civilians: at least 1, maximally 3, else enough to upgrade ca. 500 per 50 ticks, +1 for every 200k in storage
 			let storage = room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE})[0];
@@ -142,18 +141,28 @@ module.exports = {
 			// }
 			
 			//flag based spawning with homeRoom
+			var harvester_target = 2; //harvesters per remote site
 			for (var flag of _.filter(Game.flags, (f)=>f.memory.homeRoom == room.name)){
-				if(/harvest/.test(flag.name)){ //see that every remote site has enough harvesters
-					var harvesters = _.filter(Game.creeps, (creep) => 
-						creep.memory.role == 'harvester' && creep.memory.myflag == flag.name
-					);
-					if (harvesters.length < harvester_target){
-						spawn.createCreep(bodies.harvester(maxEnergy),undefined,{
-							role: 'harvester', myflag: flag.name, homeRoom: room.name
-						});
+				if(/reserve/.test(flag.name)){ 
+					//defend remote room
+					if(flag.pos.roomName in Game.rooms){//check to prevent breaking from no vision
+						if(flag.room.find(FIND_HOSTILE_CREEPS).length){
+							flag.memory.underAttack = true;
+						}
+						else{
+							flag.memory.underAttack = false;
+						}
 					}
-				}
-				if(/reserve/.test(flag.name)){ //logic to spawn reservers
+					if(flag.memory.underAttack){
+						harvester_target = 0;
+						var remoteHunters = _.filter(Game.creeps, (c) => c.memory.role == 'remoteHunter' && c.memory.myflag = flag.name);
+						if(remoteHunters.length < 2){
+							spawn.createCreep([TOUGH,MOVE,TOUGH,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],undefined,{
+							role : 'remoteHunter', myflag : flag.name, homeRoom : room.name
+							});
+						}
+					}
+					//logic to spawn reservers
 					var reservers = _.filter(Game.creeps, (creep) => 
 						creep.memory.role == 'reserver' && creep.memory.myflag == flag.name
 					);
@@ -179,6 +188,16 @@ module.exports = {
 								role: 'reserver', myflag: flag.name, homeRoom : room.name
 							});
 						}
+					}
+				}
+				if(/harvest/.test(flag.name)){ //see that every remote site has enough harvesters
+					var harvesters = _.filter(Game.creeps, (creep) => 
+						creep.memory.role == 'harvester' && creep.memory.myflag == flag.name
+					);
+					if (harvesters.length < harvester_target){
+						spawn.createCreep(bodies.harvester(maxEnergy),undefined,{
+							role: 'harvester', myflag: flag.name, homeRoom: room.name
+						});
 					}
 				}
 			}

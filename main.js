@@ -7,6 +7,7 @@ var roleRunner = require('role.runner');
 var roleReserver = require('role.reserver');
 var roleRepairer = require('role.repairer');
 var remoteUpgrader = require('remote.upgrader');
+var remoteHunter = require('remote.hunter');
 var roleClaimer = require('role.claimer');
 var roleRecycler = require('role.recycler');
 var respawn = require('respawn');
@@ -64,6 +65,9 @@ module.exports.loop = function(){
         }
 		if(creep.memory.role == 'reserver'){
 			roleReserver.run(creep);
+		}
+		if(creep.memroy.role == 'remoteHunter'){
+			remoteHunter.run(creep);
 		}
 		
 		if(creep.memory.role == 'shield'){
