@@ -155,7 +155,7 @@ module.exports = {
 					}
 					if(flag.memory.underAttack){
 						harvester_target = 0;
-						var remoteHunters = _.filter(Game.creeps, (c) => c.memory.role == 'remoteHunter' && c.memory.myflag = flag.name);
+						var remoteHunters = _.filter(Game.creeps, (c) => c.memory.role == 'remoteHunter' && c.memory.myflag == flag.name);
 						if(remoteHunters.length < 2){
 							spawn.createCreep([TOUGH,MOVE,TOUGH,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],undefined,{
 							role : 'remoteHunter', myflag : flag.name, homeRoom : room.name
