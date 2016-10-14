@@ -90,6 +90,10 @@ module.exports = {
 			var miners = creepsByRole.miner != undefined ? creepsByRole.miner : [];
 			var runners = creepsByRole.runner != undefined ? creepsByRole.runner : [];
 			var hunters = creepsByRole.hunter != undefined ? creepsByRole.hunter : [];
+			if(room.memory.requestList === undefined){ //checking this every tick is a waste
+				room.memory.requestList = JSON.stringify([]);
+			}
+			var requestList = JSON.parse(room.memory.requestList);
 			// var upgraders = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'upgrader'});
 			// var builders = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'builder'});
 			// var repairers = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'repairer'});
@@ -113,6 +117,12 @@ module.exports = {
 			// else if(repairers.length < 1){
 				// spawn.createCreep(bodies.repairer(room.energyAvailable),undefined,{role:'repairer'});
 			// }
+			//after essentials are ensured, work on the requestList
+			else if(requestList.length > 0){
+				if(spawn.canCreateCreep(...requestList[0])){
+					spawn.createCreep(...requestList.shift()) //spawns the first creep in the list and deletes it from the list
+				}
+			}
 			//now proceed with the rest in priority order
 			else if(miners.length < miner_target){
 				spawn.createCreep(bodies.miner(maxEnergy),undefined,{role:'miner'});
