@@ -10,7 +10,7 @@ module.exports = {
         Game.rooms['W54S17'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 3 , homeRoom : 'W54S17'});
         Game.rooms['W52S17'].requestCreep(
             [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE],
-            'Desmond',{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W54S17'};
+            'Desmond',{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W54S17'}
         );
         Memory.planOutheal = {
             stage : 0,
