@@ -3,9 +3,9 @@ module.exports = {
         //request appropriate creeps, rally and target are flags for the creep's memory
         healBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE]; // costs 2280, a rcl 6 room can support 2300
         Game.rooms['W52S17'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 0 });
-        Game.rooms['W52S17'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 1});
-        Game.rooms['W52S17'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 2);
-        Game.rooms['W54S17'].requestCreep(healBody,undefined,{role : 'planOutheal'} num : 3);
+        Game.rooms['W52S17'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 1 });
+        Game.rooms['W52S17'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 2 });
+        Game.rooms['W54S17'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 3 });
         Memory.planOutheal = {
             stage : 0,
             rally : rallyFlag,
@@ -14,7 +14,7 @@ module.exports = {
     },
     staging : function(){
         if (Game.flags[Memory.planOutheal.rally].pos.roomName in Game.rooms ){
-            if(Game.flags[Memory.planOutheal.rally].pos.findInRange(FIND_MY_CREEPS,{filter : (c) => c.memory.role = 'planOutheal'}).length > 0){
+            if(Game.flags[Memory.planOutheal.rally].pos.findInRange(FIND_MY_CREEPS,1,{filter : (c) => c.memory.role == 'planOutheal'}).length > 0){
                 Memory.planOutheal.stage = 1;
             }
         }
