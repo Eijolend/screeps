@@ -12,6 +12,7 @@ var roleClaimer = require('role.claimer');
 var roleRecycler = require('role.recycler');
 var respawn = require('respawn');
 var tasks = require('tasks');
+var planOutheal = require('plan.outheal');
 const profiler = require('screeps-profiler');
 
 Room.prototype.requestCreep = function(body,name,mem){
@@ -32,7 +33,7 @@ module.exports.loop = function(){
 				delete Memory.creeps[i];
 			}
 		}
-		
+
 		var myrooms = _.filter(Game.rooms, (r) => r.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN}).length > 0 );
 		for(var room of myrooms){
 			var towers = room.find(FIND_STRUCTURES, {filter : (structure) => structure.structureType == STRUCTURE_TOWER});
@@ -51,41 +52,40 @@ module.exports.loop = function(){
 				}
 			}
 		}
-		
+
 		for(var name in Game.creeps){
 			var creep = Game.creeps[name];
 			if(creep.memory.role == 'runner'){
 				roleRunner.run(creep);
 			}
-			if(creep.memory.role == 'miner'){
+			else if(creep.memory.role == 'miner'){
 				roleMiner.run(creep);
 			}
-			if(creep.memory.role == 'upgrader'){
+			else if(creep.memory.role == 'upgrader'){
 				roleUpgrader.run(creep);
 			}
-			if(creep.memory.role == 'civilian'){
+			else if(creep.memory.role == 'civilian'){
 				roleCivilian.run(creep);
 			}
-			if(creep.memory.role == 'repairer'){
+			else if(creep.memory.role == 'repairer'){
 				roleRepairer.run(creep);
 			}
-			if(creep.memory.role == 'hunter'){
+			else if(creep.memory.role == 'hunter'){
 				roleHunter.run(creep);
 			}
-			if(creep.memory.role == 'harvester'){
+			else if(creep.memory.role == 'harvester'){
 				roleHarvester.run(creep);
 			}
-			if(creep.memory.role == 'reserver'){
+			else if(creep.memory.role == 'reserver'){
 				roleReserver.run(creep);
 			}
-			if(creep.memory.role == 'remoteHunter'){
+			else if(creep.memory.role == 'remoteHunter'){
 				remoteHunter.run(creep);
 			}
-			
-			if(creep.memory.role == 'shield'){
+			else if(creep.memory.role == 'shield'){
 				creep.moveTo(Game.flags['Rally']);
 			}
-			if(creep.memory.role == 'raider'){
+			else if(creep.memory.role == 'raider'){
 				if(creep.room.name==Game.flags['Raid'].pos.roomName){
 					targets=Game.flags['Raid'].pos.findInRange(FIND_HOSTILE_STRUCTURES,0,{filter:(s) => s.structureType != STRUCTURE_ROAD && s.structureType != STRUCTURE_CONTROLLER});
 					if (targets.length){
@@ -105,7 +105,7 @@ module.exports.loop = function(){
 					creep.moveTo(Game.flags['Raid']);
 				}
 			}
-			if(creep.memory.role == 'thief'){
+			else if(creep.memory.role == 'thief'){
 				if(creep.carry.energy == creep.carryCapacity && creep.room.name != Game.spawns['Spawn1'].room.name){
 					creep.moveTo(Game.flags['home'],{reusePath:5})
 				}
@@ -125,17 +125,21 @@ module.exports.loop = function(){
 				}
 				// creep.say(creep.room.name)
 			}
-			if(creep.memory.role == 'remoteUpgrader'){
+			else if(creep.memory.role == 'remoteUpgrader'){
 				remoteUpgrader.run(creep);
 			}
-			if(creep.memory.role == 'claimer'){
+			else if(creep.memory.role == 'claimer'){
 				roleClaimer.run(creep);
 			}
-			if(creep.memory.role == 'recycler'){
+			else if(creep.memory.role == 'recycler'){
 				roleRecycler.run(creep);
+			}
+			else if(creep.memory.role == 'planOutheal'){
+				planOutheal.run(creep);
 			}
 		}
 		
+		planOutheal.staging();
 		respawn.run(myrooms);
 	});
 }
