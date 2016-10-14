@@ -1,6 +1,5 @@
 (in no particular order)
 
-*wishlist spawning for situational creeps
 *dynamic hunter bodies
 
 *ensure all miners will always stand on their container!!!
@@ -11,6 +10,7 @@
 *remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles
 
 *a solution to the two-sources split
+*a better requestList spawning
 
 combat related:
 *better tower code

@@ -138,10 +138,7 @@ module.exports.loop = function(){
 				planOutheal.run(creep);
 			}
 		}
-
-		if(Memory.planOutheal != undefined && Memory.planOutheal.active == true){
-			planOutheal.staging();
-		}
+		
 		respawn.run(myrooms);
 	});
 }
