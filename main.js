@@ -139,7 +139,6 @@ module.exports.loop = function(){
 			}
 		}
 		
-		planOutheal.staging();
 		respawn.run(myrooms);
 	});
 }
