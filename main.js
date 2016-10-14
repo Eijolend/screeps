@@ -14,6 +14,16 @@ var respawn = require('respawn');
 var tasks = require('tasks');
 const profiler = require('screeps-profiler');
 
+Room.prototype.requestCreep = function(body,name,mem){
+	if(this.memory.requestList === undefined){
+		this.memory.requestList = JSON.stringify([]);
+	}
+	var mylist = JSON.parse(this.memory.requestList);
+	mylist.push([body,name,mem]);
+	this.memory.requestList = JSON.stringify(mylist);
+}
+
+
 profiler.enable();
 module.exports.loop = function(){
 	profiler.wrap(function() {

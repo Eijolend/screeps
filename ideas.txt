@@ -1,7 +1,5 @@
 (in no particular order)
 
-!!!DEFENSE CODE for remote mining rooms!!!
-
 *wishlist spawning for situational creeps
 *dynamic hunter bodies
 
