@@ -119,7 +119,7 @@ module.exports = {
 			// }
 			//after essentials are ensured, work on the requestList
 			else if(requestList.length > 0){
-				if(spawn.canCreateCreep(...requestList[0])){
+				if(spawn.canCreateCreep(...requestList[0]) == OK){
 					spawn.createCreep(...requestList.shift()) //spawns the first creep in the list and deletes it from the list
 				}
 			}
