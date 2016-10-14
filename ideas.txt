@@ -3,6 +3,7 @@
 *wishlist spawning for situational creeps
 *dynamic hunter bodies
 
+*ensure all miners will always stand on their container!!!
 *remote mining with mining and running roles, but also build/maintain streets/containers
 
 *monitor if not prioritizing repairers will repair enough
