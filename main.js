@@ -107,7 +107,7 @@ module.exports.loop = function(){
 			}
 			else if(creep.memory.role == 'thief'){
 				if(creep.carry.energy == creep.carryCapacity && creep.room.name != creep.memory.homeRoom){
-					creep.moveTo(Game.rooms[creep.memory.homeRoom].find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE}));
+					creep.moveTo(Game.rooms[creep.memory.homeRoom].find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE})[0]);
 				}
 				else if(creep.room.name == creep.memory.homeRoom && creep.carry.energy > 0){
 					tasks.fill(creep,[STRUCTURE_STORAGE]);
