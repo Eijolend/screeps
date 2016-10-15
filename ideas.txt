@@ -1,15 +1,22 @@
 (in no particular order)
 
-*dynamic hunter bodies
+I want to respawn - things to figure out before that:
 
 *ensure all miners will always stand on their container!!!
 *remote mining with mining and running roles, but also build/maintain streets/containers
+*remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles
+*a solution to the two-sources split
+
+*clean up code
+
+===================================
+all the rest:
+
+*dynamic hunter bodies
 
 *monitor if not prioritizing repairers will repair enough
 *integrate repair into the civilian role
-*remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles
 
-*a solution to the two-sources split
 *a better requestList spawning
 
 combat related:
