@@ -106,17 +106,17 @@ module.exports.loop = function(){
 				}
 			}
 			else if(creep.memory.role == 'thief'){
-				if(creep.carry.energy == creep.carryCapacity && creep.room.name != Game.spawns['Spawn1'].room.name){
-					creep.moveTo(Game.flags['home'],{reusePath:5})
+				if(creep.carry.energy == creep.carryCapacity && creep.room.name != creep.memory.homeRoom){
+					creep.moveTo(Game.rooms[creep.memory.homeRoom].find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE}));
 				}
-				else if(creep.room.name == Game.spawns['Spawn1'].room.name && creep.carry.energy > 0){
-					tasks.fill(creep,[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,STRUCTURE_STORAGE,STRUCTURE_CONTAINER])
+				else if(creep.room.name == creep.memory.homeRoom && creep.carry.energy > 0){
+					tasks.fill(creep,[STRUCTURE_STORAGE]);
 				}
 				else if(creep.room.name != Game.flags['Steal'].pos.roomName){
 					creep.moveTo(Game.flags['Steal'],{reusePath:5});
 				}
 				else{
-					target=Game.flags['Steal'].pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{
+					target=Game.flags['Steal'].pos.findClosestByRange(FIND_STRUCTURES,{
 						filter: (s) => s.energy > 25 || ((s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) && s.store.energy > 25)
 					});
 					if(creep.withdraw(target,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
@@ -138,7 +138,7 @@ module.exports.loop = function(){
 				planOutheal.run(creep);
 			}
 		}
-		
+
 		respawn.run(myrooms);
 	});
 }
