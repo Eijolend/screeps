@@ -1,8 +1,10 @@
 /*
  * Remote mining role, that should build and maintain their own container.
+ * problematic: replacement request has too high priority
  */
 
 var tasks = require('tasks');
+var respawn = require('respawn');
 
 module.exports = {
     run : function(creep){
@@ -14,6 +16,9 @@ module.exports = {
 	        creep.memory.workable = true;
 	        // creep.say('delivering');
 	    }
+        if(creep.ticksToLive == 100){ //request your replacement in time, problematic: has too high priority this way
+            Game.rooms[creep.memory.homeRoom].requestCreep(respawn.bodies.remoteMiner(),undefined,{role : 'remoteMiner', myflag : creep.memory.myflag, homeRoom : creep.memory.homeRoom});
+        }
         var myflag = Game.flags[creep.memory.myflag];
         if(creep.room.name == myflag.pos.roomName){
             if(creep.memory.workable){

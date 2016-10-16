@@ -35,16 +35,29 @@ var bodies = {
 	repairer : function(maxEnergy){
 		return this.civilian(maxEnergy);
 	},
-	harvester : function(maxEnergy){
-		var template = [WORK,CARRY,MOVE];
-		var intervalEnergy = cost(template);
-		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),10); //hardcapped at 10
-		var body = [];
+	remoteMiner : function(maxEnergy){
+		return [WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE]
+	},
+	remoteRunner : function(maxEnergy){
+		var template = [CARRY,MOVE];
+		var intervalEnergy=cost(template);
+		var n = Math.min(Math.floor((maxEnergy-150)/intervalEnergy),16); //currently hardcapped at 800 carry
+		var body = [WORK,MOVE];
 		for(i=0;i<n;i++){
-			body.push(WORK,CARRY,MOVE);
+			body.push(CARRY,MOVE);
 		}
 		return body
 	},
+	// harvester : function(maxEnergy){
+	// 	var template = [WORK,CARRY,MOVE];
+	// 	var intervalEnergy = cost(template);
+	// 	var n = Math.min(Math.floor(maxEnergy/intervalEnergy),10); //hardcapped at 10
+	// 	var body = [];
+	// 	for(i=0;i<n;i++){
+	// 		body.push(WORK,CARRY,MOVE);
+	// 	}
+	// 	return body
+	// },
 	runner : function(maxEnergy){
 		var template = [CARRY,MOVE];
 		var intervalEnergy=cost(template);
@@ -152,7 +165,8 @@ module.exports = {
 			// }
 
 			//flag based spawning with homeRoom
-			var harvester_target = 2; //harvesters per remote site
+			var remoteMiner_target = 1; //miners per remote site
+			var remoteRunner_target = 1; //base value per remote site
 			for (var flag of _.filter(Game.flags, (f)=>f.memory.homeRoom == room.name)){
 				if(/reserve/.test(flag.name)){
 					//defend remote room
@@ -202,13 +216,27 @@ module.exports = {
 					}
 				}
 				if(/harvest/.test(flag.name)){ //see that every remote site has enough harvesters
-					var harvesters = _.filter(Game.creeps, (creep) =>
-						creep.memory.role == 'harvester' && creep.memory.myflag == flag.name
-					);
-					if (harvesters.length < harvester_target){
-						spawn.createCreep(bodies.harvester(maxEnergy),undefined,{
-							role: 'harvester', myflag: flag.name, homeRoom: room.name
+					var remoteMiners = _.filter(Game.creeps, (creep) =>
+						creep.memory.role == 'remoteMiner' && creep.memory.myflag == flag.name
+					).length;
+					var remoteRunners = _.filter(Game.creeps, (creep) =>
+						creep.memory.role == 'remoteRunner' && creep.memory.myflag == flag.name
+					).length;
+					if (remoteMiners < remoteMiner_target){
+						spawn.createCreep(bodies.remoteMiner(maxEnergy),undefined,{
+							role: 'remoteMiner', myflag: flag.name, homeRoom: room.name
 						});
+					}
+					else{
+						var myContainer = flag.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+						if(myContainer != undefined && myContainer.store.energy == myContainer.storeCapacity){
+							remoteRunner_target = 2;
+						}
+						if (remoteRunners < remoteRunner_target){
+							spawn.createCreep(bodies.remoteRunner(maxEnergy),undefined,{
+								role: 'remoteRunner', myflag: flag.name, homeRoom: room.name
+							});
+						}
 					}
 				}
 			}
