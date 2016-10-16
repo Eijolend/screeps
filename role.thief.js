@@ -20,7 +20,7 @@ module.exports = {
             if(creep.memory.delivering){
 				creep.moveTo(Game.rooms[creep.memory.homeRoom].find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE })[0] );
             }
-            else if(creep.roome.name == Game.flags['Steal'].pos.roomName){
+            else if(creep.room.name == Game.flags['Steal'].pos.roomName){
                 target=Game.flags['Steal'].pos.findClosestByRange(FIND_STRUCTURES,{
                     filter: (s) => s.energy > 25 || ((s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) && s.store.energy > 25)
                 });
