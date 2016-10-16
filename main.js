@@ -1,4 +1,4 @@
-var roleHarvester = require('role.harvester');
+var roleHarvester = require('role.harvester_deprecated');
 var roleUpgrader = require('role.upgrader');
 var roleCivilian = require('role.civilian');
 var roleHunter = require('role.hunter');
@@ -8,6 +8,8 @@ var roleReserver = require('role.reserver');
 var roleRepairer = require('role.repairer');
 var remoteUpgrader = require('remote.upgrader');
 var remoteHunter = require('remote.hunter');
+var remoteMiner = require('remote.miner');
+var remoteRunner = require('remote.runner')
 var roleClaimer = require('role.claimer');
 var roleRecycler = require('role.recycler');
 var roleThief = require('role.thief');
@@ -73,6 +75,12 @@ module.exports.loop = function(){
 			}
 			else if(creep.memory.role == 'hunter'){
 				roleHunter.run(creep);
+			}
+			else if(creep.memory.role == 'remoteMiner'){
+				remoteMiner.run(creep);
+			}
+			else if(creep.memory.role == 'remoteRunner'){
+				remoteRunner.run(creep);
 			}
 			else if(creep.memory.role == 'harvester'){
 				roleHarvester.run(creep);
