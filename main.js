@@ -10,6 +10,7 @@ var remoteUpgrader = require('remote.upgrader');
 var remoteHunter = require('remote.hunter');
 var roleClaimer = require('role.claimer');
 var roleRecycler = require('role.recycler');
+var roleThief = require('role.thief');
 var respawn = require('respawn');
 var tasks = require('tasks');
 var planOutheal = require('plan.outheal');
@@ -106,24 +107,7 @@ module.exports.loop = function(){
 				}
 			}
 			else if(creep.memory.role == 'thief'){
-				if(creep.carry.energy == creep.carryCapacity && creep.room.name != creep.memory.homeRoom){
-					creep.moveTo(Game.rooms[creep.memory.homeRoom].find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE})[0]);
-				}
-				else if(creep.room.name == creep.memory.homeRoom && creep.carry.energy > 0){
-					tasks.fill(creep,[STRUCTURE_STORAGE]);
-				}
-				else if(creep.room.name != Game.flags['Steal'].pos.roomName){
-					creep.moveTo(Game.flags['Steal'],{reusePath:5});
-				}
-				else{
-					target=Game.flags['Steal'].pos.findClosestByRange(FIND_STRUCTURES,{
-						filter: (s) => s.energy > 25 || ((s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) && s.store.energy > 25)
-					});
-					if(creep.withdraw(target,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-						creep.moveTo(target);
-					}
-				}
-				// creep.say(creep.room.name)
+				roleThief.run(creep);
 			}
 			else if(creep.memory.role == 'remoteUpgrader'){
 				remoteUpgrader.run(creep);

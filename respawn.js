@@ -66,7 +66,7 @@ module.exports = {
 				continue
 			}
 			var maxEnergy = room.energyCapacityAvailable;
-			
+
 			var upgrader_target = 1; //guarantees one upgrader
 			// number of civilians: at least 1, maximally 3, else enough to upgrade ca. 500 per 50 ticks, +1 for every 200k in storage
 			let storage = room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE})[0];
@@ -77,12 +77,12 @@ module.exports = {
 			var runner_target = 2;
 			var thief_target = 0;
 			var hunter_target = 0;
-			
+
 			var hostiles = room.find(FIND_HOSTILE_CREEPS);
 			if(hostiles.length){
 				hunter_target=Math.ceil(hostiles.length/2)
 			}
-			
+
 			var creepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.pos.roomName == room.name),'memory.role'); //this also counts spawning creeps
 			var upgraders = creepsByRole.upgrader != undefined ? creepsByRole.upgrader : [];
 			var civilians = creepsByRole.civilian != undefined ? creepsByRole.civilian : [];
@@ -102,7 +102,7 @@ module.exports = {
 			// var hunters = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'hunter'});
 			// var thiefs = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'thief'});
 	       // console.log(miners.length + ' ' + runners.length + ' ' + upgraders.length + ' ' + repairers.length)
-			
+
 			//first ensure 1 miner, 1 runner, 1 upgrader are always available
 			if(miners.length < 1){
 				spawn.createCreep(bodies.miner(room.energyAvailable),undefined,{role:'miner'});
@@ -150,11 +150,11 @@ module.exports = {
 					// spawn.createCreep([CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],undefined,{role: 'thief'});
 				// }
 			// }
-			
+
 			//flag based spawning with homeRoom
 			var harvester_target = 2; //harvesters per remote site
 			for (var flag of _.filter(Game.flags, (f)=>f.memory.homeRoom == room.name)){
-				if(/reserve/.test(flag.name)){ 
+				if(/reserve/.test(flag.name)){
 					//defend remote room
 					if(flag.pos.roomName in Game.rooms){//check to prevent breaking from no vision
 						if(flag.room.find(FIND_HOSTILE_CREEPS).length){
@@ -174,7 +174,7 @@ module.exports = {
 						}
 					}
 					//logic to spawn reservers
-					var reservers = _.filter(Game.creeps, (creep) => 
+					var reservers = _.filter(Game.creeps, (creep) =>
 						creep.memory.role == 'reserver' && creep.memory.myflag == flag.name
 					);
 					if (reservers.length < 1){
@@ -202,7 +202,7 @@ module.exports = {
 					}
 				}
 				if(/harvest/.test(flag.name)){ //see that every remote site has enough harvesters
-					var harvesters = _.filter(Game.creeps, (creep) => 
+					var harvesters = _.filter(Game.creeps, (creep) =>
 						creep.memory.role == 'harvester' && creep.memory.myflag == flag.name
 					);
 					if (harvesters.length < harvester_target){
@@ -214,9 +214,9 @@ module.exports = {
 			}
 		}
 		//flag based spawning
-		for (var flag in Game.flags){ 
+		for (var flag in Game.flags){
 			if(/claim/.test(flag)){ //continously respawn remoteUpgraders to help establish the new room until flag is removed
-				var remoteUpgraders = _.filter(Game.creeps,(creep) => 
+				var remoteUpgraders = _.filter(Game.creeps,(creep) =>
 					creep.memory.role == 'remoteUpgrader' && creep.memory.myflag == flag
 				);
 				if (remoteUpgraders.length < 1){
@@ -226,7 +226,7 @@ module.exports = {
 				}
 			}
 		}
-		
+
     }
 };
 
