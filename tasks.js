@@ -3,7 +3,7 @@ module.exports = {
 		var mycontainer = target.pos.findInRange(FIND_STRUCTURES,1,(s)=> s.structureType == STRUCTURE_CONTAINER)
 		if(mycontainer.length > 0){
 			creep.harvest(target);
-			creep.moveTo(mycontainer);
+			creep.moveTo(mycontainer[0]);
 		}
 		else{
 			if(creep.harvest(target) == ERR_NOT_IN_RANGE ){
