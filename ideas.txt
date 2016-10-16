@@ -2,7 +2,7 @@
 
 I want to respawn - things to figure out before that:
 
-*remote mining with mining and running roles, but also build/maintain streets/containers
+
 *remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles
 *a solution to the two-sources split
 
@@ -11,9 +11,11 @@ I want to respawn - things to figure out before that:
 ===================================
 all the rest:
 
+*monitor of remote mining works like expected
+*monitor if not prioritizing repairers will repair enough
+
 *dynamic hunter bodies
 
-*monitor if not prioritizing repairers will repair enough
 *integrate repair into the civilian role
 *get civilians to fill towers if under attack
 

@@ -21,10 +21,10 @@ module.exports = {
 				if (target != null){
 					tasks.construct(creep,target);
 				}
-				else if( _.filter(roadatpoint, (s) => s.hits < s.hitsMax).length){
-					creep.repair(roadatpoint[0]);
-				}
 				else{
+                    if( _.filter(roadatpoint, (s) => s.hits < s.hitsMax).length){
+	                   creep.repair(roadatpoint[0]);
+				    }
 					creep.moveTo(Game.rooms[creep.memory.homeRoom].find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE })[0] );
 				}
 			}
