@@ -36,7 +36,7 @@ module.exports = {
         			tasks.get(creep,myContainer);
         		}
         		else if (dropped.length){
-        			tasks.pick(creep,targets[0]);
+        			tasks.pick(creep,dropped[0]);
         		}
         		else{
         			tasks.get(creep,myContainer);
