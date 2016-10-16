@@ -1,10 +1,14 @@
 module.exports = {
 	mine : function(creep,target){
+		var mycontainer = target.pos.findInRange(FIND_STRUCTURES,1,(s)=> s.structureType == STRUCTURE_CONTAINER)
 		if(creep.harvest(target) == ERR_NOT_IN_RANGE ){
 			creep.moveTo(target);
 		}
+		else if(mycontainer.length > 0){
+			creep.moveTo(mycontainer[0]);
+		}
 	},
-	
+
 	contain : function(creep){
 		var mycontainer=creep.pos.findInRange(FIND_STRUCTURES,2,{
 			filter: (structure) => structure.structureType == STRUCTURE_CONTAINER
@@ -16,23 +20,23 @@ module.exports = {
 			creep.moveTo(mycontainer[0]);
 		}
 	},
-	
+
 	pick : function(creep,target){
 		if(creep.pickup(target) == ERR_NOT_IN_RANGE){
 			creep.moveTo(target);
 		}
 	},
-	
+
 	get : function(creep,target){
 		if(creep.withdraw(target,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
 			creep.moveTo(target);
 		}
 	},
-	
+
 	getenergy : function(creep,mysource){ //get energy in priority: dropped, container, storage, harvest
 		var mycontainer = mysource.pos.findInRange(FIND_STRUCTURES,3,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
 		var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
-		
+
 		var targets = mysource.pos.findInRange(FIND_DROPPED_ENERGY,3);
 		if (mycontainer != undefined && mycontainer.store.energy == mycontainer.storeCapacity){ //fixes container overflowing
 			this.get(creep,mycontainer);
@@ -50,7 +54,7 @@ module.exports = {
 			this.mine(creep,mysource);
 		}
 	},
-	
+
 	fill : function(creep,prioritylist){
 		var valid = false //use this to determine whether there was some sensible task to do
 		for(i=0; i<prioritylist.length; i++){
@@ -76,7 +80,7 @@ module.exports = {
 			return -1
 		}
 	},
-	
+
 	construct : function(creep,target){
 		if(creep.build(target)==ERR_NOT_IN_RANGE){
 			creep.moveTo(target);
@@ -94,7 +98,7 @@ module.exports = {
 			return -1
 		}
 	},
-	
+
 	rep : function(creep){
 		var target=creep.pos.findClosestByRange(FIND_STRUCTURES, {filter : (structure) => (
 			structure.structureType != STRUCTURE_WALL && structure.structureType != STRUCTURE_RAMPART && structure.hits < structure.hitsMax)
@@ -114,6 +118,6 @@ module.exports = {
 			creep.moveTo(spawn);
 		}
 	}
-	
-	
+
+
 }
