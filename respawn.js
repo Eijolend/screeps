@@ -228,7 +228,7 @@ module.exports = {
 						});
 					}
 					else{
-						var myContainer = flag.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+						var myContainer = flag.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
 						if(myContainer != undefined && myContainer.store.energy == myContainer.storeCapacity){
 							remoteRunner_target = 2;
 						}
