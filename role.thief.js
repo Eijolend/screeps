@@ -3,6 +3,8 @@
  *
  */
 
+var tasks = require('tasks')
+
 module.exports = {
     run : function(creep){
         if(creep.memory.delivering && creep.carry.energy == 0) {
