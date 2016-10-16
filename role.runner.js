@@ -24,9 +24,10 @@ module.exports = {
 				tasks.pick(creep,dropped[0]);
 			}
 			else{
-				var sources = creep.room.find(FIND_SOURCES);
-				var mysource = sources[0]
-				tasks.getenergy(creep,mysource);
+				// var sources = creep.room.find(FIND_SOURCES);
+				// var mysource = sources[0]
+				var sourceNo = 0;
+				tasks.getenergy(creep,sourceNo);
 			}
 		}
 	}

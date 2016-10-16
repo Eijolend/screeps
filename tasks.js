@@ -36,8 +36,17 @@ module.exports = {
 		}
 	},
 
-	getenergy : function(creep,mysource){ //get energy in priority: dropped, container, storage, harvest
-		var mycontainer = mysource.pos.findInRange(FIND_STRUCTURES,3,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+	getenergy : function(creep,sourceNo){ //get energy in priority: dropped, container, storage, harvest
+		var sources = creep.room.find(FIND_SOURCES);
+		var mysource = sources[sourceNo];
+		if(sourceNo === 1){
+			var notMySource = sources[0];
+		}
+		else{
+			var notMySource = sources[1];
+		}
+		var mycontainer = mysource.pos.findInRange(FIND_STRUCTURES,1,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+		var notMyContainer = notMySource.pos.findInRange(FIND_STRUCTURES,1,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
 		var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
 
 		var targets = mysource.pos.findInRange(FIND_DROPPED_ENERGY,3);

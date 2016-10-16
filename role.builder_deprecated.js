@@ -1,17 +1,12 @@
 /*
- * Module code goes here. Use 'module.exports' to export things:
- * module.exports.thing = 'a thing';
- *
- * You can import it from another modules like this:
- * var mod = require('role.builder');
- * mod.thing == 'a thing'; // true
+ * deprecated builder role, is no longer functional with current methods
  */
 
 var tasks=require('tasks');
 //var wallMax=Math.pow(10,6); //is now handled via room.memory.wallMax
 
 module.exports = {
-     run: function(creep) {
+    run: function(creep) {
 
 	    if(creep.memory.building && creep.carry.energy == 0) {
             creep.memory.building = false;
@@ -33,9 +28,9 @@ module.exports = {
 			else{
 				tasks.rep(creep,creep.room.memory.wallMax);
 			}
-			
-	        // 
-			// 
+
+	        //
+			//
 	        // if(targets.length){
 	            // if(creep.build(targets[0])==ERR_NOT_IN_RANGE){
     	            // creep.moveTo(targets[0]);

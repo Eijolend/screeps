@@ -5,7 +5,7 @@
 
 var tasks=require('tasks');
 // var roleBuilder=require('role.builder');
- 
+
 module.exports = {
      run: function(creep) {
 
@@ -31,9 +31,10 @@ module.exports = {
 			creep.memory.role = 'recycler';
 		}
 	    else { //get energy in priority: dropped, container, storage, harvest
-			var sources = creep.room.find(FIND_SOURCES);
-			var mysource = sources[1];
-			tasks.getenergy(creep,mysource);
+			// var sources = creep.room.find(FIND_SOURCES);
+			// var mysource = sources[1];
+            var sourceNo = 1;
+			tasks.getenergy(creep,sourceNo);
 	    }
      }
 };
