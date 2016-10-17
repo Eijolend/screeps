@@ -75,7 +75,7 @@ module.exports = {
 			for(i=1 ; i<=numFlags ; i++){
 	            var myFlag = 'emergency' + i;
 	            var rampart = _.filter(Game.flags[myFlag].pos.lookFor(LOOK_STRUCTURES),
-					{filter : (s) => s.structureType == STRUCTURE_RAMPART && s.hits < 6000000}
+					(s) => s.structureType == STRUCTURE_RAMPART && s.hits < 6000000
 				);
 	            if(rampart.length > 0){
 	                target = rampart[0];
