@@ -221,7 +221,7 @@ module.exports = {
 				}
 				if(/harvest/.test(flag.name)){ //see that every remote site has enough harvesters
 					var remoteMiners = _.filter(Game.creeps, (creep) =>
-						creep.memory.role == 'remoteMiner' && creep.memory.myflag == flag.name
+						creep.memory.role == 'remoteMiner' && creep.memory.myflag == flag.name && creep.ticksToLive > 100 //replacement should be spawned early
 					).length;
 					var remoteRunners = _.filter(Game.creeps, (creep) =>
 						creep.memory.role == 'remoteRunner' && creep.memory.myflag == flag.name
