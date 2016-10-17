@@ -86,6 +86,12 @@ module.exports = {
 				}
 				else{
 					creep.moveTo(target);
+					if(Game.time % 2){
+						creep.say('the sky',true)
+					}
+					else{
+						creep.say('is falling',true)
+					}
 				}
 			}
 			else{
