@@ -70,10 +70,9 @@ module.exports = {
 			var emergencyFlags = creep.room.find(FIND_FLAGS,{filter: (f) => /emergency/.test(f.name)});
 			var numFlags = emergencyFlags.length;
 			var target = undefined
-			for(i=1 ; i<=numFlags ; i++){
-	            var myFlag = 'emergency' + i;
-	            var rampart = _.filter(Game.flags[myFlag].pos.lookFor(LOOK_STRUCTURES),
-					(s) => s.structureType == STRUCTURE_RAMPART && (s.hits < 6000000 || s.hits < Game.flags[myFlag].memory.wallMax)
+			for(flag of emergencyFlags){
+	            var rampart = _.filter(flag.pos.lookFor(LOOK_STRUCTURES),
+					(s) => s.structureType == STRUCTURE_RAMPART && (s.hits < 6000000 || s.hits < flag.memory.wallMax)
 				);
 	            if(rampart.length > 0){
 	                target = rampart[0];
