@@ -84,10 +84,10 @@ module.exports = {
 			// number of civilians: at least 1, maximally 3, else enough to upgrade ca. 500 per 50 ticks, +1 for every 200k in storage
 			let storage = room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE})[0];
 			var civilian_target = Math.max(Math.min(Math.ceil(20/(bodies.civilian(maxEnergy).length/3))-1,3),1) + ( storage != undefined ? Math.floor(storage.store.energy/200000) : 0 );
-			var emergencies = room.find(FIND_FLAGS,{filter: (f) => /emergency/.test(f.name)}).length
-			if(emergencies > 0 && storage.store.energy > 100000){ //make sure things get used quickly in an emergency
-				civilian_target += 2;
-			}
+			// var emergencies = room.find(FIND_FLAGS,{filter: (f) => /emergency/.test(f.name)}).length
+			// if(emergencies > 0 && storage.store.energy > 100000){ //make sure things get used quickly in an emergency
+			// 	civilian_target += 2;
+			// }
 			var builder_target = 0;
 			var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
 			var miner_target = 2;
