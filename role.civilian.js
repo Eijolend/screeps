@@ -94,7 +94,7 @@ module.exports = {
 				}
 			}
 			else{
-				creep.memory.mytask = 'builder';
+				creep.memory.mytask = 'upgrader';
 			}
 		}
 		else if(creep.ticksToLive < 100){
