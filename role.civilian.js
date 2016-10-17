@@ -81,12 +81,12 @@ module.exports = {
 	                target = rampart[0];
 	                break;
 	            }
-				if(target != undefined){
-					if(creep.repair(target) == ERR_NOT_IN_RANGE){
-						creep.moveTo(target);
-					}
-				}
 	        }
+			if(target != undefined){
+				if(creep.repair(target) == ERR_NOT_IN_RANGE){
+					creep.moveTo(target);
+				}
+			}
 		}
 		else if(creep.ticksToLive < 100){
 			creep.memory.role = 'recycler';
