@@ -30,13 +30,20 @@ module.exports = {
 			var civsByTask = _.groupBy(civs,'memory.mytask');
 			var numBuilders = civsByTask.builder != undefined ? civsByTask.builder.length : 0;
 			// var numUpgraders= civsByTask.upgrader != undefined ? civsByTask.upgrader.length : 0;
-			if(numBuilders < this.builderTarget(creep.room,civs.length) ){
-				creep.memory.mytask = 'builder'
-				creep.say('building');
+			var emergencies = creep.room.find(FIND_FLAGS,{filter: (f) => /emergency/.test(f.name)}).length
+			if(emergencies > 0){
+				creep.memory.mytask = 'panic';
+				creep.say('panic',true);
 			}
 			else{
-				creep.memory.mytask = 'upgrader'
-				creep.say('upgrading')
+				if(numBuilders < this.builderTarget(creep.room,civs.length) ){
+					creep.memory.mytask = 'builder';
+					creep.say('building');
+				}
+				else{
+					creep.memory.mytask = 'upgrader';
+					creep.say('upgrading');
+				}
 			}
 	    }
 		//doing stuff
@@ -44,7 +51,7 @@ module.exports = {
 			var targets = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
 			var lowWalls = creep.room.find(FIND_STRUCTURES,
 				{filter : (s) => (s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART) && s.hits < creep.room.memory.wallMax
-			});	
+			});
 			if(targets.length){
 				tasks.construct(creep,targets[0]);
 			}
@@ -59,6 +66,26 @@ module.exports = {
 		else if(creep.memory.ontask && creep.memory.mytask == 'upgrader'){
 			if(creep.upgradeController(creep.room.controller)==ERR_NOT_IN_RANGE){
 	            creep.moveTo(creep.room.controller);
+	        }
+		}
+		else if(creep.memory.ontask && creep.memory.mytask == 'panic'){
+			var emergencyFlags = creep.room.find(FIND_FLAGS,{filter: (f) => /emergency/.test(f.name)});
+			var numFlags = emergencyFlags.length;
+			var target = undefined
+			for(i=1 ; i<=numFlags ; i++){
+	            var myFlag = 'emergency' + i;
+	            var rampart = Game.flags[myFlag].pos.lookFor(LOOK_STRUCTURES,
+					{filter : (s) => s.structureType == STRUCTURE_RAMPART && s.hits < 6000000}
+				);
+	            if(rampart.length > 0){
+	                target = rampart[0];
+	                break;
+	            }
+				if(target != undefined){
+					if(creep.repair(target) == ERR_NOT_IN_RANGE){
+						creep.moveTo(target);
+					}
+				}
 	        }
 		}
 		else if(creep.ticksToLive < 100){
