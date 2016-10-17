@@ -86,6 +86,9 @@ module.exports = {
 				if(creep.repair(target) == ERR_NOT_IN_RANGE){
 					creep.moveTo(target);
 				}
+				else{
+					creep.moveTo(target);
+				}
 			}
 		}
 		else if(creep.ticksToLive < 100){
