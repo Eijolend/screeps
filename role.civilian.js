@@ -90,6 +90,9 @@ module.exports = {
 					creep.moveTo(target);
 				}
 			}
+			else{
+				creep.memory.mytask = 'builder';
+			}
 		}
 		else if(creep.ticksToLive < 100){
 			creep.memory.role = 'recycler';
