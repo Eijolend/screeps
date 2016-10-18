@@ -31,11 +31,12 @@ module.exports = {
 			var numBuilders = civsByTask.builder != undefined ? civsByTask.builder.length : 0;
 			// var numUpgraders= civsByTask.upgrader != undefined ? civsByTask.upgrader.length : 0;
 			var emergencies = creep.room.find(FIND_FLAGS,{filter: (f) => /emergency/.test(f.name)}).length
+			var nukes = creep.room.find(FIND_NUKES).length
 			if(numBuilders < this.builderTarget(creep.room,civs.length) ){
 				creep.memory.mytask = 'builder';
 				creep.say('building');
 			}
-			else if(emergencies > 0){
+			else if(emergencies > 0 && nukes > 0){
 				creep.memory.mytask = 'panic';
 				creep.say('panic',true);
 			}
