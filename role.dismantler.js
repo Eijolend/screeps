@@ -8,17 +8,22 @@ module.exports ={
         var dismantleFlags = creep.room.find(FIND_FLAGS,{filter: (f) => /dismantle/.test(f.name)});
         var numFlags = dismantleFlags.length;
         var target = undefined;
-        for(i=1 ; i<=numFlags ; i++){
-            var myFlag = 'dismantle' + i;
-            var structsAtPlace = _.filter(Game.flags[myFlag].pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType != STRUCTURE_ROAD);
-            if(structsAtPlace.length > 0){
-                target = structsAtPlace[0];
-                break;
-            }
+        if(creep.room.name != Game.flags['dismantle1'].pos.roomName){
+            creep.moveTo(Game.flags['dismantle1']);
         }
-        if(target != undefined){
-            if(creep.dismantle(target) == ERR_NOT_IN_RANGE){
-                creep.moveTo(target);
+        else{
+            for(i=1 ; i<=numFlags ; i++){
+                var myFlag = 'dismantle' + i;
+                var structsAtPlace = _.filter(Game.flags[myFlag].pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType != STRUCTURE_ROAD);
+                if(structsAtPlace.length > 0){
+                    target = structsAtPlace[0];
+                    break;
+                }
+            }
+            if(target != undefined){
+                if(creep.dismantle(target) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(target);
+                }
             }
         }
     }
