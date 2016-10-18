@@ -1,4 +1,4 @@
-module.exportsmodule.exports = {
+module.exports = {
     run : function(creep){
         if(creep.room.name==Game.flags['Raid'].pos.roomName){
             var damaged = _.sortBy(creep.pos.findInRange(FIND_MY_CREEPS,1,{filter: (c) => c.hits < c.hitsMax}),'hits');
