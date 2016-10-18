@@ -1,6 +1,6 @@
 module.exports ={
 	run: function(creep){
-		var target = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS,{filter: (c) => !(c.owner.username in playerWhiteList )});
+		var target = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)});
 		if (creep.attack(target) == ERR_NOT_IN_RANGE){
 			creep.moveTo(target);
 		}

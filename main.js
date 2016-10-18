@@ -44,7 +44,7 @@ module.exports.loop = function(){
 			if(towers.length){
 				for(i=0;i<towers.length;i++){
 					var tower = towers[i];
-					tower.attack(tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS,{filter: (c) => !(c.owner.username in playerWhiteList )}));
+					tower.attack(tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)}));
 					if(tower.energy > 800){
 						tower.repair(tower.pos.findClosestByRange(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_RAMPART && s.hits < 5000}));
 						// tower.repair(tower.pos.findClosestByRange(FIND_STRUCTURES, {filter : (structure) => (
