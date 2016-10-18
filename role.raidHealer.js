@@ -13,10 +13,10 @@ module.exports = {
             }
             var closestRaider = creep.pos.findClosestByRange(FIND_MY_CREEPS,{filter: (c) => c.memory.role == 'raider'});
             if(closestRaider != undefined){
-                creep.moveTo(closestRaider);
+                creep.moveTo(closestRaider,{reusePath:0});
             }
             else{
-                creep.moveTo(Game.flags['Raid']);
+                creep.moveTo(Game.flags['Raid'],{reusePath:0});
             }
         }
         else{
