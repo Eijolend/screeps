@@ -12,6 +12,8 @@ var remoteRunner = require('remote.runner')
 var roleClaimer = require('role.claimer');
 var roleRecycler = require('role.recycler');
 var roleThief = require('role.thief');
+var roleRaider = require('role.raider');
+var roleRaidHealer = require('role.raidHealer');
 var respawn = require('respawn');
 var tasks = require('tasks');
 var planOutheal = require('plan.outheal');
@@ -93,24 +95,10 @@ module.exports.loop = function(){
 				creep.moveTo(Game.flags['Rally']);
 			}
 			else if(creep.memory.role == 'raider'){
-				if(creep.room.name==Game.flags['Raid'].pos.roomName){
-					targets=Game.flags['Raid'].pos.findInRange(FIND_HOSTILE_STRUCTURES,0,{filter:(s) => s.structureType != STRUCTURE_ROAD && s.structureType != STRUCTURE_CONTROLLER});
-					if (targets.length){
-						target=targets[0]
-					}
-					else{
-						target=Game.flags['Raid'].pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-					}
-					// if(target==null){
-					// 	target=Game.flags['Raid'].pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{filter:(s) => s.structureType != STRUCTURE_ROAD && s.structureType != STRUCTURE_CONTROLLER});
-					// }
-					if(creep.attack(target) == ERR_NOT_IN_RANGE){
-						creep.moveTo(target);
-					}
-				}
-				else{
-					creep.moveTo(Game.flags['Raid']);
-				}
+				roleRaider.run(creep);
+			}
+			else if(creep.memory.role == 'raidHealer'){
+				roleRaidHealer.run(creep);
 			}
 			else if(creep.memory.role == 'thief'){
 				roleThief.run(creep);
