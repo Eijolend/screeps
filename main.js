@@ -17,6 +17,8 @@ var tasks = require('tasks');
 var planOutheal = require('plan.outheal');
 const profiler = require('screeps-profiler');
 
+global.playerWhiteList = ['PiratenBraut']
+
 Room.prototype.requestCreep = function(body,name,mem){
 	if(this.memory.requestList === undefined){
 		this.memory.requestList = JSON.stringify([]);
@@ -42,7 +44,7 @@ module.exports.loop = function(){
 			if(towers.length){
 				for(i=0;i<towers.length;i++){
 					var tower = towers[i];
-					tower.attack(tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS,{filter: (c) => c.owner.username != 'PiratenBraut'}));
+					tower.attack(tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS,{filter: (c) => !(c.owner.username in playerWhiteList )}));
 					if(tower.energy > 800){
 						tower.repair(tower.pos.findClosestByRange(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_RAMPART && s.hits < 5000}));
 						// tower.repair(tower.pos.findClosestByRange(FIND_STRUCTURES, {filter : (structure) => (

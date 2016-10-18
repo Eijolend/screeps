@@ -95,7 +95,7 @@ module.exports = {
 			var thief_target = 0;
 			var hunter_target = 0;
 
-			var hostiles = room.find(FIND_HOSTILE_CREEPS,{filter: (c) => c.owner.username != 'PiratenBraut'});
+			var hostiles = room.find(FIND_HOSTILE_CREEPS,{filter: (c) => !(c.owner.username in playerWhiteList) });
 			if(hostiles.length){
 				hunter_target=Math.ceil(hostiles.length/2);
 			}
@@ -175,7 +175,7 @@ module.exports = {
 				if(/reserve/.test(flag.name)){
 					//defend remote room
 					if(flag.pos.roomName in Game.rooms){//check to prevent breaking from no vision
-						if(flag.room.find(FIND_HOSTILE_CREEPS).length){
+						if(flag.room.find(FIND_HOSTILE_CREEPS,{filter: (c) => !(c.owner.username in playerWhiteList)}).length){
 							flag.memory.underAttack = true;
 						}
 						else{
