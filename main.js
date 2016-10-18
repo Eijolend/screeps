@@ -117,7 +117,7 @@ module.exports.loop = function(){
 			}
 		}
 		if('Raid' in Game.flags){
-			if(Game.time % 1000 = 0){
+			if(Game.time % 1000 == 0){
 				var raiderBody = [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE];
 				var healerBody = [MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE]
 				Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider'} );
