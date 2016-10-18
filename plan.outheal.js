@@ -42,7 +42,7 @@ module.exports = {
                     creep.moveTo(Game.flags['dismantle1']);
                 }
                 else{
-                    roleDismantler.run(creep);
+                    roleDismantler.run(creep); //the way dismantlers are called changed - be aware of that
                 }
             }
         }

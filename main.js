@@ -14,6 +14,7 @@ var roleRecycler = require('role.recycler');
 var roleThief = require('role.thief');
 var roleRaider = require('role.raider');
 var roleRaidHealer = require('role.raidHealer');
+var roleDismantler = require('role.dismantler');
 var respawn = require('respawn');
 var tasks = require('tasks');
 var planOutheal = require('plan.outheal');
@@ -114,6 +115,9 @@ module.exports.loop = function(){
 			}
 			else if(creep.memory.role == 'planOutheal'){
 				planOutheal.run(creep);
+			}
+			else if(creep.memory.role == 'dismantler'){
+				roleDismantler.run(creep);
 			}
 		}
 		if('Raid' in Game.flags){
