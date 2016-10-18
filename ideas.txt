@@ -2,8 +2,6 @@
 
 I want to respawn - things to figure out before that:
 
-!!!POTENTIAL HAZARD - pos.lookFor does not have a filter option, use _.filter instead!!!
-
 *remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles
 *a solution to the two-sources split
 
