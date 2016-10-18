@@ -198,7 +198,7 @@ module.exports = {
 					if (reservers.length < 1){
 						var tospawn = false
 						if (flag.memory.reserved && flag.pos.roomName in Game.rooms){ //second check is to prevent breaking from no vision
-							var con = _.filter(flag.pos.lookFor(LOOK_STRUCTURES), s.structureType == STRUCTURE_CONTROLLER)[0];
+							var con = _.filter(flag.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_CONTROLLER)[0];
 							if(con.reservation == undefined){ //yet more failsafes
 								flag.memory.reserved = false;
 							}
