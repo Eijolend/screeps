@@ -116,7 +116,17 @@ module.exports.loop = function(){
 				planOutheal.run(creep);
 			}
 		}
-
+		if('Raid' in Game.flags){
+			if(Game.time % 1000 = 0){
+				var raiderBody = [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE];
+				var healerBody = [MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE]
+				Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider'} );
+				Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider'} );
+				Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider'} );
+				Game.spawns.Spawn2.room.requestCreep(healerBody,undefined,{role: 'raidHealer'});
+				Game.spawns.Spawn2.room.requestCreep(healerBody,undefined,{role: 'raidHealer'});
+			}
+		}
 		respawn.run(myrooms);
 	});
 }
