@@ -95,9 +95,9 @@ module.exports = {
 			var thief_target = 0;
 			var hunter_target = 0;
 
-			var hostiles = room.find(FIND_HOSTILE_CREEPS);
+			var hostiles = room.find(FIND_HOSTILE_CREEPS,{filter: (c) => c.owner.username != 'PiratenBraut'});
 			if(hostiles.length){
-				hunter_target=Math.ceil(hostiles.length/2)
+				hunter_target=Math.ceil(hostiles.length/2);
 			}
 
 			var creepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.pos.roomName == room.name),'memory.role'); //this also counts spawning creeps
