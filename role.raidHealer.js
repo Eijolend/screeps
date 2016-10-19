@@ -24,7 +24,16 @@ module.exports = {
             }
         }
         else{
-            creep.moveTo(myflag);
+            var wayPoint = Game.flags[creep.memory.waypoint];
+            if(wayPoint != undefined){
+                if(creep.pos == wayPoint.pos){
+                    delete creep.memory.waypoint;
+                }
+                creep.moveTo(wayPoint);
+            }
+            else{
+                creep.moveTo(myflag);
+            }
         }
     }
 }
