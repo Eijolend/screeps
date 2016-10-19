@@ -26,8 +26,8 @@ module.exports = {
         else{
             var wayPoint = Game.flags[creep.memory.waypoint];
             if(wayPoint != undefined){
-                if(creep.pos == wayPoint.pos){
-                    delete creep.memory.waypoint;
+                if(creep.room.name == wayPoint.pos.roomName){
+                    creep.memory.waypoint = undefined
                 }
                 creep.moveTo(wayPoint);
             }
