@@ -5,6 +5,9 @@ I want to respawn - things to figure out before that:
 *remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles
 *a solution to the two-sources split
 
+*fix problems with overwriting the queue
+*a clean solution to the waypoint dilemma
+
 *clean up code
 
 ===================================

@@ -167,86 +167,88 @@ module.exports = {
 					// spawn.createCreep([CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],undefined,{role: 'thief'});
 				// }
 			// }
-
-			//flag based spawning with homeRoom
-			var remoteMiner_target = 1; //miners per remote site
-			var remoteRunner_target = 1; //base value per remote site
-			for (var flag of _.filter(Game.flags, (f)=>f.memory.homeRoom == room.name)){
-				if(/reserve/.test(flag.name)){
-					//defend remote room
-					if(flag.pos.roomName in Game.rooms){//check to prevent breaking from no vision
-						if(flag.room.find(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)}).length){
-							flag.memory.underAttack = true;
+			else{
+				//flag based spawning with homeRoom
+				var remoteMiner_target = 1; //miners per remote site
+				var remoteRunner_target = 1; //base value per remote site
+				for (var flag of _.filter(Game.flags, (f)=>f.memory.homeRoom == room.name)){
+					if(/reserve/.test(flag.name)){
+						//defend remote room
+						if(flag.pos.roomName in Game.rooms){//check to prevent breaking from no vision
+							if(flag.room.find(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)}).length){
+								flag.memory.underAttack = true;
+							}
+							else{
+								flag.memory.underAttack = false;
+							}
+						}
+						if(flag.memory.underAttack){
+							remoteMiner_target = 0;
+							remoteRunner_target = 0;
+							var remoteHunters = _.filter(Game.creeps, (c) => c.memory.role == 'remoteHunter' && c.memory.myflag == flag.name);
+							if(remoteHunters.length < 2){
+								spawn.createCreep([TOUGH,MOVE,TOUGH,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],undefined,{
+								role : 'remoteHunter', myflag : flag.name, homeRoom : room.name
+								});
+							}
+						}
+						//logic to spawn reservers
+						var reservers = _.filter(Game.creeps, (creep) =>
+							creep.memory.role == 'reserver' && creep.memory.myflag == flag.name
+						);
+						if (reservers.length < 1){
+							var tospawn = false
+							if (flag.memory.reserved && flag.pos.roomName in Game.rooms){ //second check is to prevent breaking from no vision
+								var con = _.filter(flag.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_CONTROLLER)[0];
+								if(con.reservation == undefined){ //yet more failsafes
+									flag.memory.reserved = false;
+								}
+								else if(con.reservation.ticksToEnd < 500){
+									tospawn = true;
+								}
+							}
+							else{
+								if(!flag.memory.reserved && spawn.canCreateCreep([MOVE,CLAIM,CLAIM,MOVE],undefined) == OK){
+									tospawn = true;
+									flag.memory.reserved = true; //should have some kind of check to prevent breaking
+								}
+							}
+							if(tospawn){
+								spawn.createCreep([MOVE,CLAIM,CLAIM,MOVE],undefined,{
+									role: 'reserver', myflag: flag.name, homeRoom : room.name
+								});
+							}
+						}
+					}
+					if(/harvest/.test(flag.name)){ //see that every remote site has enough harvesters
+						var remoteMiners = _.filter(Game.creeps, (creep) =>
+							creep.memory.role == 'remoteMiner' && creep.memory.myflag == flag.name //should be spawned early, but my check is too stupid
+						).length;
+						var remoteRunners = _.filter(Game.creeps, (creep) =>
+							creep.memory.role == 'remoteRunner' && creep.memory.myflag == flag.name
+						).length;
+						if (remoteMiners < remoteMiner_target){
+							spawn.createCreep(bodies.remoteMiner(maxEnergy),undefined,{
+								role: 'remoteMiner', myflag: flag.name, homeRoom: room.name
+							});
 						}
 						else{
-							flag.memory.underAttack = false;
-						}
-					}
-					if(flag.memory.underAttack){
-						harvester_target = 0;
-						var remoteHunters = _.filter(Game.creeps, (c) => c.memory.role == 'remoteHunter' && c.memory.myflag == flag.name);
-						if(remoteHunters.length < 2){
-							spawn.createCreep([TOUGH,MOVE,TOUGH,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],undefined,{
-							role : 'remoteHunter', myflag : flag.name, homeRoom : room.name
-							});
-						}
-					}
-					//logic to spawn reservers
-					var reservers = _.filter(Game.creeps, (creep) =>
-						creep.memory.role == 'reserver' && creep.memory.myflag == flag.name
-					);
-					if (reservers.length < 1){
-						var tospawn = false
-						if (flag.memory.reserved && flag.pos.roomName in Game.rooms){ //second check is to prevent breaking from no vision
-							var con = _.filter(flag.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_CONTROLLER)[0];
-							if(con.reservation == undefined){ //yet more failsafes
-								flag.memory.reserved = false;
+							var myContainer = flag.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+							if(myContainer != undefined && myContainer.store.energy == myContainer.storeCapacity){
+								remoteRunner_target = 2;
 							}
-							else if(con.reservation.ticksToEnd < 500){
-								tospawn = true;
+							if (remoteRunners < remoteRunner_target){
+								spawn.createCreep(bodies.remoteRunner(maxEnergy),undefined,{
+									role: 'remoteRunner', myflag: flag.name, homeRoom: room.name
+								});
 							}
-						}
-						else{
-							if(!flag.memory.reserved && spawn.canCreateCreep([MOVE,CLAIM,CLAIM,MOVE],undefined) == OK){
-								tospawn = true;
-								flag.memory.reserved = true; //should have some kind of check to prevent breaking
-							}
-						}
-						if(tospawn){
-							spawn.createCreep([MOVE,CLAIM,CLAIM,MOVE],undefined,{
-								role: 'reserver', myflag: flag.name, homeRoom : room.name
-							});
-						}
-					}
-				}
-				if(/harvest/.test(flag.name)){ //see that every remote site has enough harvesters
-					var remoteMiners = _.filter(Game.creeps, (creep) =>
-						creep.memory.role == 'remoteMiner' && creep.memory.myflag == flag.name //should be spawned early, but my check is too stupid
-					).length;
-					var remoteRunners = _.filter(Game.creeps, (creep) =>
-						creep.memory.role == 'remoteRunner' && creep.memory.myflag == flag.name
-					).length;
-					if (remoteMiners < remoteMiner_target){
-						spawn.createCreep(bodies.remoteMiner(maxEnergy),undefined,{
-							role: 'remoteMiner', myflag: flag.name, homeRoom: room.name
-						});
-					}
-					else{
-						var myContainer = flag.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
-						if(myContainer != undefined && myContainer.store.energy == myContainer.storeCapacity){
-							remoteRunner_target = 2;
-						}
-						if (remoteRunners < remoteRunner_target){
-							spawn.createCreep(bodies.remoteRunner(maxEnergy),undefined,{
-								role: 'remoteRunner', myflag: flag.name, homeRoom: room.name
-							});
 						}
 					}
 				}
 			}
 		}
 		//flag based spawning
-		for (var flag in Game.flags){
+		for (var flag in Game.flags){ //has problem with overwriting the queue
 			if(/claim/.test(flag)){ //continously respawn remoteUpgraders to help establish the new room until flag is removed
 				var remoteUpgraders = _.filter(Game.creeps,(creep) =>
 					creep.memory.role == 'remoteUpgrader' && creep.memory.myflag == flag
