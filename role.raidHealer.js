@@ -1,6 +1,10 @@
 module.exports = {
     run : function(creep){
-        if(creep.room.name==Game.flags['Raid'].pos.roomName){
+        var myflag = Game.flags[creep.memory.myflag];
+        if(myflag == undefined){
+            myflag = Game.flags['Raid'];
+        }
+        if(creep.room.name==myflag.pos.roomName){
             var damaged = _.sortBy(creep.pos.findInRange(FIND_MY_CREEPS,1,{filter: (c) => c.hits < c.hitsMax}),'hits');
             if(damaged.length){
                 creep.heal(damaged[0]);
@@ -16,11 +20,11 @@ module.exports = {
                 creep.moveTo(closestRaider,{reusePath:0});
             }
             else{
-                creep.moveTo(Game.flags['Raid'],{reusePath:0});
+                creep.moveTo(myflag,{reusePath:0});
             }
         }
         else{
-            creep.moveTo(Game.flags['Raid']);
+            creep.moveTo(myflag);
         }
     }
 }
