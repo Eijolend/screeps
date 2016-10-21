@@ -11,7 +11,7 @@ module.exports = {
                 target=targets[0]
             }
             else{
-                target=myflag.pos.findClosestByRange(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)});
+                target=creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)});
             }
             if(target==undefined){
             	target=myflag.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{filter:(s) => s.structureType != STRUCTURE_ROAD && s.structureType != STRUCTURE_CONTROLLER && !_.contains(playerWhiteList,s.owner.username)});
@@ -19,9 +19,11 @@ module.exports = {
             if(target==undefined){
                 creep.moveTo(myflag,{reusePath:0});
             }
-            if(creep.attack(target) == ERR_NOT_IN_RANGE){
-                creep.moveTo(target,{reusePath:0});
-            }
+            creep.attack(target);
+            creep.moveTo(target,{reusePath:0});
+            //if(creep.attack(target) == ERR_NOT_IN_RANGE){
+            //    creep.moveTo(target,{reusePath:0});
+            //}
         }
         else{
             var wayPoint = Game.flags[creep.memory.waypoint];
