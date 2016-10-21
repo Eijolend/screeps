@@ -6,8 +6,8 @@
 var tasks = require('tasks');
 
 module.exports = {
-	var myflag = Game.flags[creep.memory.myflag];
 	run : function(creep){
+		var myflag = Game.flags[creep.memory.myflag];
 		if(creep.memory.upgrading && creep.carry.energy == 0) {
             creep.memory.upgrading = false;
             creep.say('harvesting');
