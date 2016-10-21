@@ -2,10 +2,9 @@
 
 I want to respawn - things to figure out before that:
 
-*remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles
 *a solution to the two-sources split
+*get civilians to fill towers if under attack
 
-*fix problems with overwriting the queue
 *a clean solution to the waypoint dilemma
 
 *clean up code
@@ -13,13 +12,14 @@ I want to respawn - things to figure out before that:
 ===================================
 all the rest:
 
+*remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles
+*fix problems with overwriting the queue (fixed... maybe?)
 *monitor of remote mining works like expected
 *monitor if not prioritizing repairers will repair enough
 
 *dynamic hunter bodies
 
 *integrate repair into the civilian role
-*get civilians to fill towers if under attack
 
 *a better requestList spawning
 
