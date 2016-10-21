@@ -6,6 +6,7 @@
 var tasks = require('tasks');
 
 module.exports = {
+	var myflag = Game.flags[creep.memory.myflag];
 	run : function(creep){
 		if(creep.memory.upgrading && creep.carry.energy == 0) {
             creep.memory.upgrading = false;
@@ -15,6 +16,7 @@ module.exports = {
 	        creep.memory.upgrading = true;
 	        creep.say('upgrading');
 	    }
+
 		if(creep.memory.upgrading){
 			if(creep.room.name == Game.flags[creep.memory.myflag].pos.roomName){
 				if(creep.upgradeController(creep.room.controller)==ERR_NOT_IN_RANGE){
@@ -22,7 +24,16 @@ module.exports = {
 				}
 			}
 			else{
-				creep.moveTo(Game.flags[creep.memory.myflag],{reusePath:25});
+				var wayPoint = Game.flags[creep.memory.waypoint];
+	            if(wayPoint != undefined){
+	                if(creep.room.name == wayPoint.pos.roomName){
+	                    creep.memory.waypoint = undefined
+	                }
+	                creep.moveTo(wayPoint);
+	            }
+	            else{
+	                creep.moveTo(myflag);
+	            }
 			}
 		}
 		else{

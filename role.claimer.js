@@ -4,6 +4,10 @@
 
 module.exports = {
 	run : function(creep){
+		var myflag = Game.flags[creep.memory.myflag];
+        if(myflag == undefined){
+            myflag = Game.flags['claim'];
+        }
 		var closeto = creep.pos.inRangeTo(Game.flags[creep.memory.myflag],4);
 		if(closeto){
 			var con = _.filter(Game.flags[creep.memory.myflag].pos.lookFor(LOOK_STRUCTURES),(s) => s.structureType == STRUCTURE_CONTROLLER)[0];
@@ -12,7 +16,16 @@ module.exports = {
 			}
 		}
 		else{
-			creep.moveTo(Game.flags[creep.memory.myflag],{reusePath:25});
+			var wayPoint = Game.flags[creep.memory.waypoint];
+            if(wayPoint != undefined){
+                if(creep.room.name == wayPoint.pos.roomName){
+                    creep.memory.waypoint = undefined
+                }
+                creep.moveTo(wayPoint);
+            }
+            else{
+                creep.moveTo(myflag);
+            }
 		}
 	}
 }
