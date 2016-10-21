@@ -248,9 +248,9 @@ module.exports = {
 						var remoteUpgraders = _.filter(Game.creeps,(creep) =>
 							creep.memory.role == 'remoteUpgrader' && creep.memory.myflag == flag
 						);
-						if (remoteUpgraders.length < 2){
-							spawn.createCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],undefined,{
-								role : 'remoteUpgrader' , myflag : flag.name, homeRoom : room.name
+						if (remoteUpgraders.length < 3){
+							spawn.createCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],undefined,{
+								role : 'remoteUpgrader' , myflag : flag.name, homeRoom : room.name, waypoint: 'waypoint'
 							});
 						}
 					}
