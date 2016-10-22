@@ -50,7 +50,7 @@ module.exports = {
 			if (creep.memory.delivering){
 				tasks.fill(creep,[STRUCTURE_STORAGE]);
 			}
-			else if(creep.ticksToLive < 200){
+			else if(creep.ticksToLive < 200 || creep.hits < creep.hitsMax){
 				creep.memory.role = 'recycler';
 			}
 			else{

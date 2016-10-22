@@ -42,10 +42,11 @@ var bodies = {
 		var template = [CARRY,MOVE];
 		var intervalEnergy=cost(template);
 		var n = Math.min(Math.floor((maxEnergy-150)/intervalEnergy),16); //currently hardcapped at 800 carry
-		var body = [WORK,MOVE];
+		var body = [];
 		for(i=0;i<n;i++){
 			body.push(CARRY,MOVE);
 		}
+		body.push(WORK,MOVE);
 		return body
 	},
 	// harvester : function(maxEnergy){
