@@ -142,15 +142,7 @@ module.exports.loop = function(){
 		}
 		respawn.run(myrooms);
 
-		var newRoom = Game.rooms['W55S18'];
-		if(newRoom.controller.level > 2){
-			newRoom.createConstructionSite(40,38,STRUCTURE_TOWER);
-			newRoom.createConstructionSite(19,42,STRUCTURE_EXTENSION);
-			newRoom.createConstructionSite(18,42,STRUCTURE_EXTENSION);
-			newRoom.createConstructionSite(20,42,STRUCTURE_EXTENSION);
-			newRoom.createConstructionSite(19,41,STRUCTURE_EXTENSION);
-			newRoom.createConstructionSite(19,43,STRUCTURE_EXTENSION);
-		}
+		// var newRoom = Game.rooms['W55S18'];
 		// var hostilesInNewRoom =  newRoom.find(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)});
 		// if(hostilesInNewRoom.length > 0){
 		// 	newRoom.controller.activateSafeMode();
