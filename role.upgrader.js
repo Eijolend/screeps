@@ -9,18 +9,19 @@
 
 
 var tasks=require('tasks');
- 
+
 module.exports = {
     run: function(creep){
          if(creep.memory.upgrading && creep.carry.energy == 0) {
             creep.memory.upgrading = false;
+            creep.memory.sourceNo = undefined; //resets the finding logic
             creep.say('harvesting');
 	    }
 	    if(!creep.memory.upgrading && creep.carry.energy == creep.carryCapacity) {
 	        creep.memory.upgrading = true;
 	        creep.say('upgrading');
 	    }
-	        
+
 	    if(creep.memory.upgrading){
 	        if(creep.upgradeController(creep.room.controller)==ERR_NOT_IN_RANGE){
 	            creep.moveTo(creep.room.controller);
@@ -30,9 +31,7 @@ module.exports = {
 			creep.memory.role = 'recycler';
 		}
         else { //get energy in priority: dropped, container, storage, harvest
-			var sources = creep.room.find(FIND_SOURCES);
-			var mysource = sources[1];
-			tasks.getenergy(creep,mysource);
+			tasks.getenergy(creep);
 	    }
     }
 };

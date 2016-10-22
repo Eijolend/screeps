@@ -5,12 +5,13 @@
 
 var tasks=require('tasks');
 // var roleBuilder=require('role.builder');
- 
+
 module.exports = {
      run: function(creep) {
 
 	    if(creep.memory.repairing && creep.carry.energy == 0) {
             creep.memory.repairing = false;
+            creep.memory.sourceNo = undefined; //resets the finding logic
             creep.say('getting');
 	    }
 	    if(!creep.memory.repairing && creep.carry.energy == creep.carryCapacity) {
@@ -31,9 +32,7 @@ module.exports = {
 			creep.memory.role = 'recycler';
 		}
 	    else { //get energy in priority: dropped, container, storage, harvest
-			var sources = creep.room.find(FIND_SOURCES);
-			var mysource = sources[1];
-			tasks.getenergy(creep,mysource);
+			tasks.getenergy(creep);
 	    }
      }
 };
