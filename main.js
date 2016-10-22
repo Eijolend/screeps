@@ -8,7 +8,7 @@ var roleRepairer = require('role.repairer');
 var remoteUpgrader = require('remote.upgrader');
 var remoteHunter = require('remote.hunter');
 var remoteMiner = require('remote.miner');
-var remoteRunner = require('remote.runner')
+var remoteRunner = require('remote.runner');
 var roleClaimer = require('role.claimer');
 var roleRecycler = require('role.recycler');
 var roleThief = require('role.thief');
@@ -20,7 +20,7 @@ var tasks = require('tasks');
 var planOutheal = require('plan.outheal');
 const profiler = require('screeps-profiler');
 
-global.playerWhiteList = ['PiratenBraut','PhillipK']
+global.playerWhiteList = ['PiratenBraut','PhillipK'];
 
 Room.prototype.requestCreep = function(body,name,mem){
 	if(this.memory.requestList === undefined){
@@ -29,7 +29,7 @@ Room.prototype.requestCreep = function(body,name,mem){
 	var mylist = JSON.parse(this.memory.requestList);
 	mylist.push([body,name,mem]);
 	this.memory.requestList = JSON.stringify(mylist);
-}
+};
 
 
 profiler.enable();

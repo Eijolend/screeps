@@ -13,4 +13,4 @@ module.exports ={
 			creep.moveTo(Game.flags[creep.memory.myflag]);
 		}
 	}
-}
+};

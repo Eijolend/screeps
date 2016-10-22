@@ -3,7 +3,7 @@ var roleDismantler = require('role.dismantler');
 module.exports = {
     start : function(rallyFlag,targetFlag){
         //request appropriate creeps, rally and target are flags for the creep's memory
-        healBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE]; // costs 2280, a rcl 6 room can support 2300
+        var healBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE]; // costs 2280, a rcl 6 room can support 2300
         Game.rooms['W52S17'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 0 , homeRoom : 'W54S17'});
         Game.rooms['W52S17'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 1 , homeRoom : 'W54S17'});
         Game.rooms['W54S17'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 2 , homeRoom : 'W54S17'});
@@ -12,7 +12,7 @@ module.exports = {
             [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE],
             'Desmond',{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W54S17'}
         );
-        disBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE];
+        var disBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE];
         Game.rooms['W52S17'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W54S17'});
         Game.rooms['W52S17'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W54S17'});
         Game.rooms['W54S17'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W54S17'});
@@ -22,7 +22,7 @@ module.exports = {
             stage : 0,
             rally : rallyFlag,
             target : targetFlag
-        }
+        };
     },
     trigger : function(){
         Memory.planOutheal.stage +=1;
@@ -66,7 +66,7 @@ module.exports = {
                 if(creep.room.name == Game.flags[Memory.planOutheal.target].pos.roomName){
 
                     var flagPos = Game.flags[Memory.planOutheal.target].pos;
-                    var wishPos = [25,25]
+                    var wishPos = [25,25];
                     switch (creep.memory.num){
                         case 0 :
                             wishPos = [flagPos.x,flagPos.y];
@@ -95,4 +95,4 @@ module.exports = {
             creep.memory.role = 'recycler';
         }
     }
-}
+};
