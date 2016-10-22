@@ -130,9 +130,9 @@ module.exports.loop = function(){
 				Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
 				Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
 				Game.spawns.Spawn3.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-				//Game.spawns.Spawn3.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-				//Game.spawns.Spawn3.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-				//Game.spawns.Spawn2.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
+				Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
+				Game.spawns.Spawn3.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
+				Game.spawns.Spawn2.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
 				Game.spawns.Spawn2.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
 				Game.spawns.Spawn3.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
 				//===================//
