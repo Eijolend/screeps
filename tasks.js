@@ -64,7 +64,8 @@ module.exports = {
 		var otherContainer = otherSource.pos.findInRange(FIND_STRUCTURES,1,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
 		var otherDropped = otherSource.pos.findInRange(FIND_DROPPED_ENERGY,1)[0];
 		var otherEnergy = ( otherContainer != undefined ? otherContainer.store.energy : 0 ) + ( otherDropped != undefined ? otherDropped.amount : 0 );
-		if(otherEnergy > 2000 && otherEnergy > stdEnergy){
+		var threshold = 2000
+		if(otherEnergy > threshold && (otherEnergy-threshold) > stdEnergy){
 			return otherNo;
 		}
 		else{
