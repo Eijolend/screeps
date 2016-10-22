@@ -61,6 +61,7 @@ module.exports.loop = function(){
 		}
 
 		for(var name in Game.creeps){
+			var startCpu = Game.cpu.getUsed();
 			var creep = Game.creeps[name];
 			if(creep.memory.role == 'runner'){
 				roleRunner.run(creep);
@@ -119,6 +120,8 @@ module.exports.loop = function(){
 			else if(creep.memory.role == 'dismantler'){
 				roleDismantler.run(creep);
 			}
+			var elapsed = Game.cpu.getUsed() - startCpu;
+			console.log('Creep '+name+' with role '+creep.memory.role+' has used '+elapsed+' CPU time');
 		}
 		if('Raid' in Game.flags){
 			if(Game.time % 1000 == 0){
