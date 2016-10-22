@@ -4,6 +4,7 @@ module.exports = {
 	run : function(creep){
 		if(creep.memory.delivering && creep.carry.energy == 0) {
             creep.memory.delivering = false;
+			creep.memory.sourceNo = undefined; //resets the finding logic
             creep.say('getting');
 	    }
 	    if(!creep.memory.delivering && creep.carry.energy == creep.carryCapacity) {
@@ -15,7 +16,7 @@ module.exports = {
 			tasks.fill(creep,mylist);
 		}
 		else if(creep.ticksToLive < 50){
-			creep.memory.role = 'recycler'
+			creep.memory.role = 'recycler';
 		}
 		else{
 			var spawn = creep.room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_SPAWN})[0];
@@ -24,10 +25,7 @@ module.exports = {
 				tasks.pick(creep,dropped[0]);
 			}
 			else{
-				// var sources = creep.room.find(FIND_SOURCES);
-				// var mysource = sources[0]
-				var sourceNo = 0;
-				tasks.getenergy(creep,sourceNo);
+				tasks.getenergy(creep);
 			}
 		}
 	}

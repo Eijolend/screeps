@@ -21,6 +21,7 @@ module.exports = {
 		//preparing
 		if(creep.memory.ontask && creep.carry.energy == 0){
 			creep.memory.ontask = false;
+			creep.memory.sourceNo = undefined; //resets the finding logic
             creep.say('getting');
 		}
 		if(!creep.memory.ontask && creep.carry.energy == creep.carryCapacity) {
@@ -59,6 +60,7 @@ module.exports = {
 			}
 			else{
 				creep.memory.ontask = false //switch back to getting if there is nothing left to build
+				creep.memory.sourceNo = undefined; //resets the finding logic
 				creep.say('nevermind');
 			}
 		}
@@ -102,10 +104,7 @@ module.exports = {
 			creep.memory.role = 'recycler';
 		}
         else{ //get energy in priority: dropped, container, storage, harvest
-			// var sources = creep.room.find(FIND_SOURCES);
-			// var mysource = sources[1];
-			var sourceNo = 1;
-			tasks.getenergy(creep,sourceNo);
+			tasks.getenergy(creep);
 	    }
 	}
 }
