@@ -52,6 +52,9 @@ module.exports = {
 				case 'repairer':
 					stdNo = 1;
 					break;
+				case 'remoteUpgrader';
+					stdNo = 1;
+					break;
 			}
 		}
 		var sources = creep.room.find(FIND_SOURCES);

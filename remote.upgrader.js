@@ -45,9 +45,7 @@ module.exports = {
 				creep.memory.role = 'civilian'
 			}
 			else{
-				var sources = creep.room.find(FIND_SOURCES);
-				var mysource = sources[1];
-				tasks.getenergy(creep,mysource);
+				tasks.getenergy(creep);
 			}
 		}
 	}
