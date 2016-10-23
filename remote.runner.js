@@ -26,9 +26,9 @@ module.exports = {
 				}
 			}
 			else if(creep.room.name == Game.flags[creep.memory.myflag].pos.roomName){
-                if(!roadatpoint.length){
-    				creep.pos.createConstructionSite(STRUCTURE_ROAD);
-    			}
+                // if(!roadatpoint.length){
+    			// 	creep.pos.createConstructionSite(STRUCTURE_ROAD);
+    			// }
                 var dropped = Game.flags[creep.memory.myflag].pos.findInRange(FIND_DROPPED_ENERGY,3);
                 var myContainer = Game.flags[creep.memory.myflag].pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
 
@@ -43,9 +43,9 @@ module.exports = {
         		}
 			}
             else{
-                if(!roadatpoint.length){
-    				creep.pos.createConstructionSite(STRUCTURE_ROAD);
-    			}
+                // if(!roadatpoint.length){
+    			// 	creep.pos.createConstructionSite(STRUCTURE_ROAD);
+    			// }
                 creep.moveTo(Game.flags[creep.memory.myflag]);
             }
 		}
