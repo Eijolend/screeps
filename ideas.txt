@@ -2,8 +2,6 @@
 
 I want to respawn (maybe) - things to figure out before that:
 
-*a clean solution to the waypoint dilemma
-
 *clean up code
 
 ===================================
@@ -11,10 +9,14 @@ all the rest:
 
 *overwrite Creep.prototype.moveTo with ignoreCreeps, high reusePath and a custom stuck check
 
+*spawn dedicated loader creeps if a tower is empty and there are not enough civilians to fill all of them
+
 *remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles
 *fix problems with overwriting the queue (fixed... maybe?)
 *monitor of remote mining works like expected
 *monitor if not prioritizing repairers will repair enough
+
+*a clean solution to the waypoint dilemma
 
 *dynamic hunter bodies
 
