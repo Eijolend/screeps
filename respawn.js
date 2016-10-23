@@ -236,9 +236,9 @@ module.exports = {
 						else{
 							if(flag.pos.roomName in Game.rooms){
 								var myContainer = flag.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
-								if(myContainer != undefined && myContainer.store.energy == myContainer.storeCapacity){
-									remoteRunner_target = 2;
-								}
+								var myDropped = flag.pos.findInRange(FIND_DROPPED_ENERGY,1)[0];
+								var myEnergy = ( myContainer != undefined ? myContainer.store.energy : 0 ) + ( myDropped != undefined ? myDropped.amount : 0 );
+								remoteRunner_target = 1 + Math.floor(myEnergy/2000);
 							}
 							if (remoteRunners < remoteRunner_target){
 								spawn.createCreep(bodies.remoteRunner(maxEnergy),undefined,{
