@@ -31,9 +31,14 @@ module.exports = {
 			var civsByTask = _.groupBy(civs,'memory.mytask');
 			var numBuilders = civsByTask.builder != undefined ? civsByTask.builder.length : 0;
 			// var numUpgraders= civsByTask.upgrader != undefined ? civsByTask.upgrader.length : 0;
-			var emergencies = creep.room.find(FIND_FLAGS,{filter: (f) => /emergency/.test(f.name)}).length
-			var nukes = creep.room.find(FIND_NUKES).length
-			if(numBuilders < this.builderTarget(creep.room,civs.length) ){
+			var emergencies = creep.room.find(FIND_FLAGS,{filter: (f) => /emergency/.test(f.name)}).length;
+			var nukes = creep.room.find(FIND_NUKES).length;
+			var hostiles = creep.room.find(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)}).length;
+			if(hostiles > 0){
+				creep.memory.mytask = 'loader';
+				creep.say('loading');
+			}
+			else if(numBuilders < this.builderTarget(creep.room,civs.length) ){
 				creep.memory.mytask = 'builder';
 				creep.say('building');
 			}
@@ -98,6 +103,17 @@ module.exports = {
 			}
 			else{
 				creep.memory.mytask = 'upgrader';
+			}
+		}
+		else if(creep.memory.ontask && creep.memory.mytask == 'loader'){
+			var tower = _.sortBy(creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity}),'energy')[0];
+			if(tower == undefined){
+				creep.memory.ontask = false //switch back to getting if there is nothing left to build
+				creep.memory.sourceNo = undefined; //resets the finding logic
+				creep.say('nevermind');
+			}
+			else if(creep.transfer(target,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+				creep.moveTo(target);
 			}
 		}
 		else if(creep.ticksToLive < 100){

@@ -2,8 +2,6 @@
 
 I want to respawn (maybe) - things to figure out before that:
 
-*get civilians to fill towers if under attack
-
 *a clean solution to the waypoint dilemma
 
 *clean up code
