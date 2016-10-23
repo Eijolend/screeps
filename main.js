@@ -18,6 +18,7 @@ var roleDismantler = require('role.dismantler');
 var respawn = require('respawn');
 var tasks = require('tasks');
 var planOutheal = require('plan.outheal');
+var utils = require('utils');
 const profiler = require('screeps-profiler');
 
 global.playerWhiteList = ['PiratenBraut','PhillipK'];
@@ -30,6 +31,29 @@ Room.prototype.requestCreep = function(body,name,mem){
 	mylist.push([body,name,mem]);
 	this.memory.requestList = JSON.stringify(mylist);
 };
+
+Creep.prototype.std_moveTo = Creep.prototype.moveTo;
+Creep.prototype.moveTo = function(target,opts){
+	if(target instanceof Creep){ //the modifications do not make sense for moving targets
+		return this.std_moveTo(target,opts);
+	}
+	else{
+		if(utils.isPosEqual(this.pos,this.memory.lastPos)){
+			this.memory.stuckCount += 1;
+		}
+		else{
+			this.memory.stuckCount = 0;
+		}
+		this.memory.lastPos = this.pos;
+		if(this.memory.stuckCount > 1){
+			return this.std_moveTo(target,{reusePath:5})
+		}
+		else{
+			return this.std_moveTo(target,{reusePath:50,ignoreCreeps:true})
+		}
+	}
+}
+
 
 
 profiler.enable();
