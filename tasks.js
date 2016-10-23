@@ -164,8 +164,13 @@ module.exports = {
 	},
 
 	recycle : function(creep,spawn){
-		if(spawn.recycleCreep(creep) == ERR_NOT_IN_RANGE){
-			creep.moveTo(spawn);
+		if(spawn != undefined){
+			if(spawn.recycleCreep(creep) == ERR_NOT_IN_RANGE){
+				creep.moveTo(spawn);
+			}
+		}
+		else{
+			creep.suicide();
 		}
 	}
 
