@@ -20,7 +20,7 @@ var tasks = require('tasks');
 var planOutheal = require('plan.outheal');
 const profiler = require('screeps-profiler');
 
-global.playerWhiteList = ['PiratenBraut','PhillipK'];
+global.playerWhiteList = ['PiratenBraut','PhillipK','CokeJunkie','KaZoiden'];
 
 Room.prototype.requestCreep = function(body,name,mem){
 	if(this.memory.requestList === undefined){

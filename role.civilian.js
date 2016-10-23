@@ -9,7 +9,7 @@ module.exports = {
 		var numBuilders = Math.min(buildersNeeded,numCivs);
 		if(numBuilders == 0){ //if there are walls to be repaired, should have one builder even if no construction site
 			var lowWalls = room.find(FIND_STRUCTURES,
-				{filter : (s) => (s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART) && s.hits < room.memory.wallMax
+				{filter: (s) => (s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART) && s.hits < room.memory.wallMax
 			});
 			if(lowWalls.length){
 				numBuilders = 1;
@@ -34,7 +34,8 @@ module.exports = {
 			var emergencies = creep.room.find(FIND_FLAGS,{filter: (f) => /emergency/.test(f.name)}).length;
 			var nukes = creep.room.find(FIND_NUKES).length;
 			var hostiles = creep.room.find(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)}).length;
-			if(hostiles > 0){
+			var towers = creep.room.find(FIND_MY_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_TOWER}).length;
+			if(hostiles > 0 && towers > 0){
 				creep.memory.mytask = 'loader';
 				creep.say('loading');
 			}
