@@ -112,8 +112,8 @@ module.exports = {
 				creep.memory.sourceNo = undefined; //resets the finding logic
 				creep.say('nevermind');
 			}
-			else if(creep.transfer(target,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-				creep.moveTo(target);
+			else if(creep.transfer(tower,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+				creep.moveTo(tower);
 			}
 		}
 		else if(creep.ticksToLive < 100){
