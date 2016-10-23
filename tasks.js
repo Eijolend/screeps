@@ -52,7 +52,7 @@ module.exports = {
 				case 'repairer':
 					stdNo = 1;
 					break;
-				case 'remoteUpgrader';
+				case 'remoteUpgrader':
 					stdNo = 1;
 					break;
 			}
