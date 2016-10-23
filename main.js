@@ -38,7 +38,7 @@ Creep.prototype.moveTo = function(target,opts){
 		return this.std_moveTo(target,opts);
 	}
 	else{
-		if(utils.isPosEqual(this.pos,this.memory.lastPos)){
+		if(utils.isPosEqual(this.pos,this.memory.lastPos) && this.fatigue == 0){
 			this.memory.stuckCount += 1;
 		}
 		else{
