@@ -14,8 +14,8 @@ module.exports = {
 		if(creep.room.name != creep.memory.homeRoom){
 			var roadatpoint = creep.pos.findInRange(FIND_STRUCTURES,0,{filter: (s) => s.structureType == STRUCTURE_ROAD});
 			if(creep.memory.delivering){
-				var target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES,{filter : (s) => s.structureType == STRUCTURE_ROAD});
-				if (target != null){
+				var target = creep.pos.findInRange(FIND_CONSTRUCTION_SITES,3,{filter : (s) => s.structureType == STRUCTURE_ROAD})[0];
+				if (target != undefined){
 					tasks.construct(creep,target);
 				}
 				else{
