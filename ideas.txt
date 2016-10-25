@@ -1,13 +1,15 @@
 (in no particular order)
 
-I want to respawn (maybe) - things to figure out before that:
+Things that I should do urgently.
 
 *clean up code
 
+Then:
+*mineral mining
+*labs and boosting
+
 ===================================
 all the rest:
-
-*overwrite Creep.prototype.moveTo with ignoreCreeps, high reusePath and a custom stuck check
 
 *spawn dedicated loader creeps if a tower is empty and there are not enough civilians to fill all of them
 
