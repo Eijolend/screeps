@@ -23,6 +23,7 @@ all the rest:
 *integrate repair into the civilian role
 
 *a better requestList spawning
+*remove unnecessary stringifying from requestList
 
 combat related:
 *better tower code
