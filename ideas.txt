@@ -11,6 +11,8 @@ Then:
 ===================================
 all the rest:
 
+*implement proper spawning in advance
+
 *spawn dedicated loader creeps if a tower is empty and there are not enough civilians to fill all of them
 
 *remoteUpgraders should be restructured to a special Colonist role and arbitrary remote roles

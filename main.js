@@ -15,6 +15,7 @@ var roleThief = require('role.thief');
 var roleRaider = require('role.raider');
 var roleRaidHealer = require('role.raidHealer');
 var roleDismantler = require('role.dismantler');
+var roleMineralMiner = require('role.mineralMiner');
 var respawn = require('respawn');
 var tasks = require('tasks');
 var planOutheal = require('plan.outheal');
@@ -149,6 +150,9 @@ module.exports.loop = function(){
 			}
 			else if(creep.memory.role == 'dismantler'){
 				roleDismantler.run(creep);
+			}
+			else if(creep.memory.role == 'mineralMiner'){
+				roleMineralMiner.run(creep);
 			}
 			// var elapsed = Game.cpu.getUsed() - startCpu;
 			// console.log('Creep '+name+' with role '+creep.memory.role+' has used '+elapsed+' CPU time');
