@@ -1,2 +1,0 @@
-*should switch usage if hostile creeps are present
-*does not prevent from accidentally walking into whiteListed creeps

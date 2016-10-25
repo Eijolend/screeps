@@ -34,10 +34,10 @@ Room.prototype.requestCreep = function(body,name,mem){
 
 Creep.prototype.std_moveTo = Creep.prototype.moveTo;
 Creep.prototype.moveTo = function(target,opts){
-	if(target instanceof Creep){ //the modifications do not make sense for moving targets
-		return this.std_moveTo(target,opts);
+	if(opts === undefined){
+		opts = {};
 	}
-	else{
+	if(!(target instanceof Creep)){ //these modifications do not make sense for moving targets
 		if(utils.isPosEqual(this.pos,this.memory.lastPos) && this.fatigue == 0){
 			this.memory.stuckCount += 1;
 		}
@@ -46,12 +46,18 @@ Creep.prototype.moveTo = function(target,opts){
 		}
 		this.memory.lastPos = this.pos;
 		if(this.memory.stuckCount > 1){
-			return this.std_moveTo(target,{reusePath:5})
+			opts.reusePath = 5;
 		}
 		else{
-			return this.std_moveTo(target,{reusePath:50,ignoreCreeps:true})
+			opts.reusePath = 50;
+			opts.ignoreCreeps = true;
 		}
 	}
+	var others = this.room.find(FIND_HOSTILE_CREEPS).length;
+	if(others > 0){
+		opts.reusePath = 0;
+	}
+	return this.std_moveTo(target,opts);
 }
 
 
