@@ -124,6 +124,7 @@ module.exports = {
 			var runners = creepsByRole.runner != undefined ? creepsByRole.runner : [];
 			var hunters = creepsByRole.hunter != undefined ? creepsByRole.hunter : [];
 			var mineralMiners = creepsByRole.mineralMiner != undefined ? creepsByRole.mineralMiner : [];
+			var terminalManagers = creepsByRole.terminalManager != undefined ? creepsByRole.terminalManager : [];
 			if(room.memory.requestList === undefined){ //checking this every tick is a waste
 				room.memory.requestList = JSON.stringify([]);
 			}
