@@ -129,6 +129,7 @@ module.exports = {
 				room.memory.requestList = JSON.stringify([]);
 			}
 			var requestList = JSON.parse(room.memory.requestList);
+			var mineral = room.find(FIND_MINERALS)[0];
 			// var upgraders = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'upgrader'});
 			// var builders = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'builder'});
 			// var repairers = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'repairer'});
@@ -183,11 +184,9 @@ module.exports = {
 			else if(terminalManagers.length < terminalManager_target){
 				spawn.createCreep(bodies.runner(maxEnergy/2),undefined,{role:'terminalManager'});
 			}
-			else if(room.controller.level >= 6 && room.find(FIND_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_EXTRACTOR}).length > 0){
-				var mineral = room.find(FIND_MINERALS)[0];
-				if(mineral.ticksToRegeneration === undefined && mineralMiners.length < 1){
-					spawn.createCreep(bodies.mineralMiner(maxEnergy),undefined,{role:'mineralMiner'});
-				}
+			else if(room.controller.level >= 6 && room.find(FIND_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_EXTRACTOR}).length > 0 && mineral.ticksToRegeneration === undefined && mineralMiners.length < 1){
+				spawn.createCreep(bodies.mineralMiner(maxEnergy),undefined,{role:'mineralMiner'});
+
 			}
 			// if(thiefs.length < thief_target) {
 				// if (spawn.room.energyAvailable > 600){
