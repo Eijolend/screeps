@@ -10,7 +10,7 @@ module.exports = {
                 creep.memory.getting = true;
                 creep.memory.mytask = 'getMineral';
             }
-            else if(creep.room.storage != undefined && creep.room.terminal != undefined && creep.room.storage.store.energy > 100000 && creep.terminal.store.energy < 50000){
+            else if(creep.room.storage != undefined && creep.room.terminal != undefined && creep.room.storage.store.energy > 100000 && creep.room.terminal.store.energy < 50000){
                 creep.memory.getting = true;
                 creep.memory.mytask = 'getEnergy';
             }
