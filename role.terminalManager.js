@@ -21,12 +21,12 @@ module.exports = {
                 creep.memory.mytask = 'runner';
             }
         }
-        else if(creep.memory.getting && _.sum(creep.carry) == creep.carryCapacity){
+        if(creep.memory.getting && _.sum(creep.carry) == creep.carryCapacity){
             creep.memory.getting = false;
             creep.memory.mytask = 'deliver';
         }
         if(creep.memory.mytask == 'deliver'){
-            if(creep.transfer(creep.room.terminal,_.keys(creep.carry)[0]) == ERR_NOT_IN_RANGE){
+            if(creep.transfer(creep.room.terminal,_.findKey(creep.carry,(x) => x > 0)) == ERR_NOT_IN_RANGE){
                 creep.moveTo(creep.room.terminal);
             }
         }
