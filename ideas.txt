@@ -2,10 +2,10 @@
 
 Things that I should do urgently.
 
+*only spawn terminalManagers when needed, but I don't want to give up the safety net of an additional runner
 *clean up code
 
 Then:
-*mineral mining
 *labs and boosting
 
 ===================================
