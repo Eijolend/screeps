@@ -103,6 +103,11 @@ module.exports = {
 			var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
 			var miner_target = 2;
 			var runner_target = 2;
+			var terminalManager_target = 0;
+			if(room.controller.level >= 6){
+				runner_target = 1;
+				terminalManager_target = 1;
+			}
 			var thief_target = 0;
 			var hunter_target = 0;
 
@@ -173,6 +178,9 @@ module.exports = {
 				if (spawn.room.energyAvailable > 600){
 					spawn.createCreep([TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],undefined,{role: 'hunter'});
 				}
+			}
+			else if(terminalManagers.length < terminalManager_target){
+				spawn.createCreep(bodies.runner(maxEnergy/2),undefined,{role:'terminalManager'});
 			}
 			else if(room.controller.level >= 6 && room.find(FIND_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_EXTRACTOR}).length > 0){
 				var mineral = room.find(FIND_MINERALS)[0];
