@@ -105,7 +105,7 @@ module.exports = {
 			var runner_target = 2;
 			var terminalManager_target = 0;
 			if(room.controller.level >= 6){
-				runner_target = 1;
+				//runner_target = 1;
 				terminalManager_target = 1;
 			}
 			var thief_target = 0;

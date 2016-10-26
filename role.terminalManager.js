@@ -25,6 +25,7 @@ module.exports = {
             creep.memory.getting = false;
             creep.memory.mytask = 'deliver';
         }
+
         if(creep.memory.mytask == 'deliver'){
             if(creep.transfer(creep.room.terminal,_.findKey(creep.carry,(x) => x > 0)) == ERR_NOT_IN_RANGE){
                 creep.moveTo(creep.room.terminal);
@@ -33,12 +34,12 @@ module.exports = {
         else if(creep.memory.mytask == 'runner'){
             roleRunner.run(creep);
         }
-        else if(creep.memory.mytask = 'getMineral'){
+        else if(creep.memory.mytask == 'getMineral'){
             if(creep.withdraw(mineralContainer,mineralType) == ERR_NOT_IN_RANGE){
                 creep.moveTo(mineralContainer);
             }
         }
-        else if(creep.memory.mytask = 'getEnergy'){
+        else if(creep.memory.mytask == 'getEnergy'){
             if(creep.withdraw(creep.room.storage,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                 creep.moveTo(creep.room.storage);
             }
