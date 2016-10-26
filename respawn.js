@@ -68,6 +68,16 @@ var bodies = {
 			body.push(CARRY,MOVE);
 		}
 		return body
+	},
+	mineralMiner : function(maxEnergy){
+		var template = [WORK,WORK,MOVE];
+		var intervalEnergy = cost(template);
+		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),16); //do not exceed 50 bodyparts
+		var body = [];
+		for(i=0;i<n;i++){
+			body.push(CARRY,MOVE);
+		}
+		return body
 	}
 }
 
@@ -108,6 +118,7 @@ module.exports = {
 			var miners = creepsByRole.miner != undefined ? creepsByRole.miner : [];
 			var runners = creepsByRole.runner != undefined ? creepsByRole.runner : [];
 			var hunters = creepsByRole.hunter != undefined ? creepsByRole.hunter : [];
+			var mineralMiners = creepsByRole.mineralMiner != undefined ? creepsByRole.mineralMiner : [];
 			if(room.memory.requestList === undefined){ //checking this every tick is a waste
 				room.memory.requestList = JSON.stringify([]);
 			}
@@ -161,6 +172,12 @@ module.exports = {
 			else if(hunters.length < hunter_target) {
 				if (spawn.room.energyAvailable > 600){
 					spawn.createCreep([TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],undefined,{role: 'hunter'});
+				}
+			}
+			else if(room.controller.level >= 6 && room.find(FIND_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_EXTRACTOR}).length > 0){
+				var mineral = room.find(FIND_MINERALS)[0];
+				if(mineral.ticksToRegeneration === undefined && mineralMiners.length < 1){
+					spawn.createCreep(bodies.mineralMiner(maxEnergy),undefined,{role:'mineralMiner'});
 				}
 			}
 			// if(thiefs.length < thief_target) {
