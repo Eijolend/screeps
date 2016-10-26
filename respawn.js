@@ -75,7 +75,7 @@ var bodies = {
 		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),16); //do not exceed 50 bodyparts
 		var body = [];
 		for(i=0;i<n;i++){
-			body.push(CARRY,MOVE);
+			body.push(WORK,WORK,MOVE);
 		}
 		return body
 	}
