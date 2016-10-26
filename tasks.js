@@ -46,6 +46,9 @@ module.exports = {
 				case 'runner':
 					stdNo = 0;
 					break;
+				case 'terminalManager':
+					stdNo = 0;
+					break;
 				case 'upgrader':
 					stdNo = 1;
 					break;
