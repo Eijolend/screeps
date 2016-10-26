@@ -2,7 +2,7 @@ var roleRunner = require('role.runner');
 
 module.exports = {
     run : function(creep){
-        var mineral = room.find(FIND_MINERALS)[0];
+        var mineral = creep.room.find(FIND_MINERALS)[0];
         var mineralType = mineral.mineralType;
         var mineralContainer = mineral.pos.findInRange(FIND_STRUCTURES,1,{filter:(s)=>s.structureType == STRUCTURE_CONTAINER})[0];
         if(!creep.memory.getting && _.sum(creep.carry) == 0){
