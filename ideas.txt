@@ -3,7 +3,12 @@
 Things that I should do urgently.
 
 *only spawn terminalManagers when needed, but I don't want to give up the safety net of an additional runner
-*clean up code
+
+*better repairer logic, to minimize traffic jams. Idea: only make a list what needs to be repaired every 500 ticks or so. could be combined with:
+*integrate repair into the civilian role
+
+
+*clean up code; write a better system to control on a room basis.
 
 Then:
 *labs and boosting
@@ -23,8 +28,6 @@ all the rest:
 *a clean solution to the waypoint dilemma
 
 *dynamic hunter bodies
-
-*integrate repair into the civilian role
 
 *a better requestList spawning
 *remove unnecessary stringifying from requestList
