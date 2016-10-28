@@ -165,7 +165,7 @@ module.exports = {
 				spawn.createCreep(bodies.miner(maxEnergy),undefined,{role:'miner'});
 			}
 			else if(runners.length < runner_target){
-				spawn.createCreep(bodies.runner(maxEnergy/2),undefined,{role:'runner'});
+				spawn.createCreep(bodies.runner(maxEnergy),undefined,{role:'runner'});
 			}
 			else if(upgraders.length < upgrader_target) {
 				spawn.createCreep(bodies.upgrader(maxEnergy),undefined,{role:'upgrader'});
@@ -182,7 +182,7 @@ module.exports = {
 				}
 			}
 			else if(terminalManagers.length < terminalManager_target){
-				spawn.createCreep(bodies.runner(maxEnergy/2),undefined,{role:'terminalManager'});
+				spawn.createCreep(bodies.runner(maxEnergy),undefined,{role:'terminalManager'});
 			}
 			else if(room.controller.level >= 6 && room.find(FIND_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_EXTRACTOR}).length > 0 && mineral.ticksToRegeneration === undefined && mineralMiners.length < 1){
 				spawn.createCreep(bodies.mineralMiner(maxEnergy),undefined,{role:'mineralMiner'});
