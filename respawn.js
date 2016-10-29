@@ -111,20 +111,20 @@ module.exports = {
 			var thief_target = 0;
 			var hunter_target = 0;
 
-			var hostiles = room.find(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username) });
-			if(hostiles.length){
-				hunter_target=Math.ceil(hostiles.length/2);
+			var hostiles = room.find(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username) }).length;
+			if(hostiles > 0){
+				hunter_target=Math.ceil(hostiles/2);
 			}
 
 			var creepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.pos.roomName == room.name),'memory.role'); //this also counts spawning creeps
-			var upgraders = creepsByRole.upgrader != undefined ? creepsByRole.upgrader : [];
-			var civilians = creepsByRole.civilian != undefined ? creepsByRole.civilian : [];
-			var repairers = creepsByRole.repairer != undefined ? creepsByRole.repairer : [];
-			var miners = creepsByRole.miner != undefined ? creepsByRole.miner : [];
-			var runners = creepsByRole.runner != undefined ? creepsByRole.runner : [];
-			var hunters = creepsByRole.hunter != undefined ? creepsByRole.hunter : [];
-			var mineralMiners = creepsByRole.mineralMiner != undefined ? creepsByRole.mineralMiner : [];
-			var terminalManagers = creepsByRole.terminalManager != undefined ? creepsByRole.terminalManager : [];
+			var upgraders = creepsByRole.upgrader != undefined ? creepsByRole.upgrader.length : 0;
+			var civilians = creepsByRole.civilian != undefined ? creepsByRole.civilian.length : 0;
+			var repairers = creepsByRole.repairer != undefined ? creepsByRole.repairer.length : 0;
+			var miners = creepsByRole.miner != undefined ? creepsByRole.miner.length : 0;
+			var runners = creepsByRole.runner != undefined ? creepsByRole.runner.length : 0;
+			var hunters = creepsByRole.hunter != undefined ? creepsByRole.hunter.length : 0;
+			var mineralMiners = creepsByRole.mineralMiner != undefined ? creepsByRole.mineralMiner.length : 0;
+			var terminalManagers = creepsByRole.terminalManager != undefined ? creepsByRole.terminalManager.length : 0;
 			if(room.memory.requestList === undefined){ //checking this every tick is a waste
 				room.memory.requestList = [];
 			}
@@ -140,13 +140,13 @@ module.exports = {
 	       // console.log(miners.length + ' ' + runners.length + ' ' + upgraders.length + ' ' + repairers.length)
 
 			//first ensure 1 miner, 1 runner, 1 upgrader are always available
-			if(miners.length < 1){
+			if(miners < 1){
 				spawn.createCreep(bodies.miner(room.energyAvailable),undefined,{role:'miner'});
 			}
-			else if(runners.length < 1){
+			else if(runners < 1){
 				spawn.createCreep(bodies.runner(room.energyAvailable),undefined,{role:'runner'});
 			}
-			else if(upgraders.length < 1 && room.controller.ticksToDowngrade < 500){
+			else if(upgraders < 1 && room.controller.ticksToDowngrade < 500){
 				spawn.createCreep(bodies.upgrader(room.energyAvailable),undefined,{role:'upgrader'});
 			}
 			// //prioritize first repairer so we have something to build early on
@@ -157,36 +157,35 @@ module.exports = {
 			else if(requestList.length > 0){
 				if(spawn.canCreateCreep(...requestList[0]) == OK){
 					spawn.createCreep(...requestList.shift()) //spawns the first creep in the list and deletes it from the list
-					room.memory.requestList = JSON.stringify(requestList);
+					room.memory.requestList = requestList;
 				}
 			}
 			//now proceed with the rest in priority order
-			else if(miners.length < miner_target){
+			else if(miners < miner_target){
 				spawn.createCreep(bodies.miner(maxEnergy),undefined,{role:'miner'});
 			}
-			else if(runners.length < runner_target){
+			else if(runners < runner_target){
 				spawn.createCreep(bodies.runner(maxEnergy),undefined,{role:'runner'});
 			}
-			else if(upgraders.length < upgrader_target) {
+			else if(upgraders < upgrader_target) {
 				spawn.createCreep(bodies.upgrader(maxEnergy),undefined,{role:'upgrader'});
 			}
-			else if(civilians.length < civilian_target) {
+			else if(civilians < civilian_target) {
 				spawn.createCreep(bodies.civilian(maxEnergy),undefined,{role:'civilian'});
 			}
-			else if(repairers.length < repairer_target) {
+			else if(repairers < repairer_target) {
 				spawn.createCreep(bodies.repairer(maxEnergy),undefined,{role: 'repairer'});
 			}
-			else if(hunters.length < hunter_target) {
+			else if(hunters < hunter_target) {
 				if (spawn.room.energyAvailable > 600){
 					spawn.createCreep([TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],undefined,{role: 'hunter'});
 				}
 			}
-			else if(terminalManagers.length < terminalManager_target){
+			else if(terminalManagers < terminalManager_target){
 				spawn.createCreep(bodies.runner(maxEnergy),undefined,{role:'terminalManager'});
 			}
-			else if(room.controller.level >= 6 && room.find(FIND_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_EXTRACTOR}).length > 0 && mineral.ticksToRegeneration === undefined && mineralMiners.length < 1){
+			else if(room.controller.level >= 6 && room.find(FIND_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_EXTRACTOR}).length > 0 && mineral.ticksToRegeneration === undefined && mineralMiners < 1){
 				spawn.createCreep(bodies.mineralMiner(maxEnergy),undefined,{role:'mineralMiner'});
-
 			}
 			// if(thiefs.length < thief_target) {
 				// if (spawn.room.energyAvailable > 600){
@@ -211,8 +210,8 @@ module.exports = {
 						if(flag.memory.underAttack){
 							remoteMiner_target = 0;
 							remoteRunner_target = 0;
-							var remoteHunters = _.filter(Game.creeps, (c) => c.memory.role == 'remoteHunter' && c.memory.myflag == flag.name);
-							if(remoteHunters.length < 2){
+							var remoteHunters = _.filter(Game.creeps, (c) => c.memory.role == 'remoteHunter' && c.memory.myflag == flag.name).length;
+							if(remoteHunters < 2){
 								spawn.createCreep([TOUGH,MOVE,TOUGH,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],undefined,{
 								role : 'remoteHunter', myflag : flag.name, homeRoom : room.name
 								});
@@ -221,8 +220,8 @@ module.exports = {
 						//logic to spawn reservers
 						var reservers = _.filter(Game.creeps, (creep) =>
 							creep.memory.role == 'reserver' && creep.memory.myflag == flag.name
-						);
-						if (reservers.length < 1){
+						).length;
+						if (reservers < 1){
 							var tospawn = false
 							if (flag.memory.reserved && flag.pos.roomName in Game.rooms){ //second check is to prevent breaking from no vision
 								var con = _.filter(flag.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_CONTROLLER)[0];
@@ -275,8 +274,8 @@ module.exports = {
 					if(/claim/.test(flag)){ //continously respawn remoteUpgraders to help establish the new room until flag is removed
 						var remoteUpgraders = _.filter(Game.creeps,(creep) =>
 							creep.memory.role == 'remoteUpgrader' && creep.memory.myflag == flag.name
-						);
-						if (remoteUpgraders.length < 1){
+						).length;
+						if (remoteUpgraders < 1){
 							spawn.createCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],undefined,{
 								role : 'remoteUpgrader' , myflag : flag.name, homeRoom : room.name
 							});
