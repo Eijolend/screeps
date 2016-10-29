@@ -126,9 +126,9 @@ module.exports = {
 			var mineralMiners = creepsByRole.mineralMiner != undefined ? creepsByRole.mineralMiner : [];
 			var terminalManagers = creepsByRole.terminalManager != undefined ? creepsByRole.terminalManager : [];
 			if(room.memory.requestList === undefined){ //checking this every tick is a waste
-				room.memory.requestList = JSON.stringify([]);
+				room.memory.requestList = [];
 			}
-			var requestList = JSON.parse(room.memory.requestList);
+			var requestList = room.memory.requestList;
 			var mineral = room.find(FIND_MINERALS)[0];
 			// var upgraders = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'upgrader'});
 			// var builders = room.find(FIND_MY_CREEPS,{filter: (creep) => creep.memory.role == 'builder'});

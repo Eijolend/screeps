@@ -1,11 +1,11 @@
 module.exports = function(){
     Room.prototype.requestCreep = function(body,name,mem){
     	if(this.memory.requestList === undefined){
-    		this.memory.requestList = JSON.stringify([]);
+    		this.memory.requestList = [];
     	}
-    	var mylist = JSON.parse(this.memory.requestList);
+    	var mylist = this.memory.requestList;
     	mylist.push([body,name,mem]);
-    	this.memory.requestList = JSON.stringify(mylist);
+    	this.memory.requestList = mylist;
     };
 
     Creep.prototype.std_moveTo = Creep.prototype.moveTo;

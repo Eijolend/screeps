@@ -30,7 +30,6 @@ all the rest:
 *dynamic hunter bodies
 
 *a better requestList spawning
-*remove unnecessary stringifying from requestList
 
 combat related:
 *better tower code
