@@ -22,9 +22,9 @@ module.exports = {
         var myflag = Game.flags[creep.memory.myflag];
         if(creep.room.name == myflag.pos.roomName){
             if(creep.memory.workable){
-                var myContainer = myflag.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+                var myContainer = _.filter(myflag.pos.findInRange(FIND_STRUCTURES,1), (s) => s.structureType == STRUCTURE_CONTAINER)[0];
                 if(myContainer == undefined){
-                    var csContainer = myflag.pos.findInRange(FIND_CONSTRUCTION_SITES,1,{filter:(s) => s.structureType == STRUCTURE_CONTAINER});
+                    var csContainer = _.filter(myflag.pos.findInRange(FIND_CONSTRUCTION_SITES,1),(s) => s.structureType == STRUCTURE_CONTAINER);
                     if(csContainer.length == 0){
                         creep.pos.createConstructionSite(STRUCTURE_CONTAINER);
                     }

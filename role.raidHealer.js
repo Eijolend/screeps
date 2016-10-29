@@ -4,12 +4,12 @@ module.exports = {
         if(myflag == undefined){
             myflag = Game.flags['Raid'];
         }
-        var damaged = _.sortBy(creep.pos.findInRange(FIND_MY_CREEPS,1,{filter: (c) => c.hits < c.hitsMax}),'hits');
+        var damaged = _(creep.pos.findInRange(FIND_MY_CREEPS,1)).filter((c) => c.hits < c.hitsMax).sortBy('hits').value();
         if(damaged.length){
             creep.heal(damaged[0]);
         }
         else{
-            var damagedAtRange = _.sortBy(creep.pos.findInRange(FIND_MY_CREEPS,3,{filter: (c) => c.hits < c.hitsMax}),'hits');
+            var damagedAtRange = _(creep.pos.findInRange(FIND_MY_CREEPS,3)).filter((c) => c.hits < c.hitsMax).sortBy('hits').value();
             if(damagedAtRange.length){
                 creep.rangedHeal(damagedAtRange[0]);
             }

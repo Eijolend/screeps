@@ -1,6 +1,6 @@
 module.exports = {
 	mine : function(creep,target){
-		var mycontainer = target.pos.findInRange(FIND_STRUCTURES,1,{filter: (s)=> s.structureType == STRUCTURE_CONTAINER});
+		var mycontainer = _.filter(target.pos.findInRange(FIND_STRUCTURES,1), (s)=> s.structureType == STRUCTURE_CONTAINER);
 		if(mycontainer.length > 0){
 			creep.harvest(target);
 			creep.moveTo(mycontainer[0]);
@@ -12,17 +12,15 @@ module.exports = {
 		}
 	},
 
-	contain : function(creep){
-		var mycontainer=creep.pos.findInRange(FIND_STRUCTURES,2,{
-			filter: (structure) => structure.structureType == STRUCTURE_CONTAINER
-		});
-		if (mycontainer[0].hits < mycontainer[0].hitsMax){ //maintain my own container
-			creep.repair(mycontainer[0]);
-		}
-		else if (creep.transfer(mycontainer[0],RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-			creep.moveTo(mycontainer[0]);
-		}
-	},
+	// contain : function(creep){
+	// 	var mycontainer=_.filter(creep.pos.findInRange(FIND_STRUCTURES,2), (s) => s.structureType == STRUCTURE_CONTAINER)[0];
+	// 	if (mycontainer.hits < mycontainer.hitsMax){ //maintain my own container
+	// 		creep.repair(mycontainer);
+	// 	}
+	// 	else if (creep.transfer(mycontainer,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+	// 		creep.moveTo(mycontainer);
+	// 	}
+	// },
 
 	pick : function(creep,target){
 		if(creep.pickup(target) == ERR_NOT_IN_RANGE){
@@ -64,10 +62,10 @@ module.exports = {
 		var stdSource = sources[stdNo];
 		var otherNo = (stdNo == 1) ? 0 : 1;
 		var otherSource = sources[otherNo];
-		var stdContainer = stdSource.pos.findInRange(FIND_STRUCTURES,1,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+		var stdContainer = _.filter(stdSource.pos.findInRange(FIND_STRUCTURES,1),(s) => s.structureType == STRUCTURE_CONTAINER)[0];
 		var stdDropped = stdSource.pos.findInRange(FIND_DROPPED_ENERGY,1)[0];
 		var stdEnergy = ( stdContainer != undefined ? stdContainer.store.energy : 0 ) + ( stdDropped != undefined ? stdDropped.amount : 0 );
-		var otherContainer = otherSource.pos.findInRange(FIND_STRUCTURES,1,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+		var otherContainer = _.filter(otherSource.pos.findInRange(FIND_STRUCTURES,1), (s) => s.structureType == STRUCTURE_CONTAINER)[0];
 		var otherDropped = otherSource.pos.findInRange(FIND_DROPPED_ENERGY,1)[0];
 		var otherEnergy = ( otherContainer != undefined ? otherContainer.store.energy : 0 ) + ( otherDropped != undefined ? otherDropped.amount : 0 );
 		var threshold = 2000
@@ -87,7 +85,7 @@ module.exports = {
 		}
 		var sources = creep.room.find(FIND_SOURCES);
 		var mysource = sources[sourceNo];
-		var mycontainer = mysource.pos.findInRange(FIND_STRUCTURES,1,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+		var mycontainer = _.filter(mysource.pos.findInRange(FIND_STRUCTURES,1), (s) => s.structureType == STRUCTURE_CONTAINER)[0];
 		var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
 
 		var targets = mysource.pos.findInRange(FIND_DROPPED_ENERGY,3);

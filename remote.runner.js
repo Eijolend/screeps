@@ -12,9 +12,9 @@ module.exports = {
 	    }
 
 		if(creep.room.name != creep.memory.homeRoom){
-			var roadatpoint = creep.pos.findInRange(FIND_STRUCTURES,0,{filter: (s) => s.structureType == STRUCTURE_ROAD});
+			var roadatpoint = _.filter(creep.pos.lookFor(LOOK_STRUCTURES), (s) => s.structureType == STRUCTURE_ROAD)[0];
 			if(creep.memory.delivering){
-				var target = creep.pos.findInRange(FIND_CONSTRUCTION_SITES,3,{filter : (s) => s.structureType == STRUCTURE_ROAD})[0];
+				var target = _.filter(creep.pos.findInRange(FIND_CONSTRUCTION_SITES,3),(s) => s.structureType == STRUCTURE_ROAD)[0];
 				if (target != undefined){
 					tasks.construct(creep,target);
 				}
@@ -30,7 +30,7 @@ module.exports = {
     			// 	creep.pos.createConstructionSite(STRUCTURE_ROAD);
     			// }
                 var dropped = Game.flags[creep.memory.myflag].pos.findInRange(FIND_DROPPED_ENERGY,3);
-                var myContainer = Game.flags[creep.memory.myflag].pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+                var myContainer = _.filter(Game.flags[creep.memory.myflag].pos.findInRange(FIND_STRUCTURES,1),(s) => s.structureType == STRUCTURE_CONTAINER)[0];
 
                 if (myContainer != undefined && myContainer.store.energy == myContainer.storeCapacity){ //fixes container overflowing
         			tasks.get(creep,myContainer);
