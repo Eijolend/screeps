@@ -23,15 +23,19 @@ module.exports = {
 	// },
 
 	pick : function(creep,target){
-		if(creep.pickup(target) == ERR_NOT_IN_RANGE){
+		var code = creep.pickup(target);
+		if(code == ERR_NOT_IN_RANGE){
 			creep.moveTo(target);
 		}
+		return code
 	},
 
 	get : function(creep,target){
-		if(creep.withdraw(target,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+		var code = creep.withdraw(target,RESOURCE_ENERGY);
+		if(code == ERR_NOT_IN_RANGE){
 			creep.moveTo(target);
 		}
+		return code;
 	},
 
 	determineSource : function(creep){
@@ -68,7 +72,7 @@ module.exports = {
 		var otherContainer = _.filter(otherSource.pos.findInRange(FIND_STRUCTURES,1), (s) => s.structureType == STRUCTURE_CONTAINER)[0];
 		var otherDropped = otherSource.pos.findInRange(FIND_DROPPED_ENERGY,1)[0];
 		var otherEnergy = ( otherContainer != undefined && otherContainer.store.energy != undefined ? otherContainer.store.energy : 0 ) + ( otherDropped != undefined ? otherDropped.amount : 0 );
-		var threshold = 2000
+		var threshold = 2000;
 		if(otherEnergy > threshold && (otherEnergy-threshold) > stdEnergy){
 			return otherNo;
 		}
@@ -86,7 +90,7 @@ module.exports = {
 		var sources = creep.room.find(FIND_SOURCES);
 		var mysource = sources[sourceNo];
 		var mycontainer = _.filter(mysource.pos.findInRange(FIND_STRUCTURES,1), (s) => s.structureType == STRUCTURE_CONTAINER)[0];
-		var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
+		var stock = creep.room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
 
 		var targets = mysource.pos.findInRange(FIND_DROPPED_ENERGY,3);
 		if (mycontainer != undefined && mycontainer.store.energy == mycontainer.storeCapacity){ //fixes container overflowing
@@ -95,7 +99,7 @@ module.exports = {
 		else if (targets.length){
 			this.pick(creep,targets[0]);
 		}
-		else if(mycontainer != undefined && mycontainer.store.energy >= creep.carryCapacity){
+		else if(mycontainer != undefined && mycontainer.store.energy >= creep.carryCapacity - (creep.carry.energy != undefined ? creep.carry.energy : 0) ){
 			this.get(creep,mycontainer);
 		}
 		else if(stock.length){
