@@ -16,7 +16,7 @@ module.exports = {
 		var myDropped = mySource.pos.findInRange(FIND_DROPPED_ENERGY,1)[0];
 		var myEnergy = ( myContainer != undefined ? myContainer.store.energy : 0 ) + ( myDropped != undefined ? myDropped.amount : 0 );
 		if (myEnergy < 3000){ //should limit overmining and triggering invaders too early, but is a bit of a waste to check every tick
-			tasks.mine(creep,sources[creep.memory.mine]);
+			tasks.mine(creep,mySource);
 		}
 	}
 }
