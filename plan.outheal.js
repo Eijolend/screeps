@@ -48,12 +48,12 @@ module.exports = {
         }
         else{
             //heal
-            var damaged = _(creep.pos.findInRange(FIND_MY_CREEPS,1)).filter((c) => c.hits < c.hitsMax).sortBy('hits').value();
+            var damaged = _.sortBy(creep.pos.findInRange(FIND_MY_CREEPS,1,{filter : (c) => c.hits < c.hitsMax}),'hits');
             if(damaged.length){
                 creep.heal(damaged[0]);
             }
             else{
-                var damagedAtRange = _(creep.pos.findInRange(FIND_MY_CREEPS,3)).filter((c) => c.hits < c.hitsMax).sortBy('hits').value();
+                var damagedAtRange = _.sortBy(creep.pos.findInRange(FIND_MY_CREEPS,3,{filter : (c) => c.hits < c.hitsMax}),'hits');
                 if(damagedAtRange.length){
                     creep.rangedHeal(damagedAtRange[0]);
                 }

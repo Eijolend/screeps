@@ -4,7 +4,7 @@ module.exports = {
     run : function(creep){
         var mineral = creep.room.find(FIND_MINERALS)[0];
         var mineralType = mineral.mineralType;
-        var mineralContainer = _.filter(mineral.pos.findInRange(FIND_STRUCTURES,1),(s)=>s.structureType == STRUCTURE_CONTAINER)[0];
+        var mineralContainer = mineral.pos.findInRange(FIND_STRUCTURES,1,{filter:(s)=>s.structureType == STRUCTURE_CONTAINER})[0];
         if(!creep.memory.getting && _.sum(creep.carry) == 0){
             if(creep.ticksToLive < 100){
     			creep.memory.role = 'recycler';
