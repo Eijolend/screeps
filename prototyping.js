@@ -1,3 +1,5 @@
+var utils = require('utils');
+
 module.exports = function(){
     Room.prototype.requestCreep = function(body,name,mem){
     	if(this.memory.requestList === undefined){
