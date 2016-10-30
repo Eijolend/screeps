@@ -91,13 +91,8 @@ module.exports = {
 		}
 		var sources = creep.room.find(FIND_SOURCES);
 		var mysource = sources[sourceNo];
-<<<<<<< HEAD
-		var mycontainer = _.filter(mysource.pos.findInRange(FIND_STRUCTURES,1), (s) => s.structureType == STRUCTURE_CONTAINER)[0];
+		var mycontainer = mysource.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
 		var stock = creep.room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
-=======
-		var mycontainer = mysource.pos.findInRange(FIND_STRUCTURES,1,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
-		var stock = creep.room.find(FIND_STRUCTURES,{filter : (s) => s.structureType == STRUCTURE_STORAGE && s.store.energy > 0});
->>>>>>> parent of c7a5f7c... improved findInRange calls
 
 		var targets = mysource.pos.findInRange(FIND_DROPPED_ENERGY,3);
 		if (mycontainer != undefined && mycontainer.store.energy == mycontainer.storeCapacity){ //fixes container overflowing
