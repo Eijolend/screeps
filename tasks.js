@@ -62,6 +62,9 @@ module.exports = {
 				case 'remoteUpgrader':
 					stdNo = 0;
 					break;
+				default:
+					stdNo = 0;
+					break;
 			}
 		}
 		var sources = creep.room.find(FIND_SOURCES);

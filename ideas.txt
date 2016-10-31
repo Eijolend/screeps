@@ -31,6 +31,8 @@ all the rest:
 
 *a better requestList spawning
 
+*automatic nuke defense (at least for one nuke)
+
 combat related:
 *better tower code
 *defensive and offensive creep squads
