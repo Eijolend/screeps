@@ -45,22 +45,22 @@ module.exports = {
 		if(stdNo == undefined){
 			switch (creep.memory.role){
 				case 'civilian':
-					stdNo = 1;
+					stdNo = 0;
 					break;
 				case 'runner':
-					stdNo = 0;
+					stdNo = 1;
 					break;
 				case 'terminalManager':
-					stdNo = 0;
+					stdNo = 1;
 					break;
 				case 'upgrader':
-					stdNo = 1;
+					stdNo = 0;
 					break;
 				case 'repairer':
-					stdNo = 1;
+					stdNo = 0;
 					break;
 				case 'remoteUpgrader':
-					stdNo = 1;
+					stdNo = 0;
 					break;
 			}
 		}

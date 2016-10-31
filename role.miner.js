@@ -4,11 +4,11 @@ module.exports = {
 	run : function(creep){
 		if (creep.memory.mine != 0 && creep.memory.mine != 1){ //this works only assuming two mines and two miners
 			var miners = creep.room.find(FIND_MY_CREEPS,{filter: (c) => c.memory.role == 'miner'});
-			if(miners.length && miners[0].memory.mine == 0){
-				creep.memory.mine = 1;
+			if(miners.length && miners[0].memory.mine == 1){
+				creep.memory.mine = 0;
 			}
 			else{
-				creep.memory.mine = 0;
+				creep.memory.mine = 1;
 			}
 		}
 		var mySource = creep.room.find(FIND_SOURCES)[creep.memory.mine];
