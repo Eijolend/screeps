@@ -88,6 +88,25 @@ var bodies = {
 			body.push(...template);
 		}
 		return body
+	},
+	hunter : function(maxEnergy){
+		var toughTemplate = [TOUGH,MOVE];
+		var toughCost = cost(toughTemplate);
+		var attackTemplate = [ATTACK,MOVE];
+		var attackCost = cost(attackTemplate);
+		var toughNo = Math.min(Math.floor(maxEnergy/12/toughCost),6); //at most 1/12 of energy should go towards TOUGH parts
+		var energyLeft = maxEnergy - toughNo * toughCost;
+		var attackNo = Math.min(Math.floor(energyLeft/attackCost),19); //no more than 50 body parts
+		var body = [];
+		for(i=0;i<toughNo;i++){
+			body.push(TOUGH);
+		}
+		for(i=0;i<toughNo;i++){
+			body.push(MOVE);
+		}
+		for(i=0;i<attackNo;i++){
+			body.push(...attackTemplate);
+		}
 	}
 }
 
@@ -187,9 +206,7 @@ module.exports = {
 				spawn.createCreep(bodies.repairer(maxEnergy),undefined,{role: 'repairer'});
 			}
 			else if(hunters < hunter_target) {
-				if (spawn.room.energyAvailable > 600){
-					spawn.createCreep([TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],undefined,{role: 'hunter'});
-				}
+				spawn.createCreep(bodies.hunter(maxEnergy/2),undefined,{role: 'hunter'});
 			}
 			else if(terminalManagers < terminalManager_target){
 				spawn.createCreep(bodies.runner(maxEnergy),undefined,{role:'terminalManager'});
@@ -202,8 +219,7 @@ module.exports = {
 					// spawn.createCreep([CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],undefined,{role: 'thief'});
 				// }
 			// }
-			else{
-				//flag based spawning with homeRoom
+			else{	//flag based spawning with homeRoom
 				var remoteMiner_target = 1; //miners per remote site
 				var remoteRunner_target = 1; //base value per remote site
 				for (var flag of _.filter(Game.flags, (f)=>f.memory.homeRoom == room.name)){
@@ -222,7 +238,7 @@ module.exports = {
 							remoteRunner_target = 0;
 							var remoteHunters = _.filter(Game.creeps, (c) => c.memory.role == 'remoteHunter' && c.memory.myflag == flag.name).length;
 							if(remoteHunters < 2){
-								spawn.createCreep([TOUGH,MOVE,TOUGH,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],undefined,{
+								spawn.createCreep(bodies.hunter(maxEnergy/2),undefined,{
 								role : 'remoteHunter', myflag : flag.name, homeRoom : room.name
 								});
 							}
@@ -256,6 +272,8 @@ module.exports = {
 						}
 					}
 					if(/harvest/.test(flag.name)){ //see that every remote site has enough harvesters
+						var remoteMiner_target = 1; //miners per remote site
+						var remoteRunner_target = 1; //base value per remote site
 						var remoteMiners = _.filter(Game.creeps, (creep) =>
 							creep.memory.role == 'remoteMiner' && creep.memory.myflag == flag.name //should be spawned early, but my check is too stupid
 						).length;

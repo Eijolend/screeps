@@ -27,8 +27,6 @@ all the rest:
 
 *a clean solution to the waypoint dilemma
 
-*dynamic hunter bodies
-
 *a better requestList spawning
 
 *automatic nuke defense (at least for one nuke)
