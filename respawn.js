@@ -107,6 +107,7 @@ var bodies = {
 		for(i=0;i<attackNo;i++){
 			body.push(...attackTemplate);
 		}
+		return body
 	}
 }
 
