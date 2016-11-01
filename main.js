@@ -125,37 +125,37 @@ module.exports.loop = function(){
 			// var elapsed = Game.cpu.getUsed() - startCpu;
 			// console.log('Creep '+name+' with role '+creep.memory.role+' has used '+elapsed+' CPU time');
 		}
-		if('Raid' in Game.flags){
-			if(Game.time % 1000 == 0){
-				var raiderBody = [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE];
-				var healerBody = [MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE];
-				Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-				Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-				Game.spawns.Spawn3.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-				Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-				Game.spawns.Spawn3.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-				Game.spawns.Spawn2.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
-				Game.spawns.Spawn2.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
-				Game.spawns.Spawn3.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
-				//===================//
+		// if('Raid' in Game.flags){
+		// 	// if(Game.time % 1000 == 0){
+		// 	// 	var raiderBody = [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE];
+		// 	// 	var healerBody = [MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE];
+		// 	// 	Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
+		// 	// 	Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
+		// 	// 	Game.spawns.Spawn3.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
+		// 	// 	Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
+		// 	// 	Game.spawns.Spawn3.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
+		// 	// 	Game.spawns.Spawn2.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
+		// 	// 	Game.spawns.Spawn2.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
+		// 	// 	Game.spawns.Spawn3.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
+		// 		//===================//
+		// 		// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
+		// 		// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
 				// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
-				// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
-				// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
-				// Game.spawns.Spawn1.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense2'});
-				// Game.spawns.Spawn1.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense2'});
-			}
-		}
+		// 		// Game.spawns.Spawn1.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense2'});
+		// 		// Game.spawns.Spawn1.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense2'});
+		// 	}
+		// }
 		respawn.run(myrooms);
 
 		var startRoom = Game.rooms['W63N66'];
-		if(startRoom.controller.level >= 3){
-			startRoom.createConstructionSite(14,38,STRUCTURE_EXTENSION);
-			startRoom.createConstructionSite(13,38,STRUCTURE_EXTENSION);
-			startRoom.createConstructionSite(12,39,STRUCTURE_EXTENSION);
-			startRoom.createConstructionSite(18,36,STRUCTURE_EXTENSION);
-			startRoom.createConstructionSite(19,37,STRUCTURE_EXTENSION);
-			startRoom.createConstructionSite(27,19,STRUCTURE_TOWER);
-		}
+		// if(startRoom.controller.level >= 3){
+		// 	startRoom.createConstructionSite(14,38,STRUCTURE_EXTENSION);
+		// 	startRoom.createConstructionSite(13,38,STRUCTURE_EXTENSION);
+		// 	startRoom.createConstructionSite(12,39,STRUCTURE_EXTENSION);
+		// 	startRoom.createConstructionSite(18,36,STRUCTURE_EXTENSION);
+		// 	startRoom.createConstructionSite(19,37,STRUCTURE_EXTENSION);
+		// 	startRoom.createConstructionSite(27,19,STRUCTURE_TOWER);
+		// }
 		if(Game.spawns.Spawn1.hits < Game.spawns.Spawn1.hitsMax){
 			startRoom.controller.activateSafeMode();
 		}
