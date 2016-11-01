@@ -120,12 +120,12 @@ module.exports = {
 		for(i=0; i<prioritylist.length; i++){
 		    if(prioritylist[i]==STRUCTURE_CONTAINER || prioritylist[i]==STRUCTURE_STORAGE){
 		        var target=creep.room.find(FIND_STRUCTURES, {
-				    filter : (s) => s.structureType == prioritylist[i] && (s.store.energy<s.storeCapacity)
+				    filter: (s) => s.structureType == prioritylist[i] && (s.store.energy<s.storeCapacity)
 			    })[0];
 		    }
 		    else{
     			var target=creep.pos.findClosestByRange(FIND_STRUCTURES, {
-    				filter : (s) => s.structureType == prioritylist[i] && (s.energy < s.energyCapacity)
+    				filter: (s) => s.structureType == prioritylist[i] && (s.energy < s.energyCapacity)
     			});
 		    }
     		if(target != null){

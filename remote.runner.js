@@ -22,7 +22,12 @@ module.exports = {
                     if( _.filter(roadatpoint, (s) => s.hits < s.hitsMax).length){
 	                   creep.repair(roadatpoint[0]);
 				    }
-					creep.moveTo(Game.rooms[creep.memory.homeRoom].storage);
+                    if(Game.rooms[creep.memory.homeRoom].storage != undefined){
+                        creep.moveTo(Game.rooms[creep.memory.homeRoom].storage);
+                    }
+					else{
+                        creep.moveTo(new RoomPosition(25,25,creep.memory.homeRoom));
+                    }
 				}
 			}
 			else if(creep.room.name == Game.flags[creep.memory.myflag].pos.roomName){
@@ -51,7 +56,7 @@ module.exports = {
 		}
 		else if (creep.room.name == creep.memory.homeRoom){
 			if (creep.memory.delivering){
-				tasks.fill(creep,[STRUCTURE_STORAGE]);
+				tasks.fill(creep,[STRUCTURE_STORAGE,STRUCTURE_SPAWN,STRUCTURE_EXTENSION,STRUCTURE_CONTAINER]);
 			}
 			else if(creep.ticksToLive < 200 || creep.hits < creep.hitsMax){
 				creep.memory.role = 'recycler';
