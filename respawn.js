@@ -272,7 +272,12 @@ module.exports = {
 								var myContainer = flag.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
 								var myDropped = flag.pos.findInRange(FIND_DROPPED_ENERGY,1)[0];
 								var myEnergy = ( myContainer != undefined ? myContainer.store.energy : 0 ) + ( myDropped != undefined ? myDropped.amount : 0 );
-								remoteRunner_target = 1 + Math.floor(myEnergy/2000);
+								if(myContainer == undefined){
+									remoteRunner_target = 0;
+								}
+								else{
+									remoteRunner_target = 1 + Math.floor(myEnergy/2000);
+								}
 							}
 							if (remoteRunners < remoteRunner_target){
 								spawn.createCreep(bodies.remoteRunner(maxEnergy),undefined,{

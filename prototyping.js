@@ -24,7 +24,7 @@ module.exports = function(){
     		}
     		this.memory.lastPos = this.pos;
     		if(this.memory.stuckCount > 1){
-    			opts.reusePath = 5;
+    			opts.reusePath = 2;
     		}
     		else{
     			opts.reusePath = 50;
