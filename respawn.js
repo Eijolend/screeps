@@ -78,6 +78,16 @@ var bodies = {
 			body.push(WORK,WORK,MOVE);
 		}
 		return body
+	},
+	colonist : function(maxEnergy){
+		var template = [WORK,CARRY,MOVE,MOVE];
+		var intervalEnergy = cost(template);
+		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),8);
+		var body = [];
+		for(i=0;i<n;i++){
+			body.push(...template);
+		}
+		return body
 	}
 }
 
@@ -271,13 +281,13 @@ module.exports = {
 							}
 						}
 					}
-					if(/claim/.test(flag)){ //continously respawn remoteUpgraders to help establish the new room until flag is removed
-						var remoteUpgraders = _.filter(Game.creeps,(creep) =>
-							creep.memory.role == 'remoteUpgrader' && creep.memory.myflag == flag.name
+					if(/claim/.test(flag)){ //continously respawn colonists to help establish the new room until flag is removed
+						var colonists = _.filter(Game.creeps,(creep) =>
+							creep.memory.role == 'colonist' && creep.memory.myflag == flag.name
 						).length;
-						if (remoteUpgraders < 1){
-							spawn.createCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],undefined,{
-								role : 'remoteUpgrader' , myflag : flag.name, homeRoom : room.name
+						if (colonists < 1){
+							spawn.createCreep(bodies.colonist(maxEnergy),undefined,{
+								role : 'colonist' , myflag : flag.name, homeRoom : room.name
 							});
 						}
 					}

@@ -5,7 +5,7 @@ var roleMiner = require('role.miner');
 var roleRunner = require('role.runner');
 var roleReserver = require('role.reserver');
 var roleRepairer = require('role.repairer');
-var remoteUpgrader = require('remote.upgrader');
+var roleColonist = require('role.colonist');
 var remoteHunter = require('remote.hunter');
 var remoteMiner = require('remote.miner');
 var remoteRunner = require('remote.runner');
@@ -101,8 +101,8 @@ module.exports.loop = function(){
 			else if(creep.memory.role == 'thief'){
 				roleThief.run(creep);
 			}
-			else if(creep.memory.role == 'remoteUpgrader'){
-				remoteUpgrader.run(creep);
+			else if(creep.memory.role == 'colonist'){
+				roleColonist.run(creep);
 			}
 			else if(creep.memory.role == 'claimer'){
 				roleClaimer.run(creep);
