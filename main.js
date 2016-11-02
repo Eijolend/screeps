@@ -126,24 +126,19 @@ module.exports.loop = function(){
 			// console.log('Creep '+name+' with role '+creep.memory.role+' has used '+elapsed+' CPU time');
 		}
 		// if('Raid' in Game.flags){
-		// 	// if(Game.time % 1000 == 0){
-		// 	// 	var raiderBody = [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE];
-		// 	// 	var healerBody = [MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE];
-		// 	// 	Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-		// 	// 	Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-		// 	// 	Game.spawns.Spawn3.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-		// 	// 	Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-		// 	// 	Game.spawns.Spawn3.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1',waypoint:'waypoint'} );
-		// 	// 	Game.spawns.Spawn2.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
-		// 	// 	Game.spawns.Spawn2.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
-		// 	// 	Game.spawns.Spawn3.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1',waypoint:'waypoint'});
-		// 		//===================//
-		// 		// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
-		// 		// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
-				// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
-		// 		// Game.spawns.Spawn1.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense2'});
-		// 		// Game.spawns.Spawn1.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense2'});
-		// 	}
+		if(Game.time % 1000 == 0){
+			var raiderBody = [TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,MOVE];
+			var healerBody = [MOVE,HEAL,HEAL,MOVE];
+			Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1'} );
+			Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1'} );
+			Game.spawns.Spawn1.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1'});
+			//===================//
+			// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
+			// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
+			// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
+			// Game.spawns.Spawn1.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense2'});
+			// Game.spawns.Spawn1.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense2'});
+		}
 		// }
 		respawn.run(myrooms);
 

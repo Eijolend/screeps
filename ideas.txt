@@ -2,6 +2,8 @@
 
 Things that I should do urgently.
 
+*support for multiple Waypoints, preferably in moveTo
+
 *only spawn terminalManagers when needed, but I don't want to give up the safety net of an additional runner
 
 *better repairer logic, to minimize traffic jams. Idea: only make a list what needs to be repaired every 500 ticks or so. could be combined with:
