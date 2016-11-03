@@ -9,7 +9,16 @@ module.exports ={
         var numFlags = dismantleFlags.length;
         var target = undefined;
         if(creep.room.name != Game.flags['dismantle1'].pos.roomName){
-            creep.moveTo(Game.flags['dismantle1']);
+            var wayPoint = Game.flags[creep.memory.waypoint[0]];
+            if(wayPoint != undefined){
+                if(creep.room.name == wayPoint.pos.roomName){
+                    creep.memory.waypoint.shift();
+                }
+                creep.moveTo(wayPoint);
+            }
+            else{
+                creep.moveTo(Game.flags['dismantle1']);
+            }
         }
         else{
             for(i=1 ; i<=numFlags ; i++){
