@@ -90,10 +90,10 @@ module.exports.loop = function(){
 				remoteHunter.run(creep);
 			}
 			else if(creep.memory.role == 'shield'){
-				var wayPoint = Game.flags[creep.memory.waypoint];
+				var wayPoint = Game.flags[creep.memory.waypoint[0]];
 	            if(wayPoint != undefined){
 	                if(creep.room.name == wayPoint.pos.roomName){
-	                    creep.memory.waypoint = undefined
+	                    creep.memory.waypoint.shift();
 	                }
 	                creep.moveTo(wayPoint);
 	            }
