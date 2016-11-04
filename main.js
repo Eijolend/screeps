@@ -161,7 +161,7 @@ module.exports.loop = function(){
 			thisRoom.createConstructionSite(27,30,STRUCTURE_TOWER);
 		}
 
-		var thatRoom = Game.rooms.['W62N69'];
+		var thatRoom = Game.rooms['W62N69'];
 		if(thatRoom.controller.level >= 4){
 			thatRoom.createConstructionSite(36,39,STRUCTURE_EXTENSION);
 			thatRoom.createConstructionSite(36,38,STRUCTURE_EXTENSION);
