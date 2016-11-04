@@ -9,6 +9,9 @@ module.exports ={
         var numFlags = dismantleFlags.length;
         var target = undefined;
         if(creep.room.name != Game.flags['dismantle1'].pos.roomName){
+            if(creep.memory.waypoint == undefined){
+                creep.memory.waypoint = []
+            }
             var wayPoint = Game.flags[creep.memory.waypoint[0]];
             if(wayPoint != undefined){
                 if(creep.room.name == wayPoint.pos.roomName){
