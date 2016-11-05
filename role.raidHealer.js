@@ -24,14 +24,6 @@ module.exports = {
             }
         }
         else{
-            var wayPoint = Game.flags[creep.memory.waypoint];
-            if(wayPoint != undefined){
-                if(creep.room.name == wayPoint.pos.roomName){
-                    creep.memory.waypoint = undefined
-                }
-                creep.moveTo(wayPoint);
-            }
-            else{
                 creep.moveTo(myflag);
             }
         }

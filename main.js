@@ -31,9 +31,16 @@ require('prototyping')();
 profiler.enable();
 module.exports.loop = function(){
 	profiler.wrap(function() {
-		for(var i in Memory.creeps) {
-			if(!Game.creeps[i]) {
-				delete Memory.creeps[i];
+		if(Game.time % 500 == 0){ // garbage collect
+			for(var i in Memory.creeps) {
+				if(!Game.creeps[i]) {
+					delete Memory.creeps[i];
+				}
+			}
+			for(var i in Memory.flags) {
+				if(!Game.flags[i]) {
+					delete Memory.flags[i];
+				}
 			}
 		}
 
@@ -90,16 +97,7 @@ module.exports.loop = function(){
 				remoteHunter.run(creep);
 			}
 			else if(creep.memory.role == 'shield'){
-				var wayPoint = Game.flags[creep.memory.waypoint[0]];
-	            if(wayPoint != undefined){
-	                if(creep.room.name == wayPoint.pos.roomName){
-	                    creep.memory.waypoint.shift();
-	                }
-	                creep.moveTo(wayPoint);
-	            }
-	            else{
-	                creep.moveTo(Game.flags['Rally']);
-	            }
+	            creep.moveTo(Game.flags['Rally']);
 			}
 			else if(creep.memory.role == 'raider'){
 				roleRaider.run(creep);

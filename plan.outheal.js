@@ -13,11 +13,11 @@ module.exports = {
             'Desmond',{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W63N66'}
         );
         var disBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE]; //can be built by rcl 4 rooms
-        Game.rooms['W62N69'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W62N69'});
-        Game.rooms['W62N69'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W62N69'});
-        Game.rooms['W62N69'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W62N69'});
-        Game.rooms['W62N69'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W62N69'});
-        Game.rooms['W62N69'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W62N69'});
+        Game.rooms['W62N69'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W62N69', waypoint:['waypoint3']});
+        Game.rooms['W62N69'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W62N69', waypoint:['waypoint3']});
+        Game.rooms['W62N69'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W62N69', waypoint:['waypoint3']});
+        Game.rooms['W62N69'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W62N69', waypoint:['waypoint3']});
+        Game.rooms['W62N69'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler' , homeRoom : 'W62N69', waypoint:['waypoint3']});
         Memory.planOutheal = {
             stage : 0,
             rally : rallyFlag,
