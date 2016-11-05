@@ -36,6 +36,18 @@ module.exports = function(){
     		opts.reusePath = 0;
             opts.ignoreCreeps = false;
     	}
-    	return this.std_moveTo(target,opts);
+        if(creep.memory.waypoint == undefined){
+            creep.memory.waypoint = []
+        }
+        var wayPoint = Game.flags[creep.memory.waypoint[0]];
+        if(wayPoint != undefined){
+            if(creep.room.name == wayPoint.pos.roomName){
+                creep.memory.waypoint.shift();
+            }
+            return this.std_moveTo(wayPoint,opts);
+        }
+        else{
+            return this.std_moveTo(target,opts);
+        }
     }
 }
