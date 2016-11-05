@@ -24,8 +24,7 @@ module.exports = {
             }
         }
         else{
-                creep.moveTo(myflag);
-            }
+            creep.moveTo(myflag);
         }
     }
 }
