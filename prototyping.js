@@ -34,6 +34,7 @@ module.exports = function(){
     	var others = this.room.find(FIND_HOSTILE_CREEPS).length;
     	if(others > 0){
     		opts.reusePath = 0;
+            opts.ignoreCreeps = false;
     	}
     	return this.std_moveTo(target,opts);
     }

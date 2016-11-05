@@ -151,31 +151,6 @@ module.exports.loop = function(){
 		// }
 		respawn.run(myrooms);
 
-		var thisRoom = Game.rooms['W61N68'];
-		if(thisRoom.controller.level >= 3){
-			thisRoom.createConstructionSite(22,13,STRUCTURE_EXTENSION);
-			thisRoom.createConstructionSite(23,12,STRUCTURE_EXTENSION);
-			thisRoom.createConstructionSite(23,11,STRUCTURE_EXTENSION);
-			thisRoom.createConstructionSite(22,10,STRUCTURE_EXTENSION);
-			thisRoom.createConstructionSite(21,9,STRUCTURE_EXTENSION);
-			thisRoom.createConstructionSite(27,30,STRUCTURE_TOWER);
-		}
-
-		var thatRoom = Game.rooms['W62N69'];
-		if(thatRoom.controller.level >= 4){
-			thatRoom.createConstructionSite(36,39,STRUCTURE_EXTENSION);
-			thatRoom.createConstructionSite(36,38,STRUCTURE_EXTENSION);
-			thatRoom.createConstructionSite(36,37,STRUCTURE_EXTENSION);
-			thatRoom.createConstructionSite(37,36,STRUCTURE_EXTENSION);
-			thatRoom.createConstructionSite(38,35,STRUCTURE_EXTENSION);
-			thatRoom.createConstructionSite(33,38,STRUCTURE_EXTENSION);
-			thatRoom.createConstructionSite(34,38,STRUCTURE_EXTENSION);
-			thatRoom.createConstructionSite(33,39,STRUCTURE_EXTENSION);
-			thatRoom.createConstructionSite(34,39,STRUCTURE_EXTENSION);
-			thatRoom.createConstructionSite(39,34,STRUCTURE_EXTENSION);
-			thatRoom.createConstructionSite(29,39,STRUCTURE_STORAGE);
-		}
-
 		var startRoom = Game.rooms['W63N66'];
 		// if(startRoom.controller.level >= 3){
 		// 	startRoom.createConstructionSite(14,38,STRUCTURE_EXTENSION);
