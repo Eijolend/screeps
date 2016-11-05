@@ -36,8 +36,9 @@ module.exports = function(){
     		opts.reusePath = 0;
             opts.ignoreCreeps = false;
     	}
-        if(creep.memory.waypoint == undefined){
-            creep.memory.waypoint = []
+
+        if(this.memory.waypoint == undefined){
+            this.memory.waypoint = []
         }
         var wayPoint = Game.flags[this.memory.waypoint[0]];
         if(wayPoint != undefined){
