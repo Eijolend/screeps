@@ -39,10 +39,10 @@ module.exports = function(){
         if(creep.memory.waypoint == undefined){
             creep.memory.waypoint = []
         }
-        var wayPoint = Game.flags[creep.memory.waypoint[0]];
+        var wayPoint = Game.flags[this.memory.waypoint[0]];
         if(wayPoint != undefined){
-            if(creep.room.name == wayPoint.pos.roomName){
-                creep.memory.waypoint.shift();
+            if(this.room.name == wayPoint.pos.roomName){
+                this.memory.waypoint.shift();
             }
             return this.std_moveTo(wayPoint,opts);
         }
