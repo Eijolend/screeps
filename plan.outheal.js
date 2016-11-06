@@ -4,9 +4,9 @@ module.exports = {
     start : function(rallyFlag,targetFlag){
         //request appropriate creeps, rally and target are flags for the creep's memory
         var healBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE]; // costs 2280, a rcl 6 room can support 2300
-        Game.rooms['W63N66'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 0 , homeRoom : 'W63N66'});
-        Game.rooms['W63N66'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 1 , homeRoom : 'W63N66'});
-        Game.rooms['W63N66'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 2 , homeRoom : 'W63N66'});
+        Game.rooms['W63N66'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 0 , homeRoom : 'W63N66', waypoint:['waypoint3']});
+        Game.rooms['W63N66'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 1 , homeRoom : 'W63N66', waypoint:['waypoint3']});
+        Game.rooms['W63N66'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 2 , homeRoom : 'W63N66', waypoint:['waypoint3']});
         //Game.rooms['W54S17'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 3 , homeRoom : 'W54S17'});
         Game.rooms['W63N66'].requestCreep(
             [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE],
