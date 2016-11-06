@@ -50,5 +50,16 @@ module.exports = function(){
         else{
             return this.std_moveTo(target,opts);
         }
-    }
+    };
+
+    StructureSpawn.prototype.std_createCreep = StructureSpawn.prototype.createCreep;
+    StructureSpawn.prototype.createCreep = function(body,name,mem){
+        if(!mem){
+            mem = {};
+        }
+        if(!mem.homeRoom){
+            mem.homeRoom = this.room.name;
+        }
+        return this.std_createCreep(body,name,mem);
+    };
 }
