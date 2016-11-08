@@ -70,7 +70,7 @@ module.exports = {
 		var sources = creep.room.find(FIND_SOURCES);
 		var stdSource = sources[stdNo];
 		var otherNo = (stdNo == 1) ? 0 : 1;
-		var otherSource = sources[otherNo];
+		var otherSource = sources[otherNo] || stdSource;
 		var stdContainer = stdSource.pos.findInRange(FIND_STRUCTURES,1,{filter : (s) => s.structureType == STRUCTURE_CONTAINER})[0];
 		var stdDropped = stdSource.pos.findInRange(FIND_DROPPED_ENERGY,1)[0];
 		var stdEnergy = ( stdContainer != undefined && stdContainer.store.energy != undefined ? stdContainer.store.energy : 0 ) + ( stdDropped != undefined ? stdDropped.amount : 0 );
