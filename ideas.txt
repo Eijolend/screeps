@@ -2,15 +2,7 @@
 
 Things that I should do urgently.
 
-*support for multiple Waypoints, preferably in moveTo
-
-*only spawn terminalManagers when needed, but I don't want to give up the safety net of an additional runner
-
-*better repairer logic, to minimize traffic jams. Idea: only make a list what needs to be repaired every 500 ticks or so. could be combined with:
-*integrate repair into the civilian role
-
-
-*clean up code; write a better system to control on a room basis.
+*clean up code; rewrite roles to use a deliberating & run system
 
 Then:
 *labs and boosting
@@ -19,15 +11,16 @@ Then:
 all the rest:
 
 *implement proper spawning in advance
+*spawning proper amounts of remote runners
 
 *spawn dedicated loader creeps if a tower is empty and there are not enough civilians to fill all of them
 
+*only spawn terminalManagers when needed, but I don't want to give up the safety net of an additional runner
+
+*better repairer logic, to minimize traffic jams. Idea: only make a list what needs to be repaired every 500 ticks or so. could be combined with:
+*integrate repair into the civilian role
 
 *fix problems with overwriting the queue (fixed... maybe?)
-*monitor of remote mining works like expected
-*monitor if not prioritizing repairers will repair enough
-
-*a clean solution to the waypoint dilemma
 
 *a better requestList spawning
 
