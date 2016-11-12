@@ -1,6 +1,15 @@
-var utils = require('utils');
+"use strict";
+const utils = require('utils');
 
-module.exports = function(){
+var setupConsts = function(){
+    global.TASK_BUILD = "build";
+    global.TASK_MINE = "mine";
+    global.TASK_FILL = "fill";
+    global.TASK_PICKUP = "pickup";
+    global.TASK_GET_ENERGY = "getEnergy";
+}
+
+var setupPrototypes = function(){
     Room.prototype.requestCreep = function(body,name,mem){
     	if(this.memory.requestList === undefined){
     		this.memory.requestList = [];
@@ -52,6 +61,9 @@ module.exports = function(){
         }
     };
 
+    Object.defineProperty(Creep.prototype, 'role', { get: function () { return this.memory.role; } , set: function(x) { this.memory.role = x; } });
+    Object.defineProperty(Creep.prototype, 'task', { get: function () { return this.memory.task; } , set: function(x) { this.memory.task = x; } });
+
     StructureSpawn.prototype.std_createCreep = StructureSpawn.prototype.createCreep;
     StructureSpawn.prototype.createCreep = function(body,name,mem){
         if(!mem){
@@ -62,4 +74,9 @@ module.exports = function(){
         }
         return this.std_createCreep(body,name,mem);
     };
+}
+
+module.exports = function(){
+    setupConsts();
+    setupPrototypes();
 }

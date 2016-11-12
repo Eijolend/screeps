@@ -6,7 +6,7 @@ const profiler = require('screeps-profiler');
 
 global.playerWhiteList = ['PiratenBraut','PhillipK','CokeJunkie','KaZoiden'];
 
-require('prototyping')();
+require('setupGlobal')();
 
 profiler.registerObject(roomManager, 'roomManager');
 profiler.registerObject(roomManager, 'creepLoop');
