@@ -7,6 +7,7 @@ var setupConsts = function(){
     global.TASK_FILL = "fill";
     global.TASK_PICKUP = "pickup";
     global.TASK_GET_ENERGY = "getEnergy";
+    global.TASK_UPGRADE = "upgrade";
 }
 
 var setupPrototypes = function(){

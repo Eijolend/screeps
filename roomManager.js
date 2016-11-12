@@ -1,8 +1,12 @@
 "use strict";
 const respawn = require('respawn');
 
-var recalcTasks = function(room){
+var setupTask = function(taskType,object){
     return;
+}
+
+var recalcTasks = function(room){
+    var taskList = [];
 }
 
 module.exports = {

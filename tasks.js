@@ -19,6 +19,10 @@ module.exports = {
 
     getEnergy : function(creep){
         return;
+    },
+
+    upgrade : function(creep){
+        return;
     }
 
 }
