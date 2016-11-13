@@ -10,8 +10,9 @@ var recalcTasks = function(room){
     var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
     var mineCreeps = _.groupBy(creepsByTask[TASK_MINE] || [], 'task.id');
     for (var source of room.find(FIND_SOURCES)){
-        sourcetask = setupTask(TASK_MINE,source);
-        sourcetask.assigned = (mineCreeps[sourc.id] || []).length
+        var sourcetask = setupTask(TASK_MINE,source);
+        sourcetask.assigned = (mineCreeps[source.id] || []).length
+        sourcetask.containerId = (source.pos.findInRange(FIND_STRUCTURES,1,{filter: (s)=> s.structureType == STRUCTURE_CONTAINER})[0] || []).id; //is undefined if no container
         taskList.push(sourcetask);
     }
     var buildCreeps = _.groupBy(creepsByTask[TASK_BUILD] || [], 'task.id');
@@ -35,23 +36,23 @@ var recalcTasks = function(room){
     var fillCreeps = _.groupBy(creepsByTask[TASK_FILL] || [], 'task.id');
     for (var spex of room.find(FIND_MY_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_SPAWN || s.structureType == STRUCTURE_EXTENSION})){
         var spextask = setupTask(TASK_FILL,spex);
-        spextask.amountNeeded = spex.energyCapacity - spex.energy - _.sum( (fillCreeps)[spex.id] || []), 'carry.energy');
+        spextask.amountNeeded = spex.energyCapacity - spex.energy - _.sum( (fillCreeps[spex.id] || []), 'carry.energy');
         taskList.push(spextask);
     }
     var upgradeCreeps = creepsByTask[TASK_UPGRADE] || [];
     if(room.controller != undefined){ //this needs a distinction whether this is a remoteroom or not
-        upgradetask = setupTask(TASK_UPGRADE,room.controller);
+        var upgradetask = setupTask(TASK_UPGRADE,room.controller);
         upgradetask.ticksToDowngrade = room.controller.ticksToDowngrade;
         upgradetask.assigned = upgradeCreeps.length;
         taskList.push(upgradetask);
     }
     // still needed: towers, repairing, reparing walls
-    room.memory.tasks = taskList;
+    room.memory.tasks = _.groupBy(taskList,"type");
 }
 
 module.exports = {
     run : function(room){
-        if(Game.time % 20 == 0){
+        if(Game.time % 1 == 0){
             recalcTasks(room);
         }
         respawn.run(room);

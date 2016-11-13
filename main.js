@@ -2,17 +2,17 @@
 
 const roomManager = require('roomManager');
 const creepLoop = require('creepLoop');
-const profiler = require('screeps-profiler');
+// const profiler = require('screeps-profiler');
 
 global.playerWhiteList = ['PiratenBraut','PhillipK','CokeJunkie','KaZoiden'];
 
 require('setupGlobal')();
 
-profiler.registerObject(roomManager, 'roomManager');
-profiler.registerObject(roomManager, 'creepLoop');
-profiler.enable();
+// profiler.registerObject(roomManager, 'roomManager');
+// profiler.registerObject(roomManager, 'creepLoop');
+// profiler.enable();
 module.exports.loop = function(){
-	profiler.wrap(function() {
+	//  profiler.wrap(function() {
 		if(Game.time % 500 == 0){ //garbage collect
 			for(var i in Memory.creeps) {
 				if(!Game.creeps[i]) {
@@ -36,5 +36,5 @@ module.exports.loop = function(){
 			creepLoop.run(creep);
 		}
 
-	});
+	//  });
 }
