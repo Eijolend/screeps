@@ -7,7 +7,7 @@ const roleCivilian = require('creep.roleCivilian');
 
 module.exports = {
     run : function(creep){
-        if(creep.task == undefined){
+        if(creep.task == undefined || tasks.getTarget(creep.task) == undefined){ //if no task or the target does not exist anymore
             switch (creep.role){
                 case "miner":
                     roleMiner.getTask(creep);

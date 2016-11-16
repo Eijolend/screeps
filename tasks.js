@@ -5,9 +5,8 @@ var getTarget = function(task){
     if(myobject != null){
         return myobject;
     }
-    if(task.roomName in Game.rooms){
-        creep.task = undefined;
-        return;
+    if(task.roomName in Game.rooms){ //if we should be able to see it but don't, it does not exist anymore
+        return undefined;
     }
     return new RoomPosition(task.x,task.y,task.roomName);
 
@@ -27,23 +26,55 @@ module.exports = {
     },
 
     build : function(creep){
-        return;
+        var target = getTarget(creep.task);
+        if(creep.build(target) == OK && creep.carry.energy <= creep.getActiveBodyparts(WORK)*5){ //if building and energy will run out, task is finished
+            creep.task = undefined;
+        }
+        else{
+            creep.moveTo(target);
+        }
     },
 
     fill : function(creep){
-        return;
+        var target = getTarget(creep.task);
+        if(creep.transfer(target,RESOURCE_ENERGY) == OK){
+            creep.task = undefined;
+        }
+        else{
+            creep.moveTo(target);
+        }
     },
 
     pickup : function(creep){
-        return;
+        var target = getTarget(creep.task);
+        if(creep.pickup(target) == OK){
+            creep.task = undefined;
+        }
+        else{
+            creep.moveTo(target);
+        }
     },
 
     getEnergy : function(creep){
-        return;
+        var target = getTarget(creep.task);
+        if(creep.withdraw(target,RESOURCE_ENERGY) == OK){
+            creep.task = undefined;
+        }
+        else{
+            creep.moveTo(target);
+        }
     },
 
     upgrade : function(creep){
-        return;
+        var target = getTarget(creep.task);
+        if(creep.build(target) == OK && creep.carry.energy <= creep.getActiveBodyparts(WORK)){ //if upgrading and energy will run out, task is finished
+            creep.task = undefined;
+        }
+        else{
+            creep.moveTo(target);
+        }
     }
 
 }
+
+module.exports.getTarget = getTarget;
