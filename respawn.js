@@ -36,17 +36,17 @@ var bodies = {
 		return this.civilian(maxEnergy);
 	},
 	remoteMiner : function(maxEnergy){
-		return [WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE]
+		return [WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE]
 	},
 	remoteRunner : function(maxEnergy){
-		var template = [CARRY,MOVE];
+		var template = [CARRY,CARRY,MOVE];
 		var intervalEnergy=cost(template);
-		var n = Math.min(Math.floor((maxEnergy-150)/intervalEnergy),16); //currently hardcapped at 800 carry
+		var n = Math.min(Math.floor((maxEnergy-200)/intervalEnergy),10); //currently hardcapped at 1050 carry
 		var body = [];
 		for(i=0;i<n;i++){
-			body.push(CARRY,MOVE);
+			body.push(CARRY,CARRY,MOVE);
 		}
-		body.push(WORK,MOVE);
+		body.push(CARRY,WORK,MOVE);
 		return body
 	},
 	// harvester : function(maxEnergy){
