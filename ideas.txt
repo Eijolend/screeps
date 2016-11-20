@@ -1,8 +1,17 @@
 (in no particular order)
 
-Things that I should do urgently.
+=====================================
+Things for the rewrite:
 
-*clean up code; rewrite roles to use a deliberating & run system
+*remove upgraders from respawn.js since civilians now do that
+*miner respawning based on number of TASK_MINE
+*only put filtered tasks in taskList
+*add repairing and wall repairing
+*add recylcer role
+*add remote rooms
+*complete functionality
+*overhaul of respawning logic
+*clean up code
 
 Then:
 *labs and boosting

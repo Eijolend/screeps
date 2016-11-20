@@ -1,9 +1,7 @@
 "use strict";
 const respawn = require('respawn');
-
-var setupTask = function(tasktype,object){
-    return {type: tasktype, x: object.pos.x, y: object.pos.y, roomName: object.pos.roomName, id:object.id};
-}
+const utils = require('utils');
+var setupTask = utils.setupTask;
 
 var recalcTasks = function(room){
     var taskList = [];
@@ -46,13 +44,13 @@ var recalcTasks = function(room){
         upgradetask.assigned = upgradeCreeps.length;
         taskList.push(upgradetask);
     }
-    // still needed: towers, repairing, reparing walls
+    // still needed: towers, repairing, repairing walls
     room.memory.tasks = _.groupBy(taskList,"type");
 }
 
 module.exports = {
     run : function(room){
-        if(Game.time % 1 == 0){
+        if(Game.time % 20 == 0){
             recalcTasks(room);
         }
         respawn.run(room);

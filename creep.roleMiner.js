@@ -13,5 +13,11 @@ module.exports = {
         else{
             return;
         }
+    },
+
+    run : function(creep){
+        if(!creep.task){
+            this.getTask(creep);
+        }
     }
 }

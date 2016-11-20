@@ -5,9 +5,9 @@ var getTarget = function(task){
     if(myobject != null){
         return myobject;
     }
-    // if(task.roomName in Game.rooms){ //if we should be able to see it but don't, it does not exist anymore
-    //     return undefined;
-    // }
+    if(task.roomName in Game.rooms){ //if we should be able to see it but don't, it does not exist anymore
+        return undefined;
+    }
     return new RoomPosition(task.x,task.y,task.roomName);
 
 }
@@ -25,35 +25,37 @@ var mine = function(creep,target){
 
 var build = function(creep,target){
 	creep.build(target);
-	if(!creep.inRangeTo(target,3)){
+	if(!creep.pos.inRangeTo(target,3)){
 		creep.moveTo(target);
 	}
 }
 
 var fill = function(creep,target){
-	creep.transfer(target,RESOURCE_ENERGY);
-	if(!creep.inRangeTo(target,1)){
+	if(creep.transfer(target,RESOURCE_ENERGY) == OK){
+        creep.task = undefined;
+    }
+	if(!creep.pos.inRangeTo(target,1)){
 		creep.moveTo(target);
 	}
 }
 
 var pickup = function(creep,target){
 	creep.pickup(target);
-	if(!creep.inRangeTo(target,1)){
+	if(!creep.pos.inRangeTo(target,1)){
 		creep.moveTo(target);
 	}
 }
 
-var getEnergy = function(creep){
+var getEnergy = function(creep,target){
 	creep.withdraw(target,RESOURCE_ENERGY);
-	if(!creep.inRangeTo(target,1)){
+	if(!creep.pos.inRangeTo(target,1)){
 		creep.moveTo(target);
 	}
 }
 
-var upgrade = function(creep){
+var upgrade = function(creep,target){
 	creep.upgradeController(target);
-	if(!creep.inRangeTo(target,3)){
+	if(!creep.pos.inRangeTo(target,3)){
 		creep.moveTo(target);
 	}
 }
@@ -64,22 +66,22 @@ module.exports = {
 			var target = getTarget(creep.task);
 			switch (creep.task.type){
 				case TASK_BUILD:
-					tasks.build(creep);
+					build(creep,target);
 					break;
 				case TASK_MINE:
-					tasks.mine(creep);
+					mine(creep,target);
 					break;
 				case TASK_FILL:
-					tasks.fill(creep);
+					fill(creep,target);
 					break;
 				case TASK_PICKUP:
-					tasks.pickup(creep);
+					pickup(creep,target);
 					break;
 				case TASK_GET_ENERGY:
-					tasks.getEnergy(creep);
+					getEnergy(creep,target);
 					break;
 				case TASK_UPGRADE:
-					tasks.upgrade(creep);
+					upgrade(creep,target);
 					break;
 			}
 		}
