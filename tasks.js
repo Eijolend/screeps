@@ -31,7 +31,8 @@ var build = function(creep,target){
 }
 
 var fill = function(creep,target){
-	if(creep.transfer(target,RESOURCE_ENERGY) == OK){
+    var status = creep.transfer(target,RESOURCE_ENERGY);
+	if(status == OK || status == ERR_FULL){
         creep.task = undefined;
     }
 	if(!creep.pos.inRangeTo(target,1)){

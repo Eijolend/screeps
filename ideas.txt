@@ -5,6 +5,8 @@ Things for the rewrite:
 
 *remove upgraders from respawn.js since civilians now do that
 *miner respawning based on number of TASK_MINE
+*a modular task list that can be updated in chunks
+
 *only put filtered tasks in taskList
 *add repairing and wall repairing
 *add recylcer role
