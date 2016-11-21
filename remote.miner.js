@@ -41,6 +41,10 @@ module.exports = {
             else{
                 var mySource = myflag.pos.lookFor(LOOK_SOURCES)[0];
                 tasks.mine(creep,mySource);
+                if(!creep.memory.atGoal && creep.pos.inRangeTo(myflag,2)){
+                    creep.memory.atGoal = true;
+                    creep.memory.travelTime = 1500 - creep.ticksToLive;
+                }
             }
         }
         else{

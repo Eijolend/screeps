@@ -221,9 +221,9 @@ module.exports = {
 				// }
 			// }
 			else{	//flag based spawning with homeRoom
-				var remoteMiner_target = 1; //miners per remote site
-				var remoteRunner_target = 1; //base value per remote site
 				for (var flag of _.filter(Game.flags, (f)=>f.memory.homeRoom == room.name)){
+					var remoteMiner_target = 1; //miners per remote site
+					var remoteRunner_target = 1; //base value per remote site
 					if(/reserve/.test(flag.name)){
 						//defend remote room
 						if(flag.pos.roomName in Game.rooms){//check to prevent breaking from no vision
@@ -273,17 +273,17 @@ module.exports = {
 						}
 					}
 					if(/harvest/.test(flag.name)){ //see that every remote site has enough harvesters
-						var remoteMiner_target = 1; //miners per remote site
-						var remoteRunner_target = 1; //base value per remote site
+						// var remoteMiner_target = 1; //miners per remote site
+						// var remoteRunner_target = 1; //base value per remote site
 						var remoteMiners = _.filter(Game.creeps, (creep) =>
-							creep.memory.role == 'remoteMiner' && creep.memory.myflag == flag.name //should be spawned early, but my check is too stupid
+							creep.memory.role == 'remoteMiner' && creep.memory.myflag == flag.name && creep.ticksToLive > creep.memory.travelTime //creeps are only counted if they are not too old
 						).length;
 						var remoteRunners = _.filter(Game.creeps, (creep) =>
 							creep.memory.role == 'remoteRunner' && creep.memory.myflag == flag.name
 						).length;
 						if (remoteMiners < remoteMiner_target){
 							spawn.createCreep(bodies.remoteMiner(maxEnergy),undefined,{
-								role: 'remoteMiner', myflag: flag.name, homeRoom: room.name
+								role: 'remoteMiner', myflag: flag.name, homeRoom: room.name, travelTime: 0
 							});
 						}
 						else{
