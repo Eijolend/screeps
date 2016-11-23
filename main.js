@@ -134,7 +134,9 @@ module.exports.loop = function(){
 			// console.log('Creep '+name+' with role '+creep.memory.role+' has used '+elapsed+' CPU time');
 		}
 		respawn.run(myrooms);
-		marketManager.run();
+		if(Game.time % 50 == 0){
+    		marketManager.run();
+		}
 
 		var startRoom = Game.rooms['W63N66'];
 		if(Game.spawns.Spawn1.hits < Game.spawns.Spawn1.hitsMax){
