@@ -21,6 +21,7 @@ var respawn = require('respawn');
 var tasks = require('tasks');
 var planOutheal = require('plan.outheal');
 var utils = require('utils');
+const marketManager = require('marketManager');
 const profiler = require('screeps-profiler');
 
 global.playerWhiteList = ['PiratenBraut','PhillipK','CokeJunkie','KaZoiden'];
@@ -132,32 +133,10 @@ module.exports.loop = function(){
 			// var elapsed = Game.cpu.getUsed() - startCpu;
 			// console.log('Creep '+name+' with role '+creep.memory.role+' has used '+elapsed+' CPU time');
 		}
-		// if('Raid' in Game.flags){
-		if(Game.time % 1000 == 0){
-			// var raiderBody = [TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,MOVE];
-			// var healerBody = [MOVE,HEAL,HEAL,HEAL,MOVE,MOVE];
-			// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1'} );
-			// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense1'} );
-			// Game.spawns.Spawn1.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense1'});
-		// 	//===================//
-		// 	// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
-		// 	// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
-		// 	// Game.spawns.Spawn1.room.requestCreep(raiderBody,undefined,{role: 'raider', myflag:'defense2'} );
-		// 	// Game.spawns.Spawn1.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense2'});
-		// 	// Game.spawns.Spawn1.room.requestCreep(healerBody,undefined,{role: 'raidHealer', myflag:'defense2'});
-		}
-		// }
 		respawn.run(myrooms);
+		marketManager.run();
 
 		var startRoom = Game.rooms['W63N66'];
-		// if(startRoom.controller.level >= 3){
-		// 	startRoom.createConstructionSite(14,38,STRUCTURE_EXTENSION);
-		// 	startRoom.createConstructionSite(13,38,STRUCTURE_EXTENSION);
-		// 	startRoom.createConstructionSite(12,39,STRUCTURE_EXTENSION);
-		// 	startRoom.createConstructionSite(18,36,STRUCTURE_EXTENSION);
-		// 	startRoom.createConstructionSite(19,37,STRUCTURE_EXTENSION);
-		// 	startRoom.createConstructionSite(27,19,STRUCTURE_TOWER);
-		// }
 		if(Game.spawns.Spawn1.hits < Game.spawns.Spawn1.hitsMax){
 			startRoom.controller.activateSafeMode();
 		}
