@@ -276,7 +276,7 @@ module.exports = {
 						// var remoteMiner_target = 1; //miners per remote site
 						// var remoteRunner_target = 1; //base value per remote site
 						var remoteMiners = _.filter(Game.creeps, (creep) =>
-							creep.memory.role == 'remoteMiner' && creep.memory.myflag == flag.name && (creep.ticksToLive > creep.memory.travelTime || creep.spawning) //creeps are only counted if they are not too old
+							creep.memory.role == 'remoteMiner' && creep.memory.myflag == flag.name && (creep.ticksToLive > creep.memory.travelTime + 30 || creep.spawning) //creeps are only counted if they are not too old
 						).length;
 						var remoteRunners = _.filter(Game.creeps, (creep) =>
 							creep.memory.role == 'remoteRunner' && creep.memory.myflag == flag.name
