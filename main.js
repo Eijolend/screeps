@@ -20,6 +20,7 @@ var roleTerminalManager = require('role.terminalManager');
 var respawn = require('respawn');
 var tasks = require('tasks');
 var planOutheal = require('plan.outheal');
+var planWaitstorm = require('plan.waitstorm');
 var utils = require('utils');
 const marketManager = require('marketManager');
 const profiler = require('screeps-profiler');
@@ -120,6 +121,9 @@ module.exports.loop = function(){
 			}
 			else if(creep.memory.role == 'planOutheal'){
 				planOutheal.run(creep);
+			}
+			else if(creep.memory.role == 'planWaitstorm'){
+				planWaitstorm.run(creep);
 			}
 			else if(creep.memory.role == 'dismantler'){
 				roleDismantler.run(creep);
