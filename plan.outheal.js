@@ -7,14 +7,14 @@ module.exports = {
         Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 0 , waypoint:['waypoint']});
         Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 1 , waypoint:['waypoint']});
         Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 2 , waypoint:['waypoint']});
-        //Game.rooms['W54S17'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 3 , homeRoom : 'W54S17'});
-        Game.rooms['W61N68'].requestCreep(
+        Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 3 , waypoint:['waypoint']});
+        Game.rooms['W63N66'].requestCreep(
             [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE],
             'Desmond',{role : 'planOutheal', subrole : 'dismantler', waypoint:['waypoint']}
         );
         var disBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE]; //can be built by rcl 4 rooms
-        Game.rooms['W61N68'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler', waypoint:['waypoint']});
-        Game.rooms['W61N68'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler', waypoint:['waypoint']});
+        Game.rooms['W63N66'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler', waypoint:['waypoint']});
+        Game.rooms['W63N66'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler', waypoint:['waypoint']});
         // var raidBody = [ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE];
         // Game.rooms['W61N68'].requestCreep(raidBody,undefined,{role : 'raider', myflag: 'getrid'});
         // Game.rooms['W61N68'].requestCreep(raidBody,undefined,{role : 'raider', myflag: 'getrid'});
@@ -96,7 +96,7 @@ module.exports = {
                 // }
                 // else{
                     creep.moveTo(Game.flags[Memory.planOutheal.target]);
-                // } 
+                // }
             }
         }
         if(Memory.planOutheal.stage == 3){
