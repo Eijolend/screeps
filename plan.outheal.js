@@ -91,12 +91,12 @@ module.exports = {
                 }
             }
             else if(Memory.planOutheal.stage == 2){
-                if(Game.creeps['Desmond']){
-                    creep.moveTo(Game.creeps['Desmond']);
-                }
-                else{
+                // if(Game.creeps['Desmond']){
+                //     creep.moveTo(Game.creeps['Desmond']);
+                // }
+                // else{
                     creep.moveTo(Game.flags[Memory.planOutheal.target]);
-                }
+                // } 
             }
         }
         if(Memory.planOutheal.stage == 3){
