@@ -25,7 +25,7 @@ var utils = require('utils');
 const marketManager = require('marketManager');
 const profiler = require('screeps-profiler');
 
-global.playerWhiteList = ['PiratenBraut','PhillipK','CokeJunkie','KaZoiden'];
+global.playerWhiteList = ['PiratenBraut','PhillipK','CokeJunkie','KaZoiden','WASP103'];
 
 require('prototyping')();
 
@@ -140,6 +140,17 @@ module.exports.loop = function(){
 		respawn.run(myrooms);
 		if(Game.time % 50 == 0){
     		marketManager.run();
+		}
+
+		if(Game.flags['blockade'] && Game.time % 1200){
+			var blockadeBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE];
+			Game.spawns.Spawn1.room.requestCreep(blockadeBody,undefined,{role:'raider',myflag:'blockade',waypoint:['waypoint']});
+			Game.spawns.Spawn2.room.requestCreep(blockadeBody,undefined,{role:'raider',myflag:'blockade',waypoint:['waypoint']});
+			Game.spawns.Spawn2.room.requestCreep(blockadeBody,undefined,{role:'raider',myflag:'blockade',waypoint:['waypoint']});
+
+			var healBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE];
+			Game.spawns.Spawn1.room.requestCreep(healBody,undefined,{role:'raidHealer',myflag:'blockade',waypoint:['waypoint']});
+			Game.spawns.Spawn2.room.requestCreep(healBody,undefined,{role:'raidHealer',myflag:'blockade',waypoint:['waypoint']});
 		}
 
 		var startRoom = Game.rooms['W63N66'];
