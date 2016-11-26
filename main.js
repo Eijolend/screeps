@@ -142,7 +142,7 @@ module.exports.loop = function(){
     		marketManager.run();
 		}
 
-		if(Game.flags['blockade'] && Game.time % 1200){
+		if(Game.flags['blockade'] && Game.time % 1200 == 0){
 			var blockadeBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE];
 			Game.spawns.Spawn1.room.requestCreep(blockadeBody,undefined,{role:'raider',myflag:'blockade',waypoint:['waypoint']});
 			Game.spawns.Spawn2.room.requestCreep(blockadeBody,undefined,{role:'raider',myflag:'blockade',waypoint:['waypoint']});
