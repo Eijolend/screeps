@@ -3,14 +3,13 @@
 =====================================
 Things for the rewrite:
 
-*remove upgraders from respawn.js since civilians now do that
 *miner respawning based on number of TASK_MINE
 *only put filtered tasks in taskList
 *add repairing and wall repairing
 *add recylcer role
 *add remote rooms
 *complete functionality
-*overhaul of respawning logic
+*overhaul of respawning logic -> port over early respawning from branch master
 *clean up code
 
 Then:

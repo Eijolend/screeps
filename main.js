@@ -4,7 +4,7 @@ const roomManager = require('roomManager');
 const creepLoop = require('creepLoop');
 // const profiler = require('screeps-profiler');
 
-global.playerWhiteList = ['PiratenBraut','PhillipK','CokeJunkie','KaZoiden'];
+global.playerWhiteList = ['PiratenBraut','PhillipK','CokeJunkie','KaZoiden','WASP103'];
 
 require('setupGlobal')();
 
