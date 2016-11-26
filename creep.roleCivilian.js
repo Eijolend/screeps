@@ -13,7 +13,6 @@ module.exports = {
             return OK;
         }
         var pickupTasks = taskList[TASK_PICKUP];
-        //here the filtering based on positon is missing - maybe this should be assured in the taskList instead
         myIndex = _.findIndex(pickupTasks,(t) => t.amountLeft > 50); //here a better check than > 50 would be nice
         if(myIndex != -1){
             creep.task=pickupTasks[myIndex];

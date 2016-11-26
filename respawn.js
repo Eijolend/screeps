@@ -126,7 +126,7 @@ module.exports = {
 		// 	civilian_target += 2;
 		// }
 		var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
-		var miner_target = 2;
+		var miner_target = room.memory.tasks[TASK_MINE].length;
 		var runner_target = 2;
 		var terminalManager_target = 0;
 		if(room.controller.level >= 6){
