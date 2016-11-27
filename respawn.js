@@ -138,6 +138,10 @@ module.exports = {
 				//runner_target = 1;
 				terminalManager_target = 1;
 			}
+			var laborant_target = 0;
+			if(room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_LAB}).length > 0 && room.terminal != undefined){
+				laborant_target = 1;
+			}
 			var thief_target = 0;
 			var hunter_target = 0;
 
@@ -155,6 +159,7 @@ module.exports = {
 			var hunters = creepsByRole.hunter != undefined ? creepsByRole.hunter.length : 0;
 			var mineralMiners = creepsByRole.mineralMiner != undefined ? creepsByRole.mineralMiner.length : 0;
 			var terminalManagers = creepsByRole.terminalManager != undefined ? creepsByRole.terminalManager.length : 0;
+			var laborants = creepsByRole.laborant != undefined ? creepsByRole.laborant.length : 0;
 			if(room.memory.requestList === undefined){ //checking this every tick is a waste
 				room.memory.requestList = [];
 			}
@@ -214,6 +219,9 @@ module.exports = {
 			}
 			else if(room.controller.level >= 6 && room.find(FIND_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_EXTRACTOR}).length > 0 && mineral.ticksToRegeneration === undefined && mineralMiners < 1){
 				spawn.createCreep(bodies.mineralMiner(maxEnergy),undefined,{role:'mineralMiner'});
+			}
+			else if(labroants < laborant_target){
+				spawn.createCreep([MOVE,CARRY],undefined,{role:'laborant'});
 			}
 			// if(thiefs.length < thief_target) {
 				// if (spawn.room.energyAvailable > 600){
