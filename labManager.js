@@ -18,7 +18,7 @@ module.exports = {
         if(room.memory.labManager.orders == undefined){
             room.memory.labManager.orders = [];
         }
-        room.memory.labManager.orders.push({'input1': input1, 'input2':input2, 'output':output 'amount': amount, 'roomName':roomName});
+        room.memory.labManager.orders.push({'input1': input1, 'input2':input2, 'output':output, 'amount': amount, 'roomName':roomName});
     },
 
     run : function(room){

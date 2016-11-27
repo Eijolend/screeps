@@ -24,6 +24,7 @@ var planOutheal = require('plan.outheal');
 var planWaitstorm = require('plan.waitstorm');
 var utils = require('utils');
 const marketManager = require('marketManager');
+const labManager = require('labManagare');
 const profiler = require('screeps-profiler');
 
 global.playerWhiteList = ['PiratenBraut','PhillipK','CokeJunkie','KaZoiden','WASP103'];
@@ -144,6 +145,9 @@ module.exports.loop = function(){
 		respawn.run(myrooms);
 		if(Game.time % 50 == 0){
     		marketManager.run();
+		}
+		for(room of myrooms){
+			labManager.run(room);
 		}
 
 		if(Game.flags['blockade'] && Game.time % 1200 == 0){
