@@ -45,7 +45,7 @@ module.exports = {
         creep.memory.task = {type: TASK_EMPTY, id: labs[2].id};
         return OK;
     },
-    
+
     run: function(creep){
         if(!creep.memory.delivering && _.sum(creep.carry) == creep.carryCapacity){
             creep.memory.delivering = true;
@@ -62,7 +62,7 @@ module.exports = {
 
         if(creep.ticksToLive < 5){
             if(_.sum(creep.carry) > 0){
-                creep.transfer(creep.room.terminal,_.findKey(creep.carry,(x) => x > 0);
+                creep.transfer(creep.room.terminal,_.findKey(creep.carry,(x) => x > 0));
             }
             else{
                 creep.suicide();
