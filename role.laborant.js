@@ -22,22 +22,22 @@ module.exports = {
             creep.memory.task = {type: TASK_EMPTY, id: labs[2].id};
             return OK;
         }
-        if(labs[2].mineralAmount >= labs[0].mineralAmount && labs[2].mineralAmount >= labs[1].mineralAmount){
+        if(labs[2].mineralAmount >= 1000){
             creep.memory.task = {type: TASK_EMPTY, id: labs[2].id};
             return OK;
         }
         if(order){
             if(labs[0].mineralAmount <= labs[1].mineralAmount){
                 var amount = order.amount - labs[0].mineralAmount
-                if(amount >= 0){
-                    creep.memory.task = {type: TASK_FILL_MINERAL, id:labs[0].id, "amount" : amount}
+                if(amount > 0){
+                    creep.memory.task = {type: TASK_FILL_MINERAL, id:labs[0].id, "amount" : amount, mineralType : order.input1}
                     return OK;
                 }
             }
             else{
                 var amount = order.amount - labs[1].mineralAmount
-                if(amount >= 0){
-                    creep.memory.task = {type: TASK_FILL_MINERAL, id:labs[1].id, "amount" : amount}
+                if(amount > 0){
+                    creep.memory.task = {type: TASK_FILL_MINERAL, id:labs[1].id, "amount" : amount, mineralType : order.input2}
                     return OK;
                 }
             }
@@ -50,7 +50,7 @@ module.exports = {
         if(!creep.memory.delivering && _.sum(creep.carry) == creep.carryCapacity){
             creep.memory.delivering = true;
         }
-        else if(creep.memory.delivering && creep.carryCapacity == 0){
+        else if(creep.memory.delivering && _.sum(creep.carry) == 0){
             creep.memory.delivering = false
             if(creep.memory.task.type == TASK_FILL_MINERAL){
                 creep.memory.task = undefined;

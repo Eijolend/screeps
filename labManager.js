@@ -37,10 +37,11 @@ module.exports = {
                     labs.push(Game.getObjectById(lab.id));
                 }
                 if(labs[0].mineralType == room.memory.labManager.labs[0].type && labs[1].mineralType == room.memory.labManager.labs[1].type && (labs[2].mineralType == room.memory.labManager.labs[2].type || labs[2].mineralType == undefined)){
-                    labs[2].runReaction(labs[0],labs[1]);
-                    order.amount -= 5;
-                    if(order.amount <= 0){
-                        orders.shift();
+                    if(labs[2].runReaction(labs[0],labs[1]) == OK){
+                        order.amount -= 5;
+                        if(order.amount <= 0){
+                            orders.shift();
+                        }
                     }
                 }
             }
