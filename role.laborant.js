@@ -27,14 +27,14 @@ module.exports = {
             return OK;
         }
         if(order){
-            if(labs[0].mineralAmount <= labs[1].mineralAmount){
+            if(labs[0].mineralAmount <= labs[1].mineralAmount && labs[0].mineralAmount < 1000){
                 var amount = order.amount - labs[0].mineralAmount
                 if(amount > 0){
                     creep.memory.task = {type: TASK_FILL_MINERAL, id:labs[0].id, "amount" : amount, mineralType : order.input1}
                     return OK;
                 }
             }
-            else{
+            else if(labs[1].mineralAmount < 1000){
                 var amount = order.amount - labs[1].mineralAmount
                 if(amount > 0){
                     creep.memory.task = {type: TASK_FILL_MINERAL, id:labs[1].id, "amount" : amount, mineralType : order.input2}
