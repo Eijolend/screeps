@@ -220,7 +220,7 @@ module.exports = {
 			else if(room.controller.level >= 6 && room.find(FIND_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_EXTRACTOR}).length > 0 && mineral.ticksToRegeneration === undefined && mineralMiners < 1){
 				spawn.createCreep(bodies.mineralMiner(maxEnergy),undefined,{role:'mineralMiner'});
 			}
-			else if(labroants < laborant_target){
+			else if(laborants < laborant_target){
 				spawn.createCreep([MOVE,CARRY],undefined,{role:'laborant'});
 			}
 			// if(thiefs.length < thief_target) {
