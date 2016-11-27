@@ -44,7 +44,8 @@ module.exports = {
         }
         creep.memory.task = {type: TASK_EMPTY, id: labs[2].id};
         return OK;
-    }
+    },
+    
     run: function(creep){
         if(!creep.memory.delivering && _.sum(creep.carry) == creep.carryCapacity){
             creep.memory.delivering = true;
