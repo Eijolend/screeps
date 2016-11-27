@@ -22,6 +22,9 @@ module.exports = {
     },
 
     run : function(room){
+        if(room.memory.labManager == undefined){
+            this.init(room);
+        }
         var orders = room.memory.labManager.orders;
         if(orders){
             var order = orders[0];
