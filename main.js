@@ -24,7 +24,7 @@ var planOutheal = require('plan.outheal');
 var planWaitstorm = require('plan.waitstorm');
 var utils = require('utils');
 const marketManager = require('marketManager');
-const labManager = require('labManagare');
+const labManager = require('labManager');
 const profiler = require('screeps-profiler');
 
 global.playerWhiteList = ['PiratenBraut','PhillipK','CokeJunkie','KaZoiden','WASP103'];
