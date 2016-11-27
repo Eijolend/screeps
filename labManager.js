@@ -29,14 +29,14 @@ module.exports = {
         if(orders){
             var order = orders[0];
             if(order){
-                room.memory.labs[0].type = order.input1;
-                room.memory.labs[1].type = order.input2;
-                room.memory.labs[2].type = order.output;
+                room.memory.labManager.labs[0].type = order.input1;
+                room.memory.labManager.labs[1].type = order.input2;
+                room.memory.labManager.labs[2].type = order.output;
                 var labs = [];
                 for(lab of room.memory.labManager.labs){
                     labs.push(Game.getObjectById(lab.id));
                 }
-                if(labs[0].mineralType == room.memory.labs[0].type && labs[1].mineralType == room.memory.labs[1].type && (labs[2].mineralType == room.memory.labs[2].type || labs[2].mineralType == undefined)){
+                if(labs[0].mineralType == room.memory.labManager.labs[0].type && labs[1].mineralType == room.memory.labManager.labs[1].type && (labs[2].mineralType == room.memory.labManager.labs[2].type || labs[2].mineralType == undefined)){
                     labs[2].runReaction(labs[0],labs[1]);
                     order.amount -= 5;
                     if(order.amount <= 0){
