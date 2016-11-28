@@ -102,8 +102,12 @@ module.exports = {
             }
             else{
                 var amount = creep.memory.task.amount > 50?50:creep.memory.task.amount;
-                if(creep.withdraw(creep.room.terminal,creep.memory.task.mineralType,amount) == ERR_NOT_IN_RANGE){
+                var retcode = creep.withdraw(creep.room.terminal,creep.memory.task.mineralType,amount);
+                if( retcode == ERR_NOT_IN_RANGE){
                     creep.moveTo(creep.room.terminal);
+                }
+                else if(retcode == OK){
+                    creep.memory.delivering = true;
                 }
             }
         }
