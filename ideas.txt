@@ -3,6 +3,7 @@
 Things that I should do urgently.
 
 *tweak respawn so it does not spawn too many civilians while colonists are helping
+*colonists (i.e. civilians with other homeRoom) should recycle at new room instead of trying to run back
 
 *find counting error for labs
 *make it so labs[2] gets emptied even if no order remaining
