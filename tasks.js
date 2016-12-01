@@ -1,14 +1,12 @@
 module.exports = {
 	mine : function(creep,target){
 		var mycontainer = target.pos.findInRange(FIND_STRUCTURES,1,{filter: (s)=> s.structureType == STRUCTURE_CONTAINER});
-		if(mycontainer.length > 0){
-			creep.harvest(target);
+		creep.harvest(target);
+		if(mycontainer.length > 0 && !creep.pos.isEqualTo(mycontainer[0])){
 			creep.moveTo(mycontainer[0]);
 		}
-		else{
-			if(creep.harvest(target) == ERR_NOT_IN_RANGE ){
-				creep.moveTo(target);
-			}
+		else if(!creep.pos.isNearTo(target)){
+			creep.moveTo(target);
 		}
 	},
 
