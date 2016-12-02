@@ -144,8 +144,7 @@ module.exports = {
             else{
                 var target = Game.getObjectById(creep.memory.task.id);
                 if(target.mineralAmount == 0){
-                        creep.memory.task = undefined;
-                    }
+                    creep.memory.task = undefined;
                 }
                 else{
                     if(creep.withdraw(target,target.mineralType) == ERR_NOT_IN_RANGE){
