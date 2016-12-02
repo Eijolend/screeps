@@ -139,7 +139,7 @@ module.exports = {
 				terminalManager_target = 1;
 			}
 			var laborant_target = 0;
-			if(room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_LAB}).length > 0 && room.terminal != undefined){
+			if(room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_LAB}).length >= 3 && room.terminal != undefined){
 				laborant_target = 1;
 			}
 			var thief_target = 0;

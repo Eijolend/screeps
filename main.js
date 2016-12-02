@@ -173,9 +173,6 @@ module.exports.loop = function(){
 		if(Game.time % 50 == 0){
     		marketManager.run();
 		}
-		for(room of myrooms){
-			labManager.run(room);
-		}
 
 		if(Game.flags['blockade'] && Game.time % 1200 == 0){
 			var blockadeBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE];

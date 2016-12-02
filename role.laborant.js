@@ -1,66 +1,52 @@
 const TASK_EMPTY = 'empty';
-const TASK_FILL_MINERAL = 'fillMineral';
+const TASK_SETUP_LAB = 'setup';
+const TASK_LABORANT = 'laborant';
+const TASK_RETIRE = 'retire';
 
 module.exports = {
     getTask: function(creep){
+        if(!creep.room.memory.labManager){
+            require('labManager').init(creep.room);
+        }
         var orders = creep.room.memory.labManager.orders;
         var order = {};
         if(orders){order = orders[0]};
+        if(!(creep.room.memory.labManager.labs.length>=3)){
+            require('labManager').init(creep.room);
+            return;
+        }
         var labs = [];
         for(lab of creep.room.memory.labManager.labs){
             labs.push(Game.getObjectById(lab.id));
         }
-        if(labs[0].mineralType && labs[0].mineralType != creep.room.memory.labManager.labs[0].type){
+        if(creep.ticksToLive < 15){
+            creep.memory.task = {type: TASK_RETIRE};
+        }
+        if(labs[0].mineralType){
             creep.memory.task = {type: TASK_EMPTY, id: labs[0].id};
             return OK;
         }
-        if(labs[1].mineralType && labs[1].mineralType != creep.room.memory.labManager.labs[1].type){
+        if(labs[1].mineralType){
             creep.memory.task = {type: TASK_EMPTY, id: labs[1].id};
             return OK;
         }
-        if(labs[2].mineralType && labs[2].mineralType != creep.room.memory.labManager.labs[2].type){
+        if(labs[2].mineralType){
             creep.memory.task = {type: TASK_EMPTY, id: labs[2].id};
             return OK;
         }
-        if(labs[2].mineralAmount >= 1000){
-            creep.memory.task = {type: TASK_EMPTY, id: labs[2].id};
+        if(!creep.memory.setup){
+            creep.memory.task = {type: TASK_SETUP_LAB};
             return OK;
         }
-        if(order){
-            if(labs[0].mineralAmount <= labs[1].mineralAmount && labs[0].mineralAmount < 1000){
-                var amount = order.amount - labs[0].mineralAmount
-                if(amount > 0){
-                    creep.memory.task = {type: TASK_FILL_MINERAL, id:labs[0].id, "amount" : amount, mineralType : order.input1}
-                    return OK;
-                }
-            }
-            else if(labs[1].mineralAmount < 1000){
-                var amount = order.amount - labs[1].mineralAmount
-                if(amount > 0){
-                    creep.memory.task = {type: TASK_FILL_MINERAL, id:labs[1].id, "amount" : amount, mineralType : order.input2}
-                    return OK;
-                }
-            }
-        }
-        creep.memory.task = {type: TASK_EMPTY, id: labs[2].id};
+        creep.memory.task = {type: TASK_LABORANT, timeStamp : Game.time}; //labs could be written in here when multiple blocks
         return OK;
     },
 
     run: function(creep){
-        if(!creep.memory.delivering && _.sum(creep.carry) == creep.carryCapacity){
-            creep.memory.delivering = true;
-        }
-        else if(creep.memory.delivering && _.sum(creep.carry) == 0){
-            creep.memory.delivering = false
-            if(creep.memory.task.type == TASK_FILL_MINERAL){
-                creep.memory.task = undefined;
-            }
-        }
         if(!creep.memory.task){
             this.getTask(creep);
         }
-
-        if(creep.ticksToLive < 5){
+        if(creep.memory.task.type == TASK_RETIRE){
             if(_.sum(creep.carry) > 0){
                 creep.transfer(creep.room.terminal,_.findKey(creep.carry,(x) => x > 0));
             }
@@ -70,8 +56,87 @@ module.exports = {
             return;
         }
 
-        if(creep.memory.task.type == TASK_EMPTY){
-            if(creep.memory.delivering){
+        if(creep.memory.task.type == TASK_LABORANT){
+            var orders = creep.room.memory.labManager.orders;
+            var order = {};
+            if(orders){order = orders[0]};
+            var labs = [];
+            for(lab of creep.room.memory.labManager.labs){
+                labs.push(Game.getObjectById(lab.id)); //probably could cut some calls here
+            }
+            const A = order.input1;
+            const B = order.input2;
+            const C = order.output;
+            switch ((Game.time - creep.memory.task.timeStamp) % 10){
+                case 0:
+                    if(creep.ticksToLive < 15){
+                        creep.memory.task = undefined;
+                        return;
+                    }
+                    creep.withdraw(labs[0],C);
+                    break;
+                case 1:
+                    creep.transfer(labs[0],A,_.min(10,order.amount));
+                    break;
+                case 2:
+                    creep.transfer(labs[1],B,_.min(5,order.amount));
+                    break;
+                case 3:
+                    if(labs[2].runReaction(labs[0],labs[1]) == OK){
+                        order.amount -= 5;
+                    }
+                    creep.withdraw(creep.room.terminal,B,_.min(15,order.amount));
+                    break;
+                case 4:
+                    creep.withdraw(labs[2],C);
+                    break;
+                case 5:
+                    creep.transfer(labs[2],B,_.min(10,order.amount));
+                    break;
+                case 6:
+                    if(labs[1].runReaction(labs[0],labs[2]) == OK){
+                        order.amount -= 5;
+                    }
+                    creep.withdraw(creep.room.terminal,A,_.min(15,order.amount));
+                    break;
+                case 7:
+                    creep.withdraw(labs[1],C);
+                    break;
+                case 8:
+                    creep.transfer(labs[1],A,_.min(5,order.amount));
+                    break;
+                case 9:
+                    if(labs[0].runReaction(labs[1],labs[2]) == OK){
+                        order.amount -= 5;
+                    }
+                    creep.transfer(creep.room.terminal,C);
+                    break;
+            }
+        }
+        else if(creep.memory.task.type == TASK_SETUP_LAB){
+            if(!creep.room.memory.labManager.pos){
+                require('labManager').init(creep.room);
+                return;
+            }
+            var orders = creep.room.memory.labManager.orders;
+            var order = {};
+            if(orders){order = orders[0]};
+            if(!creep.pos.isEqualTo(creep.room.memory.labManager.pos)){
+                creep.moveTo(new RoomPosition(creep.room.memory.labManager.pos.x,creep.room.memory.labManager.pos.y,creep.room.memory.labManager.pos.roomName));
+            }
+            else if(!creep.carry[order.input1] || creep.carry[order.input1] < _.min([10,order.amount])){
+                creep.withdraw(creep.room.terminal,order.input1, _.min([10,order.amount]));
+            }
+            else if(!creep.carry[order.input2] || creep.carry[order.input2] < _.min([5,order.amount])){
+                creep.withdraw(creep.room.terminal,order.input2, _.min([5,order.amount]));
+            }
+            else{
+                creep.memory.setup = true;
+                creep.memory.task = undefined;
+            }
+        }
+        else if(creep.memory.task.type == TASK_EMPTY){
+            if(_.sum(creep.carry) > 0){
                 if(creep.transfer(creep.room.terminal,_.findKey(creep.carry,(x) => x > 0)) == ERR_NOT_IN_RANGE){
                     creep.moveTo(creep.room.terminal);
                 }
@@ -79,10 +144,6 @@ module.exports = {
             else{
                 var target = Game.getObjectById(creep.memory.task.id);
                 if(target.mineralAmount == 0){
-                    if(_.sum(creep.carry) > 0){
-                        creep.memory.delivering = true;
-                    }
-                    else{
                         creep.memory.task = undefined;
                     }
                 }
@@ -90,24 +151,6 @@ module.exports = {
                     if(creep.withdraw(target,target.mineralType) == ERR_NOT_IN_RANGE){
                         creep.moveTo(target);
                     }
-                }
-            }
-        }
-        else if(creep.memory.task.type == TASK_FILL_MINERAL){
-            if(creep.memory.delivering){
-                var target= Game.getObjectById(creep.memory.task.id);
-                if(creep.transfer(target,_.findKey(creep.carry,(x) => x > 0)) == ERR_NOT_IN_RANGE){
-                    creep.moveTo(target);
-                }
-            }
-            else{
-                var amount = creep.memory.task.amount > 50?50:creep.memory.task.amount;
-                var retcode = creep.withdraw(creep.room.terminal,creep.memory.task.mineralType,amount);
-                if( retcode == ERR_NOT_IN_RANGE){
-                    creep.moveTo(creep.room.terminal);
-                }
-                else if(retcode == OK){
-                    creep.memory.delivering = true;
                 }
             }
         }
