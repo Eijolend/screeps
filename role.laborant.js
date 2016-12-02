@@ -73,37 +73,41 @@ module.exports = {
                         creep.memory.task = undefined;
                         return;
                     }
+                    if(order.amount <= 0){
+                        orders.shift();
+                        creep.memory.task = undefined;
+                    }
                     creep.withdraw(labs[0],C);
                     break;
                 case 1:
-                    creep.transfer(labs[0],A,_.min(10,order.amount));
+                    creep.transfer(labs[0],A,Math.min(10,order.amount));
                     break;
                 case 2:
-                    creep.transfer(labs[1],B,_.min(5,order.amount));
+                    creep.transfer(labs[1],B,Math.min(5,order.amount));
                     break;
                 case 3:
                     if(labs[2].runReaction(labs[0],labs[1]) == OK){
                         order.amount -= 5;
                     }
-                    creep.withdraw(creep.room.terminal,B,_.min(15,order.amount));
+                    creep.withdraw(creep.room.terminal,B,Math.min(15,order.amount));
                     break;
                 case 4:
                     creep.withdraw(labs[2],C);
                     break;
                 case 5:
-                    creep.transfer(labs[2],B,_.min(10,order.amount));
+                    creep.transfer(labs[2],B,Math.min(10,order.amount));
                     break;
                 case 6:
                     if(labs[1].runReaction(labs[0],labs[2]) == OK){
                         order.amount -= 5;
                     }
-                    creep.withdraw(creep.room.terminal,A,_.min(15,order.amount));
+                    creep.withdraw(creep.room.terminal,A,Math.min(15,order.amount));
                     break;
                 case 7:
                     creep.withdraw(labs[1],C);
                     break;
                 case 8:
-                    creep.transfer(labs[1],A,_.min(5,order.amount));
+                    creep.transfer(labs[1],A,Math.min(5,order.amount));
                     break;
                 case 9:
                     if(labs[0].runReaction(labs[1],labs[2]) == OK){
@@ -124,11 +128,11 @@ module.exports = {
             if(!creep.pos.isEqualTo(creep.room.memory.labManager.pos)){
                 creep.moveTo(new RoomPosition(creep.room.memory.labManager.pos.x,creep.room.memory.labManager.pos.y,creep.room.memory.labManager.pos.roomName));
             }
-            else if(!creep.carry[order.input1] || creep.carry[order.input1] < _.min([10,order.amount])){
-                creep.withdraw(creep.room.terminal,order.input1, _.min([10,order.amount]));
+            else if(!creep.carry[order.input1] || creep.carry[order.input1] < Math.min(10,order.amount)){
+                creep.withdraw(creep.room.terminal,order.input1, Math.min(10,order.amount));
             }
-            else if(!creep.carry[order.input2] || creep.carry[order.input2] < _.min([5,order.amount])){
-                creep.withdraw(creep.room.terminal,order.input2, _.min([5,order.amount]));
+            else if(!creep.carry[order.input2] || creep.carry[order.input2] < Math.min(5,order.amount)){
+                creep.withdraw(creep.room.terminal,order.input2, Math.min(5,order.amount));
             }
             else{
                 creep.memory.setup = true;

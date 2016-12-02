@@ -13,7 +13,7 @@ module.exports = {
             for(dx of [-1,0,1]){
                 for(dy of [-1,0,1]){
                     var mypos = {x: terminal.pos.x + dx, y: terminal.pos.y + dy, roomName: room.name};
-                    if(labs[0].pos.isNearTo(mypos) && labs[1].pos.isNearTo(mypos) && labs[2].pos.isNearTo(mypos)){
+                    if(labs[0].pos.getRangeTo(mypos) == 1 && labs[1].pos.getRangeTo(mypos) == 1 && labs[2].pos.getRangeTo(mypos) == 1){
                         room.memory.labManager.pos = mypos;
                         return OK;
                     }
