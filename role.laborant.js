@@ -59,7 +59,7 @@ module.exports = {
         if(creep.memory.task.type == TASK_LABORANT){
             var orders = creep.room.memory.labManager.orders;
             var order = {};
-            if(orders){order = orders[0]};
+            if(orders.length > 0){order = orders[0]};
             var labs = [];
             for(lab of creep.room.memory.labManager.labs){
                 labs.push(Game.getObjectById(lab.id)); //probably could cut some calls here
