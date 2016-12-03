@@ -164,7 +164,12 @@ module.exports.loop = function(){
 				roleTerminalManager.run(creep);
 			}
 			else if(creep.memory.role == 'laborant'){
-				roleLaborant.run(creep);
+				try{
+					roleLaborant.run(creep);
+				}
+				catch(err){
+					console.log("Error " + err + " in roleLaborant.run of creep " + creep.name);
+				}
 			}
 			// var elapsed = Game.cpu.getUsed() - startCpu;
 			// console.log('Creep '+name+' with role '+creep.memory.role+' has used '+elapsed+' CPU time');
