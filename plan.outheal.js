@@ -3,18 +3,26 @@ var roleDismantler = require('role.dismantler');
 module.exports = {
     start : function(rallyFlag,targetFlag){
         //request appropriate creeps, rally and target are flags for the creep's memory
-        var healBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE]; // costs 2280, a rcl 6 room can support 2300
+        // var healBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE]; // costs 2280, a rcl 6 room can support 2300
+        var healBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE]
+        for(var i = 0; i < 14; i++){
+            healBody.push(MOVE);
+        }
+        for(var i = 0; i < 15; i++){
+            healBody.push(HEAL);
+        }
+        healBody.push(MOVE);
         Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 0 , waypoint:['waypoint']});
-        Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 1 , waypoint:['waypoint']});
+        // Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 1 , waypoint:['waypoint']});
         Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 2 , waypoint:['waypoint']});
-        Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 3 , waypoint:['waypoint']});
+        // Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 3 , waypoint:['waypoint']});
         Game.rooms['W63N66'].requestCreep(
             [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE],
             'Desmond',{role : 'planOutheal', subrole : 'dismantler', waypoint:['waypoint']}
         );
-        var disBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE]; //can be built by rcl 4 rooms
-        Game.rooms['W63N66'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler', waypoint:['waypoint']});
-        Game.rooms['W63N66'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler', waypoint:['waypoint']});
+        // var disBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE]; //can be built by rcl 4 rooms
+        // Game.rooms['W63N66'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler', waypoint:['waypoint']});
+        // Game.rooms['W63N66'].requestCreep(disBody,undefined,{role : 'planOutheal', subrole : 'dismantler', waypoint:['waypoint']});
         // var raidBody = [ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE];
         // Game.rooms['W61N68'].requestCreep(raidBody,undefined,{role : 'raider', myflag: 'getrid'});
         // Game.rooms['W61N68'].requestCreep(raidBody,undefined,{role : 'raider', myflag: 'getrid'});
