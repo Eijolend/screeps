@@ -199,7 +199,7 @@ module.exports.loop = function(){
 			require("plan.outheal").start("healRally","healTarget");
 		}
 		if(Game.time > 15754573 && Game.time % 50 == 0 && Memory.planOutheal.stage == 0){
-			if(Game.flags.healRally.pos.findInRange(FIND_MY_CREEPS).length >= 4){
+			if(Game.flags.healRally.pos.findInRange(FIND_MY_CREEPS,5).length >= 4){
 				require("plan.outheal").trigger();
 			}
 		}
