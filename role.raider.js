@@ -14,7 +14,7 @@ module.exports = {
                 target=creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)});
             }
             if(target==undefined){
-            	target=myflag.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{filter:(s) => s.structureType != STRUCTURE_ROAD && s.structureType != STRUCTURE_CONTROLLER && !_.contains(playerWhiteList,s.owner.username)});
+            	target=myflag.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{filter:(s) => s.structureType != STRUCTURE_ROAD && s.structureType != STRUCTURE_CONTROLLER && s.structureType != STRUCTURE_RAMPART && !_.contains(playerWhiteList,s.owner.username)});
             }
             if(target==undefined){
                 creep.moveTo(myflag,{reusePath:0});
