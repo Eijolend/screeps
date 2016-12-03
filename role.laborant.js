@@ -124,7 +124,7 @@ module.exports = {
             }
             var orders = creep.room.memory.labManager.orders;
             var order = {};
-            if(orders){order = orders[0]};
+            if(orders.length >  0){order = orders[0]};
             if(!creep.pos.isEqualTo(creep.room.memory.labManager.pos)){
                 creep.moveTo(new RoomPosition(creep.room.memory.labManager.pos.x,creep.room.memory.labManager.pos.y,creep.room.memory.labManager.pos.roomName));
             }
