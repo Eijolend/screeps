@@ -42,7 +42,7 @@ module.exports = function(){
         }
         var wayPoint = Game.flags[this.memory.waypoint[0]];
         if(wayPoint != undefined){
-            if(this.room.name == wayPoint.pos.roomName){
+            if(this.room.name == wayPoint.pos.roomName && this.pos.inRangeTo(wayPoint,5)){
                 this.memory.waypoint.shift();
             }
             return this.std_moveTo(wayPoint,opts);

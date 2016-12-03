@@ -194,6 +194,18 @@ module.exports.loop = function(){
 		if(Game.spawns.Spawn1.hits < Game.spawns.Spawn1.hitsMax){
 			startRoom.controller.activateSafeMode();
 		}
+
+		if(Game.time == 15754573){
+			require("plan.outheal").start("healRally","healTarget");
+		}
+		if(Game.time > 15754573 && Game.time % 50 == 0 && Memory.planOutheal.stage == 0){
+			if(Game.flags.healRally.pos.findInRange(FIND_MY_CREEPS).length >= 4){
+				require("plan.outheal").trigger();
+			}
+		}
+		if(Memory.planOutheal.stage == 1 && Game.time % 50 == 10){
+			require("plan.outheal").trigger();
+		}
 		// var newRoom = Game.rooms['W55S18'];
 		// var hostilesInNewRoom =  newRoom.find(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)});
 		// if(hostilesInNewRoom.length > 0){
