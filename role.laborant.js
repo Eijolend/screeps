@@ -39,6 +39,7 @@ module.exports = {
             return OK;
         }
         creep.memory.task = {type: TASK_LABORANT, timeStamp : Game.time}; //labs could be written in here when multiple blocks
+        creep.memory.setup = false;
         return OK;
     },
 
