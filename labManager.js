@@ -22,7 +22,7 @@ module.exports = {
         }
     },
 
-    addOrder : function(input1,idnput2,output,amount,roomName){
+    addOrder : function(input1,input2,output,amount,roomName){
         var room = Game.rooms[roomName];
         if(room.memory.labManager == undefined){
             this.init(room);

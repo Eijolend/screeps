@@ -16,7 +16,7 @@ module.exports = {
         // Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 1 , waypoint:['waypoint']});
         Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 2 , waypoint:['waypoint']});
         // Game.rooms['W61N68'].requestCreep(healBody,undefined,{role : 'planOutheal', num : 3 , waypoint:['waypoint']});
-        Game.rooms['W63N66'].requestCreep(
+        Game.rooms['W61N68'].requestCreep(
             [TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE,WORK,MOVE],
             'Desmond',{role : 'planOutheal', subrole : 'dismantler', waypoint:['waypoint']}
         );
