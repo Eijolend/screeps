@@ -42,7 +42,8 @@ module.exports = {
 				if(!spawns.length){
 					Game.flags['placespawn'].pos.createConstructionSite(STRUCTURE_SPAWN);
 				}
-				creep.memory.role = 'civilian'
+				creep.memory.role = 'civilian';
+				creep.memory.homeRoom = creep.room.name;
 			}
 			else{
 				tasks.getenergy(creep);
