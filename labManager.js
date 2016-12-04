@@ -36,21 +36,20 @@ module.exports = {
     },
 
     addChain : function(output,amount,roomName){
+        if(_findIndex(BASEMINERALS,output) != -1){
+            return;
+        }
         var input1;
         var input2;
         for(var i in REACTIONS){
-            input2 = _.findKey(REACTIONS[i], (x) => x == output)
+            input2 = _.findKey(REACTIONS[i], (x) => x == output);
             if(input2 != undefined){
                 input1 = i;
                 break;
             }
         }
-        if(_.findIndex(BASEMINERALS,input1) == -1){
-            this.addChain(input1,amount,roomName);
-        }
-        if(_.findIndex(BASEMINERALS,input2) == -1){
-            this.addChain(input2,amount,roomName);
-        }
+        this.addChain(input1,amount,roomName);
+        this.addChain(input2,amount,roomName);
         // this.addOrder(input1,input2,output,amount,roomName);
         console.log(JSON.stringify({'input1': input1, 'input2':input2, 'output':output, 'amount': amount, 'roomName':roomName}));
     }
