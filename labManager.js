@@ -46,10 +46,10 @@ module.exports = {
             }
         }
         if(_.findIndex(BASEMINERALS,input1) == -1){
-            addChain(input1,amount,roomName);
+            this.addChain(input1,amount,roomName);
         }
         if(_.findIndex(BASEMINERALS,input2) == -1){
-            addChain(input2,amount,roomName);
+            this.addChain(input2,amount,roomName);
         }
         // this.addOrder(input1,input2,output,amount,roomName);
         console.log(JSON.stringify({'input1': input1, 'input2':input2, 'output':output, 'amount': amount, 'roomName':roomName}));
