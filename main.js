@@ -180,14 +180,14 @@ module.exports.loop = function(){
 		}
 
 		if(Game.flags['blockade'] && Game.time % 1200 == 0){
-			var blockadeBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE];
-			Game.spawns.Spawn1.room.requestCreep(blockadeBody,undefined,{role:'raider',myflag:'blockade',waypoint:['waypoint']});
-			Game.spawns.Spawn2.room.requestCreep(blockadeBody,undefined,{role:'raider',myflag:'blockade',waypoint:['waypoint']});
-			Game.spawns.Spawn2.room.requestCreep(blockadeBody,undefined,{role:'raider',myflag:'blockade',waypoint:['waypoint']});
-
-			var healBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE];
-			Game.spawns.Spawn1.room.requestCreep(healBody,undefined,{role:'raidHealer',myflag:'blockade',waypoint:['waypoint']});
-			Game.spawns.Spawn2.room.requestCreep(healBody,undefined,{role:'raidHealer',myflag:'blockade',waypoint:['waypoint']});
+			// var blockadeBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE];
+			// Game.spawns.Spawn1.room.requestCreep(blockadeBody,undefined,{role:'raider',myflag:'blockade',waypoint:['waypoint']});
+			// Game.spawns.Spawn2.room.requestCreep(blockadeBody,undefined,{role:'raider',myflag:'blockade',waypoint:['waypoint']});
+			// Game.spawns.Spawn2.room.requestCreep(blockadeBody,undefined,{role:'raider',myflag:'blockade',waypoint:['waypoint']});
+			//
+			// var healBody = [TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE];
+			// Game.spawns.Spawn1.room.requestCreep(healBody,undefined,{role:'raidHealer',myflag:'blockade',waypoint:['waypoint']});
+			// Game.spawns.Spawn2.room.requestCreep(healBody,undefined,{role:'raidHealer',myflag:'blockade',waypoint:['waypoint']});
 		}
 
 		var startRoom = Game.rooms['W63N66'];

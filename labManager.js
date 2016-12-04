@@ -1,3 +1,5 @@
+const BASEMINERALS = [RESOURCE_HYDROGEN, RESOURCE_OXYGEN, RESOURCE_UTRIUM, RESOURCE_LEMERGIUM, RESOURCE_KEANIUM, RESOURCE_ZYNTHIUM, RESOURCE_CATALYST];
+
 module.exports = {
     init : function(room){
         if(room.memory.labManager == undefined){
@@ -31,7 +33,29 @@ module.exports = {
             room.memory.labManager.orders = [];
         }
         room.memory.labManager.orders.push({'input1': input1, 'input2':input2, 'output':output, 'amount': amount, 'roomName':roomName});
-    }//,
+    },
+
+    addChain : function(output,amount,roomName){
+        var input1;
+        var input2;
+        for(var i in REACTIONS){
+            input2 = _.findKey(REACTIONS[i], (x) => x == output)
+            if(input2 != undefined){
+                input1 = i;
+                break;
+            }
+        }
+        if(_.findIndex(BASEMINERALS,input1) == -1){
+            addChain(input1,amount,roomName);
+        }
+        if(_.findIndex(BASEMINERALS,input2) == -1){
+            addChain(input2,amount,roomName);
+        }
+        // this.addOrder(input1,input2,output,amount,roomName);
+        console.log(JSON.stringify({'input1': input1, 'input2':input2, 'output':output, 'amount': amount, 'roomName':roomName}));
+    }
+
+    //,
 
     // run : function(room){
     //     if(room.memory.labManager == undefined){
