@@ -36,7 +36,7 @@ module.exports = {
     },
 
     addChain : function(output,amount,roomName){
-        if(_findIndex(BASEMINERALS,output) != -1){
+        if(_.findIndex(BASEMINERALS,output) != -1){
             return;
         }
         var input1;
