@@ -62,7 +62,7 @@ var bodies = {
 	runner : function(maxEnergy){
 		var template = [CARRY,MOVE];
 		var intervalEnergy=cost(template);
-		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),10); //currently hardcapped at 10
+		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),15); //currently hardcapped at 15
 		var body = [];
 		for(i=0;i<n;i++){
 			body.push(CARRY,MOVE);

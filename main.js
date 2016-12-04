@@ -168,7 +168,7 @@ module.exports.loop = function(){
 					roleLaborant.run(creep);
 				}
 				catch(err){
-					console.log("Error " + err + " in roleLaborant.run of creep " + creep.name);
+					Game.notify("Error " + err + " in roleLaborant.run of creep " + creep.name,5);
 				}
 			}
 			// var elapsed = Game.cpu.getUsed() - startCpu;
