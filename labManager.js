@@ -37,6 +37,7 @@ module.exports = {
 
     addChain : function(output,amount,roomName){
         if(_.findIndex(BASEMINERALS,output) != -1){
+            console.log(output + " is a base mineral");
             return;
         }
         var input1;
