@@ -37,7 +37,6 @@ module.exports = {
 
     addChain : function(output,amount,roomName){
         if(_.findIndex(BASEMINERALS,(x) => x == output) != -1){
-            console.log(output + " is a base mineral");
             return;
         }
         var input1;
@@ -51,8 +50,7 @@ module.exports = {
         }
         this.addChain(input1,amount,roomName);
         this.addChain(input2,amount,roomName);
-        // this.addOrder(input1,input2,output,amount,roomName);
-        console.log(JSON.stringify({'input1': input1, 'input2':input2, 'output':output, 'amount': amount, 'roomName':roomName}));
+        this.addOrder(input1,input2,output,amount,roomName);
     }
 
     //,
