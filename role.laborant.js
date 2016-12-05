@@ -21,6 +21,7 @@ module.exports = {
         }
         if(creep.ticksToLive < 15){
             creep.memory.task = {type: TASK_RETIRE};
+            return OK;
         }
         if(labs[0].mineralType){
             creep.memory.task = {type: TASK_EMPTY, id: labs[0].id};
@@ -54,7 +55,6 @@ module.exports = {
             else{
                 creep.suicide();
             }
-            return;
         }
 
         if(creep.memory.task.type == TASK_LABORANT){
@@ -77,6 +77,7 @@ module.exports = {
                     if(order.amount <= 0){
                         orders.shift();
                         creep.memory.task = undefined;
+                        return;
                     }
                     creep.withdraw(labs[0],C);
                     break;
