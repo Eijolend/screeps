@@ -77,6 +77,38 @@ var setupPrototypes = function(){
         }
         return this.std_createCreep(body,name,mem);
     };
+
+    //thanks to WASP103 for the following improvements
+    RoomPosition.prototype.isNearTo = function(pos) {
+        if(pos.pos !== undefined) {
+            pos = pos.pos;
+        }
+        if(this.roomName === pos.roomName || pos.roomName === undefined) {
+            return ( ((this.x>pos.x?this.x-pos.x:pos.x-this.x) <2) && ((this.y>pos.y?this.y-pos.y:pos.y-this.y) <2));
+        } else return false;
+    };//*/
+    RoomPosition.prototype.isEqualTo = function(pos) {
+        if(pos.pos !== undefined) {
+            pos = pos.pos;
+        }
+        return (pos.x === this.x && pos.y === this.y && pos.roomName === this.roomName);
+    };//*/
+    RoomPosition.prototype.getRangeTo = function(pos) {
+        if(pos.pos !== undefined) {
+            pos = pos.pos;
+        }
+        var dX = (this.x>pos.x?this.x-pos.x:pos.x-this.x);
+        var dY = (this.y>pos.y?this.y-pos.y:pos.y-this.y);
+        return (dX>dY?dX:dY);
+    };//*/
+    RoomPosition.prototype.inRangeTo = function(pos,range) {
+        if(pos.pos !== undefined) {
+            pos = pos.pos;
+        }
+        if(this.roomName === pos.roomName) {
+            return ( (this.x>pos.x?this.x-pos.x:pos.x-this.x) <= range && (this.y>pos.y?this.y-pos.y:pos.y-this.y) <= range);
+        } else return false;
+    };//*/
 }
 
 module.exports = function(){
