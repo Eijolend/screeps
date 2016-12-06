@@ -8,6 +8,8 @@ var setupConsts = function(){
     global.TASK_PICKUP = "pickup";
     global.TASK_GET_ENERGY = "getEnergy";
     global.TASK_UPGRADE = "upgrade";
+    global.TASK_REPAIR = "repair";
+    global.TASK_REPAIR_WALL = "repairWall";
 }
 
 var setupPrototypes = function(){

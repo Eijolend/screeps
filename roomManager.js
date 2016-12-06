@@ -49,6 +49,18 @@ var recalcTasks = function(room){
         upgradetask.assigned = upgradeCreeps.length;
         taskList.push(upgradetask);
     }
+    var repairCreeps = _.groupBy(creepsByTask[TASK_REPAIR] || [],'task.id');
+    for (var needsRepair in room.find(FIND_STRUCTURES,{filter: (s) => s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART && s.hits < s.hitsMax })){
+        var repairtask = setupTask(TASK_REPAIR,needsRepair);
+        repairtask.repairNeeded = Math.ceil((needsRepair.hitsMax - needsRepair.hits)/100) - _.sum( (repairCreeps[needsRepair.id] || []), 'carry.energy');
+        taskList.push(repairtask);
+    }
+    var repairWallCreeps = _.groupBy(creepsByTask[TASK_REPAIR_WALL] || [],'task.id');
+    for (var weakWall in room.find(FIND_STRUCTURES,{filter: (s) => (s.structureType == STRUCTURE_WALL || s.structureType == STRUCTURE_RAMPART) && s.hits < room.memory.wallMax})){
+        var repairwalltask = setupTask(TASK_REPAIR_WALL,weakWall);
+        repairwalltask.repairNeeded = Math.ceil((room.memory.wallMax - weakWall.hits)/100) - _.sum( (repqirWallCreeps[weakWall.id] || []), 'carry.energy');
+        taskList.push(repairwalltask);
+    }
     // still needed: towers, repairing, repairing walls
     room.memory.tasks = _.groupBy(taskList,"type");
 }

@@ -53,6 +53,28 @@ module.exports = {
         }
     },
 
+    getRepairingTask : function(creep){
+        var taskList = creep.room.memory.tasks;
+        var repairList = taskList[TASK_REPAIR];
+        var myIndex = _.findIndex(repairList, (t) => t.repairNeeded > 0);
+        if(myIndex != -1){
+            creep.task=repairList[myIndex];
+            repairList[myIndex].repairNeeded -= (creep.carryCapacity - creep.carry.energy)*100;
+            return OK;
+        }
+    },
+
+    getWallRepairingTask : function(creep){
+        var taskList = creep.room.memory.tasks;
+        var repairWallList = taskList[TASK_REPAIR_WALL];
+        var myIndex = _.findIndex(repairWallList, (t) => t.repairNeeded > 0);
+        if(myIndex != -1){
+            creep.task=repairWallList[myIndex];
+            repairWallList[myIndex].repairNeeded -= (creep.carryCapacity - creep.carry.energy)*100;
+            return OK;
+        }
+    },
+
     run : function(creep){
         if(creep.memory.working && creep.carry.energy == 0) {
             creep.memory.working = false;
