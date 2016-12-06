@@ -31,9 +31,6 @@ var bodies = {
 		}
 		return body
 	},
-	upgrader : function(maxEnergy){
-		return this.civilian(maxEnergy);
-	},
 	repairer : function(maxEnergy){
 		return this.civilian(maxEnergy);
 	},
@@ -121,17 +118,15 @@ module.exports = {
 		}
 		var maxEnergy = room.energyCapacityAvailable;
 
-		var upgrader_target = 1; //guarantees one upgrader
 		// number of civilians: at least 1, maximally 3, else enough to upgrade ca. 500 per 50 ticks, +1 for every 200k in storage
 		let storage = room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_STORAGE})[0];
-		var civilian_target = Math.max(Math.min(Math.ceil(20/(bodies.civilian(maxEnergy).length/3))-1,6),1) + ( storage != undefined ? Math.floor(storage.store.energy/200000) : 0 );
+		var civilian_target = Math.max(Math.min(Math.ceil(20/(bodies.civilian(maxEnergy).length/3))-1,7),2) + ( storage != undefined ? Math.floor(storage.store.energy/200000) : 0 );
 		// var emergencies = room.find(FIND_FLAGS,{filter: (f) => /emergency/.test(f.name)}).length
 		// if(emergencies > 0 && storage.store.energy > 100000){ //make sure things get used quickly in an emergency
 		// 	civilian_target += 2;
 		// }
-		var builder_target = 0;
 		var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
-		var miner_target = 2;
+		var miner_target = room.memory.tasks[TASK_MINE].length;
 		var runner_target = 2;
 		var terminalManager_target = 0;
 		if(room.controller.level >= 6){
@@ -147,7 +142,6 @@ module.exports = {
 		}
 
 		var creepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.pos.roomName == room.name),'memory.role'); //this also counts spawning creeps
-		var upgraders = creepsByRole.upgrader != undefined ? creepsByRole.upgrader.length : 0;
 		var civilians = creepsByRole.civilian != undefined ? creepsByRole.civilian.length : 0;
 		var repairers = creepsByRole.repairer != undefined ? creepsByRole.repairer.length : 0;
 		var miners = creepsByRole.miner != undefined ? creepsByRole.miner.length : 0;
@@ -176,8 +170,8 @@ module.exports = {
 		else if(runners < 1){
 			spawn.createCreep(bodies.runner(room.energyAvailable),undefined,{role:'runner'});
 		}
-		else if(upgraders < 1 && room.controller.ticksToDowngrade < 500){
-			spawn.createCreep(bodies.upgrader(room.energyAvailable),undefined,{role:'upgrader'});
+		else if(civilians < 1 && room.controller.ticksToDowngrade < 500){
+			spawn.createCreep(bodies.civilian(room.energyAvailable),undefined,{role:'upgrader'});
 		}
 		// //prioritize first repairer so we have something to build early on
 		// else if(repairers.length < 1){
@@ -196,9 +190,6 @@ module.exports = {
 		}
 		else if(runners < runner_target){
 			spawn.createCreep(bodies.runner(maxEnergy),undefined,{role:'runner'});
-		}
-		else if(upgraders < upgrader_target) {
-			spawn.createCreep(bodies.upgrader(maxEnergy),undefined,{role:'upgrader'});
 		}
 		else if(civilians < civilian_target) {
 			spawn.createCreep(bodies.civilian(maxEnergy),undefined,{role:'civilian'});

@@ -3,20 +3,18 @@
 =====================================
 Things for the rewrite:
 
-*remove upgraders from respawn.js since civilians now do that
-*miner respawning based on number of TASK_MINE
-*a modular task list that can be updated in chunks
 
-*only put filtered tasks in taskList
+
 *add repairing and wall repairing
-*add recylcer role
+*add recycler role
 *add remote rooms
 *complete functionality
-*overhaul of respawning logic
+*a modular task list that can be updated in chunks
+*overhaul of respawning logic -> port over early respawning from branch master
 *clean up code
 
 Then:
-*labs and boosting
+*labs and boosting (labs are solved in master)
 
 ===================================
 all the rest:

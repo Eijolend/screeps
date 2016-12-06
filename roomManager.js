@@ -20,10 +20,15 @@ var recalcTasks = function(room){
         taskList.push(cstask);
     }
     var pickupCreeps = _.groupBy(creepsByTask[TASK_PICKUP] || [], 'task.id');
+    var sources = room.find(FIND_SOURCES);
+    var spawns = room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_SPAWN});
+    var sourceSpawns = sources.concat(spawns);
     for (var droppedEnergy of room.find(FIND_DROPPED_RESOURCES,{filter: (r) => r.resourceType == RESOURCE_ENERGY})){ //here a estimate of how much will be left would be nice
-        var droppedtask = setupTask(TASK_PICKUP,droppedEnergy);
-        droppedtask.amountLeft = droppedEnergy.amount - _.sum( (pickupCreeps[droppedEnergy.id] || []), (c) => c.carryCapacity - c.carry.energy);
-        taskList.push(droppedtask);
+        if(_.some(sourceSpawns, (x) => droppedEnergy.pos.isNearTo(x) )){ //here we only want those that are close to spawn or source
+            var droppedtask = setupTask(TASK_PICKUP,droppedEnergy);
+            droppedtask.amountLeft = droppedEnergy.amount - _.sum( (pickupCreeps[droppedEnergy.id] || []), (c) => c.carryCapacity - c.carry.energy);
+            taskList.push(droppedtask);
+        }
     }
     var getEnergyCreeps = _.groupBy(creepsByTask[TASK_GET_ENERGY] || [], 'task.id');
     for (var container of room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})){
