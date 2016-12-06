@@ -5,8 +5,7 @@ Things for the rewrite:
 
 
 
-*add repairing and wall repairing
-*add recycler role
+*limit the number of repairers and wallRepairers
 *add remote rooms
 *complete functionality
 *a modular task list that can be updated in chunks

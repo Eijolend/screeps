@@ -97,6 +97,12 @@ module.exports = {
                     check = this.getBuildingTask(creep);
                 }
                 if(check != OK){
+                    check = this.getRepairingTask(creep); // should have some kind of limit to number of creeps that should perform this role
+                }
+                if(check != OK){
+                    check = this.getWallRepairingTask(creep);
+                }
+                if(check != OK){
                     check = this.getUpgradingTask(creep);
                 }
             }
