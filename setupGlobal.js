@@ -10,6 +10,7 @@ var setupConsts = function(){
     global.TASK_UPGRADE = "upgrade";
     global.TASK_REPAIR = "repair";
     global.TASK_REPAIR_WALL = "repairWall";
+    global.TASK_RECYCLE = "recycle";
 }
 
 var setupPrototypes = function(){

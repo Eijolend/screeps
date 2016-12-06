@@ -35,21 +35,21 @@ var fill = function(creep,target){
 	if(status == OK || status == ERR_FULL){
         creep.task = undefined;
     }
-	if(!creep.pos.inRangeTo(target,1)){
+	if(!creep.pos.isNearTo(target)){
 		creep.moveTo(target);
 	}
 }
 
 var pickup = function(creep,target){
 	creep.pickup(target);
-	if(!creep.pos.inRangeTo(target,1)){
+	if(!creep.pos.isNearTo(target)){
 		creep.moveTo(target);
 	}
 }
 
 var getEnergy = function(creep,target){
 	creep.withdraw(target,RESOURCE_ENERGY);
-	if(!creep.pos.inRangeTo(target,1)){
+	if(!creep.pos.isNearTo(target)){
 		creep.moveTo(target);
 	}
 }
@@ -59,6 +59,37 @@ var upgrade = function(creep,target){
 	if(!creep.pos.inRangeTo(target,3)){
 		creep.moveTo(target);
 	}
+}
+
+var repair = function(creep,target){
+    if(target && target.hits == target.hitsMax){
+        creep.task = undefined;
+        return;
+    }
+    creep.repair(target);
+    if(!creep.pos.inRangeTo(target,3)){
+		creep.moveTo(target);
+	}
+}
+
+var repairWall = function(creep,target){
+    if(target && target.hits >= creep.room.memory.wallMax){
+        creep.task = undefined;
+        return;
+    }
+    creep.repair(target);
+    if(!creep.pos.inRangeTo(target,3)){
+		creep.moveTo(target);
+	}
+}
+
+var recycle = function(creep,target){
+    if(target && target.structureType == STRUCTURE_SPAWN){
+        target.recycleCreep(creep);
+    }
+    if(!creep.pos.isNearTo(target)){
+        creep.moveTo(target);
+    }
 }
 
 module.exports = {
@@ -84,6 +115,15 @@ module.exports = {
 				case TASK_UPGRADE:
 					upgrade(creep,target);
 					break;
+                case TASK_REPAIR:
+                    repair(creep,target);
+                    break;
+                case TASK_REPAIR_WALL:
+                    repairWall(creep,target);
+                    break;
+                case TASK_RECYCLE:
+                    recycle(creep,target);
+                    break;
 			}
 		}
 	}
