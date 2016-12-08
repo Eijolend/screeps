@@ -4,9 +4,9 @@
 Things for the rewrite:
 
 
-
-*limit the number of repairers and wallRepairers
 *add remote rooms
+*limit the number of repairers and wallRepairers
+*reserve energy in containers for runners in a shortage (and dropped?)
 *complete functionality
 *a modular task list that can be updated in chunks
 *overhaul of respawning logic -> port over early respawning from branch master

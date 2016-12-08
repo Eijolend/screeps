@@ -9,7 +9,7 @@ module.exports = {
         myIndex = _.findIndex(getEnergyTasks, (t) => t.amountAvailable == Game.getObjectById(t.id).storeCapacity);
         if(myIndex != -1){
             creep.task=getEnergyTasks[myIndex];
-            getEnergyTask[myIndex].amountAvailable -= (creep.carryCapacity - creep.carry.energy);
+            getEnergyTasks[myIndex].amountAvailable -= (creep.carryCapacity - creep.carry.energy);
             return OK;
         }
         var pickupTasks = taskList[TASK_PICKUP];
@@ -22,7 +22,7 @@ module.exports = {
         myIndex = _.findIndex(getEnergyTasks,(t) => t.amountAvailable >= (creep.carryCapacity - creep.carry.energy));
         if(myIndex != -1){
             creep.task=getEnergyTasks[myIndex];
-            getEnergyTask[myIndex].amountAvailable -= (creep.carryCapacity - creep.carry.energy);
+            getEnergyTasks[myIndex].amountAvailable -= (creep.carryCapacity - creep.carry.energy);
             return OK;
         }
         // //need a different solution for storages
@@ -37,7 +37,7 @@ module.exports = {
         var myIndex = _.findIndex(buildList, (t) => t.progressLeft > 0);
         if(myIndex != -1){
             creep.task=buildList[myIndex];
-            buildList[myIndex].progressLeft -= (creep.carryCapacity - creep.carry.energy);
+            buildList[myIndex].progressLeft -= creep.carry.energy;
             return OK;
         }
     },
@@ -59,7 +59,7 @@ module.exports = {
         var myIndex = _.findIndex(repairList, (t) => t.repairNeeded > 0);
         if(myIndex != -1){
             creep.task=repairList[myIndex];
-            repairList[myIndex].repairNeeded -= (creep.carryCapacity - creep.carry.energy)*100;
+            repairList[myIndex].repairNeeded -= creep.carry.energy;
             return OK;
         }
     },
@@ -70,7 +70,7 @@ module.exports = {
         var myIndex = _.findIndex(repairWallList, (t) => t.repairNeeded > 0);
         if(myIndex != -1){
             creep.task=repairWallList[myIndex];
-            repairWallList[myIndex].repairNeeded -= (creep.carryCapacity - creep.carry.energy)*100;
+            repairWallList[myIndex].repairNeeded -= creep.carry.energy;
             return OK;
         }
     },

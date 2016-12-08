@@ -11,7 +11,7 @@ module.exports = {
         myIndex = _.findIndex(getEnergyTasks, (t) => t.amountAvailable == Game.getObjectById(t.id).storeCapacity);
         if(myIndex != -1){
             creep.task=getEnergyTasks[myIndex];
-            getEnergyTask[myIndex].amountAvailable -= (creep.carryCapacity - creep.carry.energy);
+            getEnergyTasks[myIndex].amountAvailable -= (creep.carryCapacity - creep.carry.energy);
             return OK;
         }
         var pickupTasks = taskList[TASK_PICKUP];
@@ -24,7 +24,7 @@ module.exports = {
         myIndex = _.findIndex(getEnergyTasks,(t) => t.amountAvailable >= (creep.carryCapacity - creep.carry.energy));
         if(myIndex != -1){
             creep.task=getEnergyTasks[myIndex];
-            getEnergyTask[myIndex].amountAvailable -= (creep.carryCapacity - creep.carry.energy);
+            getEnergyTasks[myIndex].amountAvailable -= (creep.carryCapacity - creep.carry.energy);
             return OK;
         }
         // //need a different solution for storages

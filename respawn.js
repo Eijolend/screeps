@@ -31,9 +31,6 @@ var bodies = {
 		}
 		return body
 	},
-	repairer : function(maxEnergy){
-		return this.civilian(maxEnergy);
-	},
 	remoteMiner : function(maxEnergy){
 		return [WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE]
 	},
@@ -125,7 +122,6 @@ module.exports = {
 		// if(emergencies > 0 && storage.store.energy > 100000){ //make sure things get used quickly in an emergency
 		// 	civilian_target += 2;
 		// }
-		var repairer_target = 1; //repairer is a builder that prioritises repairing non-wall structures
 		var miner_target = room.memory.tasks[TASK_MINE].length;
 		var runner_target = 2;
 		var terminalManager_target = 0;
@@ -193,9 +189,6 @@ module.exports = {
 		}
 		else if(civilians < civilian_target) {
 			spawn.createCreep(bodies.civilian(maxEnergy),undefined,{role:'civilian'});
-		}
-		else if(repairers < repairer_target) {
-			spawn.createCreep(bodies.repairer(maxEnergy),undefined,{role: 'repairer'});
 		}
 		else if(hunters < hunter_target) {
 			spawn.createCreep(bodies.hunter(maxEnergy/2),undefined,{role: 'hunter'});
