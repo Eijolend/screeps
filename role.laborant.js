@@ -61,6 +61,11 @@ module.exports = {
             var orders = creep.room.memory.labManager.orders;
             var order = {};
             if(orders.length > 0){order = orders[0]};
+            if(order.amount <= 0){
+                orders.shift();
+                creep.memory.task = undefined;
+                return;
+            }
             var labs = [];
             for(lab of creep.room.memory.labManager.labs){
                 labs.push(Game.getObjectById(lab.id)); //probably could cut some calls here
@@ -71,11 +76,6 @@ module.exports = {
             switch ((Game.time - creep.memory.task.timeStamp) % 10){
                 case 0:
                     if(creep.ticksToLive < 15){
-                        creep.memory.task = undefined;
-                        return;
-                    }
-                    if(order.amount <= 0){
-                        orders.shift();
                         creep.memory.task = undefined;
                         return;
                     }
