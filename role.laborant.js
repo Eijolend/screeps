@@ -80,7 +80,7 @@ module.exports = {
                         return;
                     }
                     creep.withdraw(labs[0],C);
-                    if(labs[0].mineralType != C || labs[1].mineralType || labs[2].mineralType){
+                    if( (labs[0].mineralType != undefined && labs[0].mineralType != C) || labs[1].mineralType || labs[2].mineralType){
                         creep.memory.task = undefined;
                         return;
                     }
