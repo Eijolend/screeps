@@ -56,7 +56,7 @@ module.exports = {
 		}
 		else if (creep.room.name == creep.memory.homeRoom){
 			if (creep.memory.delivering){
-				tasks.fill(creep,[STRUCTURE_STORAGE,STRUCTURE_SPAWN,STRUCTURE_EXTENSION,STRUCTURE_CONTAINER]);
+				tasks.fill(creep,[STRUCTURE_STORAGE,STRUCTURE_SPAWN,STRUCTURE_EXTENSION]); //removed STRUCTURE_CONTAINER because of problems
 			}
 			else if(creep.ticksToLive < 200 || creep.hits < creep.hitsMax){
 				creep.memory.role = 'recycler';

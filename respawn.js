@@ -226,6 +226,13 @@ module.exports = {
 			else if(laborants < laborant_target){
 				spawn.createCreep([MOVE,CARRY],undefined,{role:'laborant'});
 			}
+			else if(room.memory.aidRoom != undefined && room.controller.level >= 8 && storage.store.energy >= 900000){
+				let auxbody = [];
+				for(var i=0; i<25;i++){
+					auxbody.push(MOVE,CARRY);
+				}
+				spawn.createCreep(auxbody,undefined,{role:'transporter',targetRoom: room.memory.aidRoom});
+			}
 			// if(thiefs.length < thief_target) {
 				// if (spawn.room.energyAvailable > 600){
 					// spawn.createCreep([CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],undefined,{role: 'thief'});

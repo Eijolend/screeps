@@ -39,6 +39,8 @@ var roleTerminalManager = require('role.terminalManager');
 profiler.registerObject(roleTerminalManager, 'roleTerminalManager');
 const roleLaborant = require('role.laborant');
 profiler.registerObject(roleLaborant, 'roleLaborant');
+const roleTransporter = require('role.transporter');
+profiler.registerObject(roleTransporter,'roleTransporter');
 var respawn = require('respawn');
 profiler.registerObject(respawn, 'respawn');
 var tasks = require('tasks');
@@ -170,6 +172,9 @@ module.exports.loop = function(){
 				catch(err){
 					Game.notify("Error " + err + " in roleLaborant.run of creep " + creep.name,5);
 				}
+			}
+			else if(creep.memory.role == 'transporter'){
+				roleTransporter.run(creep);
 			}
 			// var elapsed = Game.cpu.getUsed() - startCpu;
 			// console.log('Creep '+name+' with role '+creep.memory.role+' has used '+elapsed+' CPU time');
