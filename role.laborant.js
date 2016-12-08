@@ -80,6 +80,10 @@ module.exports = {
                         return;
                     }
                     creep.withdraw(labs[0],C);
+                    if(labs[0].mineralType != C || labs[1].mineralType || labs[2].mineralType){
+                        creep.memory.task = undefined;
+                        return;
+                    }
                     break;
                 case 1:
                     creep.transfer(labs[0],A,Math.min(10,order.amount));
