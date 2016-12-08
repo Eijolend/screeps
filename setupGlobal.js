@@ -76,7 +76,11 @@ var setupPrototypes = function(){
         if(!mem.homeRoom){
             mem.homeRoom = this.room.name;
         }
-        return this.std_createCreep(body,name,mem);
+        var returnValue = this.std_createCreep(body,name,mem);
+        if (returnValue == OK){
+            _.set(this.room.memory, "roomManager.lastUpdated."+TASK_FILL, 0); //if something is spawned, should update tasks next tick
+        }
+        return returnValue;
     };
 
     //thanks to WASP103 for the following improvements
