@@ -4,7 +4,9 @@
 Things for the rewrite:
 
 
-*add remote rooms
+*add remote rooms (tasks done, missing: roles and respawn)
+*how do we handle repairing in RemoteRooms?
+
 *limit the number of repairers and wallRepairers
 *reserve energy in containers for runners in a shortage (and dropped?)
 *complete functionality
@@ -23,9 +25,6 @@ all the rest:
 *spawn dedicated loader creeps if a tower is empty and there are not enough civilians to fill all of them
 
 *only spawn terminalManagers when needed, but I don't want to give up the safety net of an additional runner
-
-*better repairer logic, to minimize traffic jams. Idea: only make a list what needs to be repaired every 500 ticks or so. could be combined with:
-*integrate repair into the civilian role
 
 *fix problems with overwriting the queue (fixed... maybe?)
 

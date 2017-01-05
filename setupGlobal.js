@@ -11,6 +11,7 @@ var setupConsts = function(){
     global.TASK_REPAIR = "repair";
     global.TASK_REPAIR_WALL = "repairWall";
     global.TASK_RECYCLE = "recycle";
+    global.TASK_RESERVE = "reserve";
 }
 
 var setupPrototypes = function(){

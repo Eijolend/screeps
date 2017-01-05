@@ -92,6 +92,13 @@ var recycle = function(creep,target){
     }
 }
 
+var reserve = function(creep,target){
+    creep.reserveController(target);
+    if(!creep.pos.isNearTo(target)){
+        creep.moveTo(target);
+    }
+}
+
 module.exports = {
 	run: function(creep){
 		if (creep.task != undefined){
@@ -123,6 +130,9 @@ module.exports = {
                     break;
                 case TASK_RECYCLE:
                     recycle(creep,target);
+                    break;
+                case TASK_RESERVE:
+                    reserve(creep,target);
                     break;
 			}
 		}

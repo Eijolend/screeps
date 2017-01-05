@@ -103,6 +103,18 @@ var recalcRepairWallTasks = function(room,creepByTask){
     setTaskList(room,TASK_REPAIR_WALL,taskList);
 }
 
+var recalcReserveTasks = function(room,creepsByTask){
+    var taskList = [];
+    var reserveCreeps = creepsByTask[TASK_RESERVE] || [];
+    if(room.controller != undefined){ //this needs a distinction whether this is a remoteroom or not
+        var reservetask = setupTask(TASK_RESERVE,room.controller);
+        upgradetask.ticksToDowngrade = room.controller.ticksToDowngrade;
+        upgradetask.assigned = upgradeCreeps.length;
+        taskList.push(upgradetask);
+    }
+    setTaskList(room,TASK_RESERVE,taskList);
+}
+
 var recalcTasks = function(room){
     var creepsByTask;
     if( !(Game.time - _.get(room.memory,"roomManager.lastUpdated."+TASK_MINE) < 200) ){
@@ -139,12 +151,58 @@ var recalcTasks = function(room){
     }
 }
 
+var recalcRemoteTasks = function(room){
+    var creepsByTask;
+    if( !(Game.time - _.get(room.memory,"roomManager.lastUpdated."+TASK_MINE) < 200) ){
+        creepsByTask = creepsByTask != undefined ? creepsByTask : _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
+        recalcMineTasks(room,creepsByTask);
+    }
+    if( !(Game.time - _.get(room.memory,"roomManager.lastUpdated."+TASK_BUILD) < 50) ){
+        creepsByTask = creepsByTask != undefined ? creepsByTask : _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
+        recalcBuildTasks(room,creepsByTask);
+    }
+    if( !(Game.time - _.get(room.memory,"roomManager.lastUpdated."+TASK_PICKUP) < 20) ){
+        creepsByTask = creepsByTask != undefined ? creepsByTask : _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
+        recalcPickupTasks(room,creepsByTask);
+    }
+    if( !(Game.time - _.get(room.memory,"roomManager.lastUpdated."+TASK_GET_ENERGY) < 20) ){
+        creepsByTask = creepsByTask != undefined ? creepsByTask : _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
+        recalcGetEnergyTasks(room,creepsByTask);
+    }
+    if( !(Game.time - _.get(room.memory,"roomManager.lastUpdated."+TASK_REPAIR) < 500) ){
+        creepsByTask = creepsByTask != undefined ? creepsByTask : _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
+        recalcRepairTasks(room,creepsByTask);
+    }
+    if( !(Game.time - _.get(room.memory,"roomManager.lastUpdated."+TASK_RESERVE) < 20) ){
+        creepsByTask = creepsByTask != undefined ? creepsByTask : _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
+        recalcReserveTasks(room,creepsByTask);
+    }
+}
+
 module.exports = {
     run : function(room){
         if(!room.memory.tasks){
             room.memory.tasks = {};
         }
-        recalcTasks(room);
-        respawn.run(room);
+        if(room.memory.remoteRoom){
+            recalcRemoteTasks(room);
+        }
+        else{
+            recalcTasks(room);
+            respawn.run(room);
+        }
+    },
+
+    remoteInit : function(remoteRoomName,homeRoomName){
+        _.set(Memory, "rooms." + remoteRoomName + ".remoteRoom", true);
+        _.set(Memory, "rooms." + remoteRoomName + ".homeRoom", homeRoomName)
+        let homeRoom = Game.rooms[homeRoomName];
+        if(!homeRoom.memory.remoteRooms){
+            homeRoom.memory.remoteRooms = [];
+        }
+        homeRoom.memory.remoteRooms.push(remoteRoomName);
+        if(!Game.rooms[remoteRoomName]){
+            //request a scout from homeRoom using homeRoom.requestCreep()
+        }
     }
 }
