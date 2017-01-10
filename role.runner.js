@@ -12,7 +12,7 @@ module.exports = {
 	        creep.say('delivering');
 		}
 		if(creep.memory.delivering){
-			var mylist=[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,STRUCTURE_TOWER,STRUCTURE_STORAGE];
+			var mylist=[STRUCTURE_SPAWN,STRUCTURE_EXTENSION,STRUCTURE_TOWER,STRUCTURE_STORAGE,STRUCTURE_NUKER];
 			tasks.fill(creep,mylist);
 		}
 		else if(creep.ticksToLive < 50){

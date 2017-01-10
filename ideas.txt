@@ -2,6 +2,8 @@
 
 Things that I should do urgently.
 
+*terminal Managers should fill Ghodium into Nukers... maybe the can also manage getting energy to the nukers
+
 *tweak respawn so it does not spawn too many civilians while colonists are helping
 
 *find counting error for labs
