@@ -35,6 +35,9 @@ module.exports = {
 	                creep.moveTo(myflag);
 	            }
 			}
+			if(creep.room.name == creep.memory.homeRoom){
+				creep.memory.waypoint = ["daway"];
+			}
 		}
 		else{
 			if(creep.room.name == Game.flags[creep.memory.myflag].pos.roomName){
