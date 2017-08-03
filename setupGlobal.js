@@ -21,6 +21,18 @@ var setupPrototypes = function(){
 	Object.defineProperty(Creep.prototype, 'role', { get: function () { return this.memory.role; } , set: function(x) { this.memory.role = x; } });
     Object.defineProperty(Creep.prototype, 'task', { get: function () { return this.memory.task; } , set: function(x) { this.memory.task = x; } });
 
+	StructureSpawn.prototype.std_createCreep = StructureSpawn.prototype.createCreep;
+    StructureSpawn.prototype.createCreep = function(body,name,mem){
+        if(!mem){
+            mem = {};
+        }
+        if(!mem.homeRoom){
+            mem.homeRoom = this.room.name;
+        }
+        var returnValue = this.std_createCreep(body,name,mem);
+		return returnValue
+	};
+
 	//thanks to WASP103 for the following improvements
     RoomPosition.prototype.isNearTo = function(pos) {
         if(pos.pos !== undefined) {
@@ -54,18 +66,7 @@ var setupPrototypes = function(){
 	};//*/
 }
 
-var setupClasses = function(){
-	function task(tasktype,object){
-		this.type = tasktype;
-		this.x = object.pos.x;
-		this.y = object.pos.y;
-		this.roomName = object.roomName;
-		this.id = object.id;
-	}
-}
-
 module.exports = function(){
 	setupConsts();
 	setupPrototypes();
-	setupClasses();
 }
