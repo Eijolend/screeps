@@ -2,7 +2,7 @@
 
 const tasks = require("tasks");
 const roleMiner = require('creep.roleMiner');
-// const roleRunner = require('creep.roleRunner');
+const roleRunner = require('creep.roleRunner');
 // const roleCivilian = require('creep.roleCivilian');
 // const roleRecycler = require('creep.roleRecycler');
 

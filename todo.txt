@@ -1,0 +1,4 @@
+*Rewrite filltasks to choose closest task and include towers.
+*Put Task-Calculation in a central file rather than in the role file.
+*getting task in runners and civilians from storage should recalculate if storage is empty
+*find a way to avoid energy starving when too many civilians are present

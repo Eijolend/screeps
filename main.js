@@ -29,5 +29,7 @@ module.exports.loop = function(){
   		creepLoop.run(creep);
 	}
 
-
+	if(Game.spawns.Spawn1.hits < Game.spawns.Spawn1.hitsMax){
+		startRoom.controller.activateSafeMode();
+	}
 }
