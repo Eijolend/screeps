@@ -3,8 +3,8 @@
 const tasks = require("tasks");
 const roleMiner = require('creep.roleMiner');
 const roleRunner = require('creep.roleRunner');
-// const roleCivilian = require('creep.roleCivilian');
-// const roleRecycler = require('creep.roleRecycler');
+const roleCivilian = require('creep.roleCivilian');
+const roleRecycler = require('creep.roleRecycler');
 
 module.exports = {
     run : function(creep){
