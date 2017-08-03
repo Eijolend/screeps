@@ -15,7 +15,7 @@ var bodies = {
 		var minEnergy = cost([WORK,MOVE])
 		if(maxEnergy > minEnergy){
 			var n = Math.min(Math.floor((maxEnergy - minEnergy)/BODYPART_COST[WORK]),4); //a maximum of 5 WORK parts
-			for(i=0; i<n; i++){
+			for(var i=0; i<n; i++){
 				body.push(WORK);
 			}
 		}
@@ -28,7 +28,7 @@ var bodies = {
 		var intervalEnergy=cost(template);
 		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),10); //currently hardcapped at 10
 		var body = [];
-		for(i=0;i<n;i++){
+		for(var i=0;i<n;i++){
 			body.push(CARRY,MOVE);
 		}
 		return body
@@ -39,7 +39,7 @@ var bodies = {
 		var intervalEnergy = cost(template);
 		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),10); //hardcapped at 10
 		var body = [];
-		for(i=0;i<n;i++){
+		for(var i=0;i<n;i++){
 			body.push(WORK,CARRY,MOVE);
 		}
 		return body
