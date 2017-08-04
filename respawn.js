@@ -173,7 +173,7 @@ module.exports = {
 						spawn.createCreep(bodies.remoteMiner(maxEnergy), undefined, {role:ROLE_REMOTE_MINER, task : remoteminetask, travelTime : 0});
 						return;
 					}
-					var taskRemoteRunners = _.filter(remoteRunners, (c) => c.assocTask.id == remoteminetask.id);
+					var taskRemoteRunners = _.filter(remoteRunners, (c) => c.memory.assocTask.id == remoteminetask.id);
 					var numRemoteRunners = taskRemoteRunners != undefined ? taskRemoteRunners.length : 0;
 					var remoteRunner_target = 1;
 					if(remoteminetask.roomName in Game.rooms){
