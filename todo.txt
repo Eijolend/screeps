@@ -1,5 +1,6 @@
 URGENT:
 *next up: remote mining
+*colonizing
 
 soon:
 *Towers should be prioritized in an emergency and civilians should help fill them in an emergency.
