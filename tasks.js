@@ -197,7 +197,10 @@ var remoteMine = function(creep,target){
 
 	if(creep.room.name == creep.task.roomName){
 		if(creep.memory.workable){
-			var myContainer = target.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+			var myContainer = Game.getObjectById(creep.task.containerId);
+			if (myContainer == null){
+				myContainer = target.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+			}
 			if(myContainer == undefined){
 				var csContainer = target.pos.findInRange(FIND_CONSTRUCTION_SITES,1,{filter:(s) => s.structureType == STRUCTURE_CONTAINER});
 				if(csContainer.length == 0){
@@ -214,6 +217,9 @@ var remoteMine = function(creep,target){
 				}
 			}
 			else{
+				if(!creep.task.containerId){
+					creep.task.containerId = myContainer.id;
+				}
 				mine(creep,target);
 			}
 		}
@@ -235,7 +241,7 @@ var remoteGetEnergy = function(creep,target){
 		creep.moveTo(target);
 	}
 	else{
-		var dropped = target.pos.findInRange(FIND_DROPPED_ENERGY,3,{filter: (r) => r.resourceType == RESOURCE_ENERGY});
+		var dropped = target.pos.findInRange(FIND_DROPPED_RESOURCES,3,{filter: (r) => r.resourceType == RESOURCE_ENERGY});
         var myContainer = target.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
 		if (myContainer != undefined && myContainer.store.energy == myContainer.storeCapacity){ //fixes container overflowing
 			getEnergy(creep,myContainer);
