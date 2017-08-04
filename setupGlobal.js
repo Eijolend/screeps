@@ -19,6 +19,7 @@ var setupConsts = function(){
 	global.TASK_RECYCLE = "recycle";
 	global.TASK_RESERVE = "reserve";
 	global.TASK_RAID = "raid";
+	global.TASK_GUARD = "guard";
 }
 
 var setupPrototypes = function(){

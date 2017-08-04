@@ -9,7 +9,12 @@ module.exports = {
 		    if(myflag == undefined){
 		        myflag = Game.flags['Raid'];
 		    }
-			creep.task = setupTask(TASK_RAID,myflag)
+			if(creep.memory.raidMode == "guard"){
+				creep.task = setupTask(TASK_GUARD,myflag);
+			}
+			else{
+				creep.task = setupTask(TASK_RAID,myflag);
+			}
 		}
 	}
 }
