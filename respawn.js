@@ -54,7 +54,7 @@ var bodies = {
 		var energyLeft = maxEnergy - toughNo * toughCost;
 		var attackNo = Math.min(Math.floor(energyLeft/attackCost),19); //no more than 50 body parts
 		var body = [];
-		for(i=0;i<toughNo;i++){
+		for(var i=0;i<toughNo;i++){
 			body.push(TOUGH);
 		}
 		for(i=0;i<toughNo;i++){
