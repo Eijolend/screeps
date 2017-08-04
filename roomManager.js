@@ -1,5 +1,7 @@
 "use strict";
 
+const setupTask = require("utils").setupTask;
+
 module.exports = {
 	remoteUpdate : function(remoteRoomName,homeRoomName){
 		let homeRoom = Game.rooms[homeRoomName];
@@ -10,10 +12,11 @@ module.exports = {
 		else{
 			let remoteRoom = Game.rooms[remoteRoomName];
 			//note down controller and sources
-			remoteRoom.memory.controller = remoteRoom.controller.id;
+			remoteRoom.memory.controller = setupTask(TASK_RESERVE,remoteRoom.controller)
 			remoteRoom.memory.sources = [];
 			for(var source of remoteRoom.find(FIND_SOURCES)){
-				remoteRoom.memory.sources.push(source.id);
+				var remoteminetask = setupTask(TASK_REMOTE_MINE, source);
+				remoteRoom.memory.sources.push(remotemineTask)
 			}
 			return OK;
 		}

@@ -64,6 +64,10 @@ var bodies = {
 			body.push(...attackTemplate);
 		}
 		return body
+	},
+
+	reserver : function(maxEnergy){
+		return [MOVE,CLAIM,CLAIM,MOVE];
 	}
 }
 
@@ -116,17 +120,34 @@ module.exports = {
 				room.memory.requestList = requestList;
 			}
 		}
-		else if(hunters < hunter_target){
-			spawn.createCreep(bodies.hunter(maxEnergy),undefined,{role:ROLE_HUNTER});
-		}
 		else if(miners < miner_target){
 			spawn.createCreep(bodies.miner(maxEnergy),undefined,{role:ROLE_MINER});
 		}
 		else if(runners < runner_target){
 			spawn.createCreep(bodies.runner(maxEnergy),undefined,{role:ROLE_RUNNER});
 		}
+		else if(hunters < hunter_target){
+			spawn.createCreep(bodies.hunter(maxEnergy),undefined,{role:ROLE_HUNTER});
+		}
 		else if(civilians < civilian_target) {
 			spawn.createCreep(bodies.civilian(maxEnergy),undefined,{role:ROLE_CIVILIAN});
+		}
+		else{
+			//do spawning for remoteRooms
+			for(remoteRoomName of room.memory.remoteRooms){
+				var remoteCreepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.task && c.task.roomName == remoteRoomName), "memory.role");
+				var reservers = remoteCreepsByRole.reserver != undefined ? creepsByRole.reserver.length : 0;
+				if(reservers < 1){
+					var reservetask = Game.rooms[remoteRoomName].memory.controller
+					var controllerId = reservetask.id;
+					var controller = Game.getObjectById(controllerId);
+					if(controller = null || controller.reservation.ticksToEnd < 500){
+						spawn.createCreep(bodies.reserver,undefined,{role:ROLE_RESERVER, task : reservetask});
+						return;
+					}
+				}
+				//add more remoteRoomLogic
+			}
 		}
 	}
 }
