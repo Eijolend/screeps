@@ -179,7 +179,7 @@ module.exports = {
 					if(remoteminetask.roomName in Game.rooms){
 						var mySource = tasks.getTarget(remoteminetask);
 						var myContainer = mySource.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
-						var myDropped = mySource.pos.findInRange(FIND_DROPPED_ENERGY,1,{filter: (r) => r.resourceType == RESOURCE_ENERGY})[0];
+						var myDropped = mySource.pos.findInRange(FIND_DROPPED_RESOURCES,1,{filter: (r) => r.resourceType == RESOURCE_ENERGY})[0];
 						var myEnergy = ( myContainer != undefined ? myContainer.store.energy : 0 ) + ( myDropped != undefined ? myDropped.amount : 0 );
 						if(myContainer == undefined){
 							remoteRunner_target = 0;
