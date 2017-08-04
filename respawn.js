@@ -138,7 +138,7 @@ module.exports = {
 				var remoteCreepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.task && c.task.roomName == remoteRoomName), "memory.role");
 				var reservers = remoteCreepsByRole.reserver != undefined ? creepsByRole.reserver.length : 0;
 				if(reservers < 1){
-					var reservetask = Game.rooms[remoteRoomName].memory.controller
+					var reservetask = Memory.rooms[remoteRoomName].controller;
 					var controllerId = reservetask.id;
 					var controller = Game.getObjectById(controllerId);
 					if(controller = null || controller.reservation.ticksToEnd < 500){
