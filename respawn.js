@@ -81,7 +81,7 @@ var bodies = {
 		var intervalEnergy=cost(template);
 		var n = Math.min(Math.floor((maxEnergy-200)/intervalEnergy),10); //currently hardcapped at 1050 carry
 		var body = [];
-		for(i=0;i<n;i++){
+		for(var i=0;i<n;i++){
 			body.push(CARRY,CARRY,MOVE);
 		}
 		body.push(CARRY,WORK,MOVE);
