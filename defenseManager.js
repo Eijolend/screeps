@@ -2,6 +2,19 @@
 
 module.exports = {
 	run : function(room){
+		if(!room.memory.underAttack){
+			var hostiles = room.find(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username) }).length;
+			if(hostiles > 0){
+				room.memory.underAttack = true;
+			}
+		}
+		else if(Game.time % 50 == 0){
+			var hostiles = room.find(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username) }).length;
+			if(hostiles == 0){
+				room.memory.underAttack = false;
+			}
+		}
+
 		var towers = room.find(FIND_STRUCTURES, {filter: (structure) => structure.structureType == STRUCTURE_TOWER});
 		if(towers.length){
 			for(var i=0;i<towers.length;i++){

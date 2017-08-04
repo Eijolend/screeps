@@ -142,7 +142,7 @@ var guard = function(creep){ //like raid, but with a maximal engagement range
             target=targets[0]
         }
         else{
-            target=myflag.pos.findClosestByRange(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username && c.pos.inRangeTo(myflag,maxRange))});
+            target=creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username && c.pos.inRangeTo(myflag,maxRange))});
         }
         if(target==undefined){
         	target=myflag.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{filter:(s) => s.structureType != STRUCTURE_ROAD && s.structureType != STRUCTURE_CONTROLLER && s.structureType != STRUCTURE_RAMPART && !_.contains(playerWhiteList,s.owner.username) && s.pos.inRangeTo(myflag,maxRange)});
@@ -158,6 +158,19 @@ var guard = function(creep){ //like raid, but with a maximal engagement range
     }
     else{
         creep.moveTo(myflag);
+	}
+}
+
+var hunt = function(creep){
+	module.exports ={
+	run: function(creep){
+		var target = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)});
+		if (creep.attack(target) == ERR_NOT_IN_RANGE){
+			creep.moveTo(target);
+		}
+		if(target === null){
+			creep.task = undefined;
+		}
 	}
 }
 
@@ -201,6 +214,9 @@ module.exports = {
 					break;
 				case TASK_GUARD:
 					guard(creep);
+					break;
+				case TASK_HUNT:
+					hunt(creep);
 					break;
 			}
 		}

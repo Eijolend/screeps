@@ -8,6 +8,7 @@ var setupConsts = function(){
 	global.ROLE_CIVILIAN = "civilian";
 	global.ROLE_RECYCLER = "recycler";
 	global.ROLE_RAIDER = "raider";
+	global.ROLE_HUNTER = "hunter";
 	global.TASK_BUILD = "build";
 	global.TASK_MINE = "mine";
 	global.TASK_FILL = "fill";
@@ -20,6 +21,7 @@ var setupConsts = function(){
 	global.TASK_RESERVE = "reserve";
 	global.TASK_RAID = "raid";
 	global.TASK_GUARD = "guard";
+	global.TASK_HUNT = "hunt";
 }
 
 var setupPrototypes = function(){
