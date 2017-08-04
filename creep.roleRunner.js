@@ -51,6 +51,10 @@ module.exports = {
             creep.task=deliverList[myIndex];
             return OK;
         }
+		else if(creep.room.storage) {
+			creep.task=setupTask(TASK_FILL,creep.room.storage);
+			return OK;
+		}
     },
 
 	run : function(creep){
