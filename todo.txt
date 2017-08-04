@@ -1,5 +1,6 @@
-*Rewrite filltasks to choose closest task and include towers.
-*While solving towers, make sure civilians help filling towers in an emergency.
+*Rewrite filltasks to choose closest task.
+
 *getting task in runners and civilians from storage should recalculate if storage is empty
 *find a way to avoid energy starving when too many civilians are present
-*deliberate including the old moveTo function
+
+*Towers should be prioritized in an emergency and civilians should help fill them in an emergency.

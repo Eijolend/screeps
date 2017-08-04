@@ -91,17 +91,20 @@ module.exports = {
         if(!creep.task){
             if(creep.memory.working){
                 var check;
-				var upgradeCreeps =  _(Game.creeps).filter( (c) => c.task && c.task.roomName == c.room.name).groupBy('task.type').value() || [];
-                if(upgradeCreeps.length < 1 && Game.rooms[creep.memory.homeRoom].controller.ticksToDowngrade < 5000){ //is missing some safety checks
+				var creepsByTask =  _(Game.creeps).filter( (c) => c.task && c.task.roomName == creep.room.name).groupBy('task.type').value();
+				var upgradeCreeps = creepsByTask[TASK_UPGRADE] || [];
+				var repairCreeps = creepsByTask[TASK_REPAIR] || [];
+				var wallRepairCreeps = creepsByTask[TASK_REPAIR_WALL] || [];
+				if(upgradeCreeps.length < 1 && Game.rooms[creep.memory.homeRoom].controller.ticksToDowngrade < 5000){ //is missing some safety checks
                     check = this.getUpgradingTask(creep);
                 }
                 if(check != OK){
                     check = this.getBuildingTask(creep);
                 }
-                if(check != OK){
-                    check = this.getRepairingTask(creep); // should have some kind of limit to number of creeps that should perform this role
-                }
-                if(check != OK){
+                if(check != OK && repairCreeps.length < 1){ //at most 1 creep on repairing duties
+                    check = this.getRepairingTask(creep);
+				}
+                if(check != OK && repairWallCreeps.length < 1){ //should allow more creeps to repair in emergency
                     check = this.getWallRepairingTask(creep);
                 }
                 if(check != OK){
