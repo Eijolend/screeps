@@ -63,7 +63,9 @@ module.exports = {
 		var miners = creepsByRole.miner != undefined ? creepsByRole.miner.length : 0;
 		var runners = creepsByRole.runner != undefined ? creepsByRole.runner.length : 0;
 		var civilians = creepsByRole.civilian != undefined ? creepsByRole.civilian.length : 0;
-
+		if(room.memory.requestList === undefined){ //checking this every tick is a waste
+			room.memory.requestList = [];
+		}
 		var requestList = room.memory.requestList;
 
 		//first ensure that at least one miner, one runner and one upgrader is always active
@@ -75,6 +77,13 @@ module.exports = {
 		}
 		else if(civilians < 1 && room.controller.ticksToDowngrade < 500){
 			spawn.createCreep(bodies.civilian(room.energyAvailable),undefined,{role:ROLE_CIVILIAN});
+		}
+		//after essentials are ensured, work on the requestList
+		else if(requestList.length > 0){
+			if(spawn.canCreateCreep(...requestList[0]) == OK){
+				spawn.createCreep(...requestList.shift()) //spawns the first creep in the list and deletes it from the list
+				room.memory.requestList = requestList;
+			}
 		}
 		else if(miners < miner_target){
 			spawn.createCreep(bodies.miner(maxEnergy),undefined,{role:ROLE_MINER});

@@ -18,6 +18,15 @@ var setupConsts = function(){
 }
 
 var setupPrototypes = function(){
+	Room.prototype.requestCreep = function(body,name,mem){
+    	if(this.memory.requestList === undefined){
+    		this.memory.requestList = [];
+    	}
+    	var mylist = this.memory.requestList;
+    	mylist.push([body,name,mem]);
+    	this.memory.requestList = mylist;
+	};
+
 	Object.defineProperty(Creep.prototype, 'role', { get: function () { return this.memory.role; } , set: function(x) { this.memory.role = x; } });
     Object.defineProperty(Creep.prototype, 'task', { get: function () { return this.memory.task; } , set: function(x) { this.memory.task = x; } });
 
