@@ -27,7 +27,7 @@ module.exports = {
             creep.task=getEnergyTasks[myIndex];
             return OK;
         }
-		if(!creep.room.storage){
+		if(!creep.room.storage && creep.role == ROLE_RUNNER){
 			myIndex = _.findIndex(getEnergyTasks,(t) => t.amountAvailable > 0);
 	        if(myIndex != -1){
 	            creep.task=getEnergyTasks[myIndex];
