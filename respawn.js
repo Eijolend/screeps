@@ -134,7 +134,7 @@ module.exports = {
 		}
 		else{
 			//do spawning for remoteRooms
-			for(remoteRoomName of room.memory.remoteRooms){
+			for(var remoteRoomName of room.memory.remoteRooms){
 				var remoteCreepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.task && c.task.roomName == remoteRoomName), "memory.role");
 				var reservers = remoteCreepsByRole.reserver != undefined ? creepsByRole.reserver.length : 0;
 				if(reservers < 1){
