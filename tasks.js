@@ -98,6 +98,10 @@ var reserve = function(creep,target){
     }
 }
 
+var raid = function(creep){
+	
+}
+
 module.exports = {
 	run: function(creep){
 		if (creep.task != undefined){

@@ -94,7 +94,7 @@ module.exports = {
 				var creepsByTask =  _(Game.creeps).filter( (c) => c.task && c.task.roomName == creep.room.name).groupBy('task.type').value();
 				var upgradeCreeps = creepsByTask[TASK_UPGRADE] || [];
 				var repairCreeps = creepsByTask[TASK_REPAIR] || [];
-				var wallRepairCreeps = creepsByTask[TASK_REPAIR_WALL] || [];
+				var repairWallCreeps = creepsByTask[TASK_REPAIR_WALL] || [];
 				if(upgradeCreeps.length < 1 && Game.rooms[creep.memory.homeRoom].controller.ticksToDowngrade < 5000){ //is missing some safety checks
                     check = this.getUpgradingTask(creep);
                 }
