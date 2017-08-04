@@ -49,6 +49,12 @@ module.exports = {
 			spextask.amountNeeded = spex.energyCapacity - spex.energy - _.sum( (fillCreeps[spex.id] || []), 'carry.energy');
 			taskList.push(spextask);
 		}
+		//doing towers second guarantees spawns and extension are prioritized, but this ignores tower too much on higher levels I think
+			var towertask = setupTask(TASK_FILL,tower);
+		for (var tower of room.find(FIND_MY_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_TOWER})){
+			tower.amountNeeded = tower.energyCapacity - tower.energy - _.sum( (fillCreeps[tower.id] || []), 'carry.energy');
+			taskList.push(towertask);
+		}
 		return taskList;
 	},
 
