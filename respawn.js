@@ -68,7 +68,11 @@ var bodies = {
 
 	reserver : function(maxEnergy){
 		return [MOVE,CLAIM,CLAIM,MOVE];
-	}
+	},
+
+	remoteMiner : function(maxEnergy){
+		return [WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE]
+	},
 }
 
 module.exports = {
@@ -143,6 +147,15 @@ module.exports = {
 					var controller = Game.getObjectById(controllerId);
 					if(controller == null || !controller.reservation || controller.reservation.ticksToEnd < 500){
 						spawn.createCreep(bodies.reserver(maxEnergy),undefined,{role:ROLE_RESERVER, task : reservetask});
+						return;
+					}
+				}
+				var remoteMiners = remoteCreepsByRole.remoteMiner
+				for (var remoteminetask of Memory.rooms[remoteRoomName].sources){
+					var taskRemoteMiners = _.filter(remoteMiners, (c) => c.task.id == remoteminetask.id && (creep.ticksToLive > creep.memory.travelTime + 30 || creep.spawning) );
+					var numRemoteMiners = taskRemoteMiners != undefined ? taskRemoteMiners.length : 0;
+					if(numRemoteMiners < 1){
+						spawn.createCreep(bodies.remoteMiner(maxEnergy), undefined, {role:ROLE_REMOTE_MINER, task : remoteminetask});
 						return;
 					}
 				}

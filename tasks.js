@@ -187,6 +187,47 @@ var scout = function(creep,target){
 	}
 }
 
+var remoteMine = function(creep,target){
+	if(creep.memory.workable && creep.carry.energy == 0) {
+        creep.memory.workable = false;
+    }
+    if(!creep.memory.workable && creep.carry.energy == creep.carryCapacity) {
+        creep.memory.workable = true;
+	}
+
+	if(creep.room.name == creep.task.roomName){
+		if(creep.memory.workable){
+			var myContainer = target.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+			if(myContainer == undefined){
+				var csContainer = target.pos.findInRange(FIND_CONSTRUCTION_SITES,1,{filter:(s) => s.structureType == STRUCTURE_CONTAINER});
+				if(csContainer.length == 0){
+                    creep.pos.createConstructionSite(STRUCTURE_CONTAINER);
+                }
+				build(creep,csContainer[0]);
+			}
+			else if(myContainer.hits < myContainer.hitsMax){
+        		creep.repair(myContainer);
+				if(!creep.pos.isNearTo(target)){
+					creep.moveTo(target);
+				}
+			}
+			else{
+				mine(creep,target);
+			}
+		}
+		else{
+			mine(creep,target);
+			if(!creep.memory.atGoal && creep.pos.inRangeTo(target,2)){
+                creep.memory.atGoal = true;
+                creep.memory.travelTime = 1500 - creep.ticksToLive;
+			}
+		}
+	}
+	else{
+		creep.moveTo(target);
+	}
+}
+
 module.exports = {
 	run: function(creep){
 		if (creep.task != undefined){
@@ -233,6 +274,9 @@ module.exports = {
 					break;
 				case TASK_SCOUT:
 					scout(creep,target);
+					break;
+				case TASK_REMOTE_MINE:
+					remoteMine(creep,target);
 					break;
 			}
 		}
