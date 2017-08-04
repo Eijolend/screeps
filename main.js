@@ -6,6 +6,8 @@ const defenseManager = require("defenseManager");
 
 require("setupGlobal")(); //global constants and modified prototypes
 
+global.playerWhiteList = [];
+
 module.exports.loop = function(){
 	if(Game.time % 500 == 0){ //garbage collect
 		for(var i in Memory.creeps) {

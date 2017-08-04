@@ -5,6 +5,7 @@ const roleMiner = require('creep.roleMiner');
 const roleRunner = require('creep.roleRunner');
 const roleCivilian = require('creep.roleCivilian');
 const roleRecycler = require('creep.roleRecycler');
+const roleRaider = require('creep.roleRaider');
 
 module.exports = {
     run : function(creep){
@@ -24,6 +25,9 @@ module.exports = {
             case ROLE_RECYCLER:
                 roleRecycler.run(creep);
                 break;
+			case ROLE_RAIDER:
+				roleRaider.run(creep);
+				break;
         }
         tasks.run(creep);
     }
