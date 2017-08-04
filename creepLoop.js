@@ -7,6 +7,10 @@ const roleCivilian = require('creep.roleCivilian');
 const roleRecycler = require('creep.roleRecycler');
 const roleRaider = require('creep.roleRaider');
 const roleHunter = require('creep.roleHunter');
+const remoteMiner = require("creep.remoteMiner");
+const remoteRunner = require("creep.remoteRunner");
+const roleReserver = require("creep.roleReserver");
+const roleScout = require("creep.roleScout");
 
 module.exports = {
     run : function(creep){
@@ -31,6 +35,18 @@ module.exports = {
 				break;
 			case ROLE_HUNTER:
 				roleHunter.run(creep);
+				break;
+			case ROLE_RESERVER:
+				roleReserver.run(creep);
+				break;
+			case ROLE_SCOUT:
+				roleScout.run(creep);
+				break;
+			case ROLE_REMOTE_MINER:
+				remoteMiner.run(creep);
+				break;
+			case ROLE_REMOTE_RUNNER:
+				remoteRunner.run(creep);
 				break;
         }
         tasks.run(creep);

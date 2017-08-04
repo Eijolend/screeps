@@ -1,5 +1,7 @@
 "use strict";
 
+const roomManager = require("roomManager");
+
 var getTarget = function(task){
     var myobject = Game.getObjectById(task.id)
     if(myobject != null){
@@ -174,6 +176,17 @@ var hunt = function(creep){
 	}
 }
 
+var scout = function(creep,target){
+	creep.moveTo(target);
+	if(creep.room.name == creep.task.roomName){
+		var status = roomManager.remoteUpdate(creep.room.name, creep.memory.homeRoom);
+		if(status == OK){
+			creep.role = ROLE_RECYCLER;
+			creep.task = undefined;
+		}
+	}
+}
+
 module.exports = {
 	run: function(creep){
 		if (creep.task != undefined){
@@ -217,6 +230,9 @@ module.exports = {
 					break;
 				case TASK_HUNT:
 					hunt(creep);
+					break;
+				case TASK_SCOUT:
+					scout(creep,target);
 					break;
 			}
 		}

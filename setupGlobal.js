@@ -9,6 +9,10 @@ var setupConsts = function(){
 	global.ROLE_RECYCLER = "recycler";
 	global.ROLE_RAIDER = "raider";
 	global.ROLE_HUNTER = "hunter";
+	global.ROLE_RESERVER = "reserver";
+	global.ROLE_REMOTE_MINER = "remoteMiner";
+	global.ROLE_REMOTE_RUNNER = "remoteRunner";
+	global.ROLE_SCOUT = "scout";
 	global.TASK_BUILD = "build";
 	global.TASK_MINE = "mine";
 	global.TASK_FILL = "fill";
@@ -22,6 +26,8 @@ var setupConsts = function(){
 	global.TASK_RAID = "raid";
 	global.TASK_GUARD = "guard";
 	global.TASK_HUNT = "hunt";
+	global.TASK_REMOTE_MINE = "remoteMine";
+	global.TASK_SCOUT = "scout";
 }
 
 var setupPrototypes = function(){
