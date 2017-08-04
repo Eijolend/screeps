@@ -24,7 +24,7 @@ module.exports = {
 					creep.task = setupTask(TASK_BUILD,roadcs);
 					return;
 				}
-				else if(roadatpoint != undefined && roadatpoint.hits < roadatpoints.hitsMax){
+				else if(roadatpoint != undefined && roadatpoint.hits < roadatpoint.hitsMax){
 					creep.repair(roadatpoint);
 				}
 			}
