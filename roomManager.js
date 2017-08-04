@@ -16,7 +16,7 @@ module.exports = {
 			remoteRoom.memory.sources = [];
 			for(var source of remoteRoom.find(FIND_SOURCES)){
 				var remoteminetask = setupTask(TASK_REMOTE_MINE, source);
-				remoteRoom.memory.sources.push(remotemineTask)
+				remoteRoom.memory.sources.push(remoteminetask)
 			}
 			return OK;
 		}
