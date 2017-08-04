@@ -1,5 +1,7 @@
 "use strict";
 
+const utils = require("utils");
+
 var setupConsts = function(){
 	global.ROLE_MINER = "miner";
 	global.ROLE_RUNNER = "runner";
