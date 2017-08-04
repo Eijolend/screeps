@@ -142,7 +142,7 @@ module.exports = {
 					var controllerId = reservetask.id;
 					var controller = Game.getObjectById(controllerId);
 					if(controller == null || controller.reservation.ticksToEnd < 500){
-						spawn.createCreep(bodies.reserver,undefined,{role:ROLE_RESERVER, task : reservetask});
+						spawn.createCreep(bodies.reserver(maxEnergy),undefined,{role:ROLE_RESERVER, task : reservetask});
 						return;
 					}
 				}
