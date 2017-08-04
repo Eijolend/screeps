@@ -31,7 +31,8 @@ module.exports = {
 			myIndex = _.findIndex(getEnergyTasks,(t) => t.amountAvailable > 0);
 	        if(myIndex != -1){
 	            creep.task=getEnergyTasks[myIndex];
-            return OK;
+            	return OK;
+			}
 		}
         //this should work now that we do creep-based tasks, but should reset when empty
         if(creep.room.storage && creep.room.storage >= (creep.carryCapacity - creep.carry.energy)){
