@@ -203,7 +203,9 @@ var remoteMine = function(creep,target){
 				if(csContainer.length == 0){
                     creep.pos.createConstructionSite(STRUCTURE_CONTAINER);
                 }
-				build(creep,csContainer[0]);
+				else{
+					build(creep,csContainer[0]);
+				}
 			}
 			else if(myContainer.hits < myContainer.hitsMax){
         		creep.repair(myContainer);
