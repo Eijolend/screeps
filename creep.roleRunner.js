@@ -35,7 +35,7 @@ module.exports = {
 			}
 		}
         //this should work now that we do creep-based tasks, but should reset when empty
-        if(creep.room.storage && creep.room.storage >= (creep.carryCapacity - creep.carry.energy)){
+        if(creep.room.storage && creep.room.storage.store.energy >= (creep.carryCapacity - creep.carry.energy)){
             creep.task= setupTask(TASK_GET_ENERGY,creep.room.storage);
         }
     },
