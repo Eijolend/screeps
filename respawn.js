@@ -165,7 +165,7 @@ module.exports = {
 					}
 				}
 				var remoteMiners = remoteCreepsByRole.remoteMiner;
-				var remoteRunners = _.filter(Game.creeps,(c) => c.role == ROLE_REMOTE_RUNNER, c.assocTask && c.assocTask.roomName == remoteRoomName);
+				var remoteRunners = _.filter(Game.creeps,(c) => c.role == ROLE_REMOTE_RUNNER && c.memory.assocTask && c.memory.assocTask.roomName == remoteRoomName);
 				for (var remoteminetask of Memory.rooms[remoteRoomName].sources){
 					var taskRemoteMiners = _.filter(remoteMiners, (c) => c.task.id == remoteminetask.id && (c.ticksToLive > c.memory.travelTime + 30 || c.spawning) );
 					var numRemoteMiners = taskRemoteMiners != undefined ? taskRemoteMiners.length : 0;
