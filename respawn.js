@@ -80,7 +80,7 @@ module.exports = {
 		var runner_target = 2;
 		var civilian_target = Math.max(Math.min(Math.ceil(20/(bodies.civilian(maxEnergy).length/3))-1,7),2) + ( room.storage != undefined ? Math.floor(room.storage.store.energy/200000) : 0 );
 		var hunter_target = 0;
-		if(room.underAttack){
+		if(room.memory.underAttack){
 			var hostiles = room.find(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username) }).length;
 			hunter_target=Math.ceil(hostiles/2);
 		}
