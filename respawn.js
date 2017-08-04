@@ -89,7 +89,7 @@ module.exports = {
 		var miners = creepsByRole.miner != undefined ? creepsByRole.miner.length : 0;
 		var runners = creepsByRole.runner != undefined ? creepsByRole.runner.length : 0;
 		var civilians = creepsByRole.civilian != undefined ? creepsByRole.civilian.length : 0;
-		var hunters = creepsByRole.civilian != undefined ? creepsByRole.hunter.length : 0;
+		var hunters = creepsByRole.hunter != undefined ? creepsByRole.hunter.length : 0;
 
 		if(room.memory.requestList === undefined){ //checking this every tick is a waste
 			room.memory.requestList = [];
