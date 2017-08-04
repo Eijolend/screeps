@@ -4,7 +4,7 @@ module.exports = {
 	run : function(room){
 		var towers = room.find(FIND_STRUCTURES, {filter: (structure) => structure.structureType == STRUCTURE_TOWER});
 		if(towers.length){
-			for(i=0;i<towers.length;i++){
+			for(var i=0;i<towers.length;i++){
 				var tower = towers[i];
 				tower.attack(tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)}));
 				if(tower.energy > 800){
