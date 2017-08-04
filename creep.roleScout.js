@@ -7,7 +7,7 @@ module.exports = {
 		if(!creep.task){
 			var target = {};
 			target.pos = new RoomPosition(25,25,creep.memory.targetRoom);
-			setupTask(TASK_SCOUT,target);
+			creep.task = setupTask(TASK_SCOUT,target);
 		}
 	}
 }
