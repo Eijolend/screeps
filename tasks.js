@@ -47,7 +47,10 @@ var pickup = function(creep,target){
 }
 
 var getEnergy = function(creep,target){
-	creep.withdraw(target,RESOURCE_ENERGY);
+	var status = creep.withdraw(target,RESOURCE_ENERGY);
+	if(status == OK || status == ERR_NOT_ENOUGH_RESOURCES){
+		creep.task = undefined;
+	}
 	if(!creep.pos.isNearTo(target)){
 		creep.moveTo(target);
 	}

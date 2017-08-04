@@ -1,11 +1,18 @@
-to do:
-*Rewrite filltasks to choose closest task.
-*getting task in runners and civilians from storage should recalculate if storage is empty
+URGENT:
+*next up: remote mining
+
+soon:
 *Towers should be prioritized in an emergency and civilians should help fill them in an emergency.
+*Rewrite filltasks to choose closest task.
+
+eventually:
+*
 
 observe:
 *find a way to avoid energy starving when too many civilians are present
  (should be okay because runners calculate tasks first)
+*getting task in runners and civilians from storage should recalculate if storage is empty
+ (should be solved now that a successful withdraw action resets the task)
 
 maybe:
 *integrate military creeps fully with task system
