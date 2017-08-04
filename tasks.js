@@ -230,7 +230,7 @@ var remoteMine = function(creep,target){
 	}
 }
 
-var remoteGetEnergy(creep,target){
+var remoteGetEnergy = function(creep,target){
 	if(creep.room.name != creep.task.roomName){
 		creep.moveTo(target);
 	}
