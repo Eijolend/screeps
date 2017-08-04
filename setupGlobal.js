@@ -28,6 +28,7 @@ var setupConsts = function(){
 	global.TASK_HUNT = "hunt";
 	global.TASK_REMOTE_MINE = "remoteMine";
 	global.TASK_SCOUT = "scout";
+	global.TASK_REMOTE_GET_ENERGY = "remoteGetEnergy"
 }
 
 var setupPrototypes = function(){

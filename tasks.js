@@ -230,6 +230,25 @@ var remoteMine = function(creep,target){
 	}
 }
 
+var remoteGetEnergy(creep,target){
+	if(creep.room.name != creep.task.roomName){
+		creep.moveTo(target);
+	}
+	else{
+		var dropped = target.pos.findInRange(FIND_DROPPED_ENERGY,3,{filter: (r) => r.resourceType == RESOURCE_ENERGY});
+        var myContainer = target.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+		if (myContainer != undefined && myContainer.store.energy == myContainer.storeCapacity){ //fixes container overflowing
+			getEnergy(creep,myContainer);
+		}
+		else if(dropped.length){
+			pickup(creep,dropped[0]);
+		}
+		else{
+			getEnergy(creep,myContainer);
+		}
+	}
+}
+
 module.exports = {
 	run: function(creep){
 		if (creep.task != undefined){
@@ -279,6 +298,9 @@ module.exports = {
 					break;
 				case TASK_REMOTE_MINE:
 					remoteMine(creep,target);
+					break;
+				case TASK_REMOTE_GET_ENERGY:
+					remoteGetEnergy(creep,target);
 					break;
 			}
 		}

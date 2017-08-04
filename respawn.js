@@ -1,5 +1,7 @@
 "use strict";
 
+const tasks = require("tasks");
+
 var cost = function(body){
 	var mycost = 0;
 	for(var bodypart of body){
@@ -73,6 +75,18 @@ var bodies = {
 	remoteMiner : function(maxEnergy){
 		return [WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE]
 	},
+
+	remoteRunner : function(maxEnergy){
+		var template = [CARRY,CARRY,MOVE];
+		var intervalEnergy=cost(template);
+		var n = Math.min(Math.floor((maxEnergy-200)/intervalEnergy),10); //currently hardcapped at 1050 carry
+		var body = [];
+		for(i=0;i<n;i++){
+			body.push(CARRY,CARRY,MOVE);
+		}
+		body.push(CARRY,WORK,MOVE);
+		return body
+	}
 }
 
 module.exports = {
@@ -150,7 +164,8 @@ module.exports = {
 						return;
 					}
 				}
-				var remoteMiners = remoteCreepsByRole.remoteMiner
+				var remoteMiners = remoteCreepsByRole.remoteMiner;
+				var remoteRunners = _.filter(Game.creeps,(c) => c.role == ROLE_REMOTE_RUNNER, c.assocTask && c.assocTask.roomName == remoteRoomName);
 				for (var remoteminetask of Memory.rooms[remoteRoomName].sources){
 					var taskRemoteMiners = _.filter(remoteMiners, (c) => c.task.id == remoteminetask.id && (c.ticksToLive > c.memory.travelTime + 30 || c.spawning) );
 					var numRemoteMiners = taskRemoteMiners != undefined ? taskRemoteMiners.length : 0;
@@ -158,7 +173,28 @@ module.exports = {
 						spawn.createCreep(bodies.remoteMiner(maxEnergy), undefined, {role:ROLE_REMOTE_MINER, task : remoteminetask, travelTime : 0});
 						return;
 					}
+					var taskRemoteRunners = _.filter(remoteRunners, (c) => c.assocTask.id == remoteminetask.id);
+					var numRemoteRunners = taskRemoteRunners != undefined ? taskRemoteRunners.length : 0;
+					var remoteRunner_target = 1;
+					if(remoteminetask.roomName in Game.rooms){
+						var mySource = tasks.getTarget(remoteminetask);
+						var myContainer = mySource.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+						var myDropped = mySource.pos.findInRange(FIND_DROPPED_ENERGY,1,{filter: (r) => r.resourceType == RESOURCE_ENERGY})[0];
+						var myEnergy = ( myContainer != undefined ? myContainer.store.energy : 0 ) + ( myDropped != undefined ? myDropped.amount : 0 );
+						if(myContainer == undefined){
+							remoteRunner_target = 0;
+						}
+						else{
+							remoteRunner_target = 1 + Math.floor(myEnergy/2000);
+						}
+					}
+					if(numRemoteRunners < remoteRunner_target){
+						spawn.createCreep(bodies.remoteRunner(maxEnergy),undefined,{role: ROLE_REMOTE_RUNNER, assocTask : remoteminetask});
+						return;
+					}
 				}
+
+
 				//add more remoteRoomLogic
 			}
 		}
