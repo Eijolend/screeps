@@ -52,7 +52,7 @@ module.exports = {
 		//doing towers second guarantees spawns and extension are prioritized, but this ignores tower too much on higher levels I think
 		for (var tower of room.find(FIND_MY_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_TOWER})){
 			var towertask = setupTask(TASK_FILL,tower);
-			tower.amountNeeded = tower.energyCapacity - tower.energy - _.sum( (fillCreeps[tower.id] || []), 'carry.energy');
+			towertask.amountNeeded = tower.energyCapacity - tower.energy - _.sum( (fillCreeps[tower.id] || []), 'carry.energy');
 			taskList.push(towertask);
 		}
 		return taskList;
