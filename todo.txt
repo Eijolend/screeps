@@ -7,6 +7,7 @@ soon:
 eventually:
 *go over whole task system again and try to standardize things more
 *repair tasks would really benefit from a centralized list that is updated sparingly
+*recycler role alternatives, if there is no valid spawn rather than failsafe in roleCivilian
 
 observe:
 *find a way to avoid energy starving when too many civilians are present
