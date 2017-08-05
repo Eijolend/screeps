@@ -84,6 +84,7 @@ module.exports = {
 		var myIndex = _.min(_.keys(mineTasks), function(k) { return mineTasks[k].assigned;})
 		if(myIndex != -1){
 			creep.task = mineTasks[myIndex];
+			creep.task.containerId = undefined; //civilians ignore containers
 			return OK;
 		}
 		else{
