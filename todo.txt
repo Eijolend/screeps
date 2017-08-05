@@ -1,11 +1,11 @@
 URGENT:
-*colonizing
 
 soon:
 *Towers should be prioritized in an emergency and civilians should help fill them in an emergency.
 *Rewrite filltasks to choose closest task.
 
 eventually:
+*go over whole task system again and try to standardize things more
 *repair tasks would really benefit from a centralized list that is updated sparingly
 
 observe:

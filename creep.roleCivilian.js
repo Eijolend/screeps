@@ -127,7 +127,7 @@ module.exports = {
                 }
             }
             else{
-                if(creep.ticksToLive < 150){
+                if(creep.ticksToLive < 150 && creep.room.find(FIND_MY_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_SPAWN}).length > 0){
                     creep.role = ROLE_RECYCLER;
                 }
                 else{
