@@ -3,7 +3,7 @@
 const roomManager = require("roomManager");
 
 var getTarget = function(task){
-    var myobject = Game.getObjectById(task.id)
+    var myobject = Game.getObjectById(task.id);
     if(myobject != null){
         return myobject;
     }
@@ -258,6 +258,13 @@ var remoteGetEnergy = function(creep,target){
 	}
 }
 
+var claim = function(creep,target){
+	creep.claimController(target);
+	if(!creep.pos.isNearTo(target)){
+		creep.moveTo(target);
+	}
+}
+
 module.exports = {
 	run: function(creep){
 		if (creep.task != undefined){
@@ -310,6 +317,9 @@ module.exports = {
 					break;
 				case TASK_REMOTE_GET_ENERGY:
 					remoteGetEnergy(creep,target);
+					break;
+				case TASK_CLAIM:
+					claim(creep,target);
 					break;
 			}
 		}

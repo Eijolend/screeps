@@ -29,6 +29,7 @@ module.exports = {
         //this should work now that we do creep-based tasks, but should reset when empty
         if(creep.room.storage && creep.room.storage >= (creep.carryCapacity - creep.carry.energy)){
             creep.task= setupTask(TASK_GET_ENERGY,creep.room.storage);
+			return OK;
         }
     },
 
@@ -76,6 +77,20 @@ module.exports = {
         }
     },
 
+	getMiningTask : function(creep){
+		var room = creep.room
+		var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
+		var mineTasks = calcTasks.calcMineTasks(room,creepsByTask);
+		var myIndex = _.findIndex(mineTasks, (t) => t.assigned == 0);
+		if(myIndex != -1){
+			creep.task = mineTasks[myIndex];
+			return OK;
+		}
+		else{
+			return;
+		}
+	},
+
     run : function(creep){
         if(creep.memory.working && creep.carry.energy == 0) {
             creep.memory.working = false;
@@ -116,7 +131,10 @@ module.exports = {
                     creep.role = ROLE_RECYCLER;
                 }
                 else{
-                    this.getGettingTask(creep);
+                    var status = this.getGettingTask(creep);
+					if(status != OK){
+						this.getMiningTask(creep);
+					}
                 }
             }
         }

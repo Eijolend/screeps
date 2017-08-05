@@ -13,6 +13,8 @@ var setupConsts = function(){
 	global.ROLE_REMOTE_MINER = "remoteMiner";
 	global.ROLE_REMOTE_RUNNER = "remoteRunner";
 	global.ROLE_SCOUT = "scout";
+	global.ROLE_CLAIMER = "claimer";
+	global.ROLE_COLONIST = "colonist";
 	global.TASK_BUILD = "build";
 	global.TASK_MINE = "mine";
 	global.TASK_FILL = "fill";
@@ -29,6 +31,8 @@ var setupConsts = function(){
 	global.TASK_REMOTE_MINE = "remoteMine";
 	global.TASK_SCOUT = "scout";
 	global.TASK_REMOTE_GET_ENERGY = "remoteGetEnergy"
+	global.TASK_CLAIM = "claim";
+	// global.TASK_COLONIZE = "colonize";
 }
 
 var setupPrototypes = function(){

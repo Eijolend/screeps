@@ -86,6 +86,17 @@ var bodies = {
 		}
 		body.push(CARRY,WORK,MOVE);
 		return body
+	},
+
+	colonist : function(maxEnergy){
+		var template = [WORK,CARRY,MOVE,MOVE];
+		var intervalEnergy = cost(template);
+		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),8);
+		var body = [];
+		for(var i=0;i<n;i++){
+			body.push(...template);
+		}
+		return body
 	}
 }
 
@@ -151,6 +162,14 @@ module.exports = {
 			spawn.createCreep(bodies.civilian(maxEnergy),undefined,{role:ROLE_CIVILIAN});
 		}
 		else{
+			//spawn colonists
+			for(var colony of room.memory.colonies){
+				var colonists = _.filter(Game.creeps,(c) => c.role == ROLE_COLONIST && c.memory.myColony == colony);
+				if(colonists.length < 1){
+					spawn.createCreep(bodies.colonist(maxEnergy),undefined,{role:ROLE_COLONIST, myColony : colony});
+					return;
+				}
+			}
 			//do spawning for remoteRooms
 			for(var remoteRoomName of room.memory.remoteRooms){
 				var remoteCreepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.task && c.task.roomName == remoteRoomName), "memory.role");

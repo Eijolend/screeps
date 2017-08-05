@@ -8,6 +8,9 @@ module.exports = {
         return firstPos.x === secondPos.x && firstPos.y === secondPos.y && firstPos.roomName === secondPos.roomName;
     },
     setupTask : function(tasktype,object){
-        return {type: tasktype, x: object.pos.x, y: object.pos.y, roomName: object.pos.roomName, id:object.id};
+		//if object is a RoomPosition, will return a task with undefined id
+		//if id is undefined role will need to reconstruct its own task once the target room is reached.
+		var pos = object.pos != undefined ? object.pos : object;
+        return {type: tasktype, x: pos.x, y: pos.y, roomName: pos.roomName, id:object.id};
     }
 }

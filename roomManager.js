@@ -31,5 +31,19 @@ module.exports = {
         }
         homeRoom.memory.remoteRooms.push(remoteRoomName);
         this.remoteUpdate(remoteRoomName,homeRoomName);
+	},
+
+	colonizeRoom : function(colonyRoomName, homeRoomName, spawnPosX, spawnPosY, waypoint){
+		_.set(Memory, "rooms." + colonyRoomName + ".spawnpos", {x:spawnPosX,y:spawnPosY});
+		_.set(Memory, "rooms." + colonyRoomName + ".waypoint", waypoint);
+
+		let homeRoom = Game.rooms[homeRoomName];
+		if(!homeRoom.memory.colonies){
+			homeRoom.memory.colonies = [];
+		}
+		homeRoom.memory.colonies.push(colonyRoomName);
+
+		var claimtask = setupTask(TASK_CLAIM, new RoomPosition(25,25,colonyRoomName));
+		Game.rooms[homeRoomName].requestCreep([CLAIM,MOVE],undefined,{role:ROLE_CLAIMER,task:claimtask});
 	}
 }

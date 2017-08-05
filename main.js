@@ -39,8 +39,8 @@ module.exports.loop = function(){
 		startRoom.controller.activateSafeMode();
 	}
 
-	if(Game.time % 1000 == 0){
-		Game.spawns.Spawn1.room.requestCreep([TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE],undefined,{role:ROLE_RAIDER , myflag:"blockade", raidMode:"guard"});
-		Game.spawns.Spawn1.room.requestCreep([TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE],undefined,{role:ROLE_RAIDER , myflag:"blockade", raidMode:"guard"});
-	}
+	// if(Game.time % 1000 == 0){
+	// 	Game.spawns.Spawn1.room.requestCreep([TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE],undefined,{role:ROLE_RAIDER , myflag:"blockade", raidMode:"guard"});
+	// 	Game.spawns.Spawn1.room.requestCreep([TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE],undefined,{role:ROLE_RAIDER , myflag:"blockade", raidMode:"guard"});
+	// }
 }
