@@ -22,9 +22,11 @@ module.exports.loop = function(){
 		}
 	}
 
+	for(var room of Game.rooms){
+		defenseManager.run(room);
+	}
 	var myrooms = _.filter(Game.rooms, (r) => r.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN}).length > 0 || r.memory.remoteRoom == true);
 	for(var room of myrooms){
-		defenseManager.run(room);
 		respawn.run(room);
 	}
 

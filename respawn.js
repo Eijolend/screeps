@@ -154,6 +154,12 @@ module.exports = {
 			//do spawning for remoteRooms
 			for(var remoteRoomName of room.memory.remoteRooms){
 				var remoteCreepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.task && c.task.roomName == remoteRoomName), "memory.role");
+				if(Memory.rooms[remoteRoomName].underAttack){
+					var remoteHunters = remoteCreepsByRole.hunter != undefined ? remoteCreepsByRole.hunter.length : 0;
+					if(hunters < 2){
+						spawn.createCreep(bodies.hunter(maxEnergy/2),undefined,{role:ROLE_HUNTER});
+					}
+				}
 				var reservers = remoteCreepsByRole.reserver != undefined ? remoteCreepsByRole.reserver.length : 0;
 				if(reservers < 1){
 					var reservetask = Memory.rooms[remoteRoomName].controller;

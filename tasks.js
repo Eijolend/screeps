@@ -166,13 +166,16 @@ var guard = function(creep){ //like raid, but with a maximal engagement range
 	}
 }
 
-var hunt = function(creep){
+var hunt = function(creep,controller){
 	var target = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)});
 	if (creep.attack(target) == ERR_NOT_IN_RANGE){
 		creep.moveTo(target);
 	}
 	if(target === null){
-		creep.task = undefined;
+		if(creep.room.name == creep.task.roomName){
+			creep.task = undefined;
+		}
+		creep.moveTo(controller); //either moves to relevant room, or prevents being stuck at edges.
 	}
 }
 
@@ -297,7 +300,7 @@ module.exports = {
 					guard(creep);
 					break;
 				case TASK_HUNT:
-					hunt(creep);
+					hunt(creep,target);
 					break;
 				case TASK_SCOUT:
 					scout(creep,target);
