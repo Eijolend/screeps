@@ -81,7 +81,7 @@ module.exports = {
 		var room = creep.room
 		var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
 		var mineTasks = calcTasks.calcMineTasks(room,creepsByTask);
-		var myIndex = _.min(_.keys(mineTasks), function(k) { return mineTasks(k).assigned;})
+		var myIndex = _.min(_.keys(mineTasks), function(k) { return mineTasks[k].assigned;})
 		if(myIndex != -1){
 			creep.task = mineTasks[myIndex];
 			return OK;
