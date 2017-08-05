@@ -19,7 +19,7 @@ module.exports = {
 		if(!creep.task){
 			if(creep.memory.upgrading){
 				if(creep.memory.myColony in Game.rooms){
-					creep.task = setupTask(TASK_UPGRADE,Game.rooms[creep.memroy.myColony].controller);
+					creep.task = setupTask(TASK_UPGRADE,Game.rooms[creep.memory.myColony].controller);
 				}
 				else{
 					creep.task = setupTask(TASK_UPGRADE,new RoomPosition(25,25,creep.memory.myColony));
