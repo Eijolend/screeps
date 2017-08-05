@@ -163,6 +163,9 @@ module.exports = {
 		}
 		else{
 			//spawn colonists
+			if(!room.memory.colonies){
+				room.memory.colonies = [];
+			}
 			for(var colony of room.memory.colonies){
 				var colonists = _.filter(Game.creeps,(c) => c.role == ROLE_COLONIST && c.memory.myColony == colony);
 				if(colonists.length < 1){
@@ -171,6 +174,9 @@ module.exports = {
 				}
 			}
 			//do spawning for remoteRooms
+			if(!room.memory.remoteRooms){
+				room.memory.remoteRooms = [];
+			}
 			for(var remoteRoomName of room.memory.remoteRooms){
 				var remoteCreepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.task && c.task.roomName == remoteRoomName), "memory.role");
 				if(Memory.rooms[remoteRoomName].underAttack){
