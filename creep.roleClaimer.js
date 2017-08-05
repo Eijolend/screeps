@@ -5,9 +5,12 @@ const setupTask = require('utils').setupTask;
 module.exports = {
 	run : function(creep){
 		if(!creep.task){
-			//task will get deleted once creep arrives at target room
-			//now reconstruct task with proper target
-			creep.task = setupTask(TASK_CLAIM,creep.room.controller);
+			if(creep.memory.myColony in Game.rooms){
+				creep.task = setupTask(TASK_CLAIM,Game.rooms[creep.memory.myColony].controller);
+			}
+			else{
+					creep.task = setupTask(TASK_CLAIM,new RoomPosition(25,25,creep.memory.myColony));
+			}
 		}
 	}
 }

@@ -34,6 +34,10 @@ module.exports = {
 	},
 
 	colonizeRoom : function(colonyRoomName, homeRoomName, spawnPosX, spawnPosY, waypoint){
+		var waypoint = waypoint;
+		if(waypoint == undefined){
+			waypoint = [];
+		}
 		_.set(Memory, "rooms." + colonyRoomName + ".spawnpos", {x:spawnPosX,y:spawnPosY});
 		_.set(Memory, "rooms." + colonyRoomName + ".waypoint", waypoint);
 
