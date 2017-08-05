@@ -7,10 +7,12 @@ module.exports = {
 		var myflag = Game.flags[creep.memory.myflag];
 		if(creep.memory.upgrading && creep.carry.energy == 0) {
             creep.memory.upgrading = false;
+			creep.task = undefined;
             creep.say('getting');
 	    }
 	    if(!creep.memory.upgrading && creep.carry.energy == creep.carryCapacity) {
 	        creep.memory.upgrading = true;
+			creep.task = undefined;
 	        creep.say('upgrading');
 	    }
 
