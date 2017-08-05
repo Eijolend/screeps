@@ -22,8 +22,8 @@ module.exports.loop = function(){
 		}
 	}
 
-	for(var room of Game.rooms){
-		defenseManager.run(room);
+	for(var roomName in Game.rooms){
+		defenseManager.run(Game.rooms[roomName]);
 	}
 	var myrooms = _.filter(Game.rooms, (r) => r.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN}).length > 0 || r.memory.remoteRoom == true);
 	for(var room of myrooms){
