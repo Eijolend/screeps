@@ -48,6 +48,6 @@ module.exports = {
 		homeRoom.memory.colonies.push(colonyRoomName);
 
 		var claimtask = setupTask(TASK_CLAIM, new RoomPosition(25,25,colonyRoomName));
-		Game.rooms[homeRoomName].requestCreep([CLAIM,MOVE],undefined,{role:ROLE_CLAIMER,task:claimtask});
+		Game.rooms[homeRoomName].requestCreep([CLAIM,MOVE],undefined,{role:ROLE_CLAIMER,task:claimtask,myColony : colonyRoomName});
 	}
 }
