@@ -187,7 +187,8 @@ module.exports = {
 				}
 				var reservers = remoteCreepsByRole.reserver != undefined ? remoteCreepsByRole.reserver.length : 0;
 				if(reservers < 1){
-					var reservetask = Memory.rooms[remoteRoomName].controller;
+					//var reservetask = Memory.rooms[remoteRoomName].controller;
+					var reservetask = _.get(Memory, "rooms." + remoteRoomName + ".controller", {})
 					var controllerId = reservetask.id;
 					var controller = Game.getObjectById(controllerId);
 					if(controller == null || !controller.reservation || controller.reservation.ticksToEnd < 500){
@@ -197,7 +198,7 @@ module.exports = {
 				}
 				var remoteMiners = remoteCreepsByRole.remoteMiner;
 				var remoteRunners = _.filter(Game.creeps,(c) => c.role == ROLE_REMOTE_RUNNER && c.memory.assocTask && c.memory.assocTask.roomName == remoteRoomName);
-				for (var remoteminetask of Memory.rooms[remoteRoomName].sources){
+				for (var remoteminetask of _.get(Memory, "rooms." + remoteRoomName + ".sources", {})){
 					var taskRemoteMiners = _.filter(remoteMiners, (c) => c.task.id == remoteminetask.id && (c.ticksToLive > c.memory.travelTime + 30 || c.spawning) );
 					var numRemoteMiners = taskRemoteMiners != undefined ? taskRemoteMiners.length : 0;
 					if(numRemoteMiners < 1){
