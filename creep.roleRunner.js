@@ -46,6 +46,7 @@ module.exports = {
 		var room = creep.room
 		var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
         var deliverList = calcTasks.calcFillTasks(room,creepsByTask);
+        deliverList = _.sortBy(deliverList, (x) => creep.pos.getRangeTo(x)); //so they deliver to closest first
         var myIndex = _.findIndex(deliverList, (t) => t.amountNeeded > 0);
         if(myIndex != -1){
             creep.task=deliverList[myIndex];
