@@ -59,7 +59,7 @@ module.exports = {
 		var room = creep.room
 		var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
         var repairList = calcTasks.calcRepairTasks(room,creepsByTask);
-		repairList = _(repairList).sortBy("repairNeeded").invert().value();
+		repairList = _(repairList).sortBy("repairNeeded").reverse().value();
         var myIndex = _.findIndex(repairList, (t) => t.repairNeeded > 0);
         if(myIndex != -1){
             creep.task=repairList[myIndex];
