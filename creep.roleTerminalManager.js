@@ -19,13 +19,13 @@ module.exports = {
 
 		if(!creep.task){
 			if(creep.memory.delivering){
-				var resourceType = creep.carry[_.findKey(creep.carry, (x) => x > 0)];
+				var resourceType = _.findKey(creep.carry, (x) => x > 0);
 				if(resourceType != RESOURCE_ENERGY){
 					creep.task = setupTask(TASK_FILL,creep.room.terminal);
 					creep.task.resourceType = resourceType;
 					return OK;
 				}
-				else if(creep.room.storage && creep.room.storage.store.energy > 100000 && creep.room.terminal && creep.room.terminal.store.energy < 50000){
+				else if(creep.room.storage != undefined && creep.room.storage.store.energy > 100000 && creep.room.terminal != undefined && creep.room.terminal.store.energy < 50000){
 					creep.task = setupTask(TASK_FILL,creep.room.terminal);
 					return OK;
 				}
