@@ -43,13 +43,13 @@ module.exports = {
     getDeliveringTask : function(creep){
         //need some prioritizing logic here, for now only spawns and extensions are accounted for
         //does not account for getting the closest first yet
-		var room = creep.room
-		var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
-        var deliverList = calcTasks.calcFillTasks(room,creepsByTask);
+        var deliverList = creep.room.memory.tasks[TASK_FILL];
         deliverList = _.sortBy(deliverList, (x) => creep.pos.getRangeTo(x)); //so they deliver to closest first
         var myIndex = _.findIndex(deliverList, (t) => t.amountNeeded > 0);
         if(myIndex != -1){
-            creep.task=deliverList[myIndex];
+			deliverList[myIndex].amountNeeded -= creep.carry.energy;
+			creep.task=deliverList[myIndex];
+			creep.room.memory.tasks[TASK_FILL] = deliverList;
             return OK;
         }
 		else if(creep.room.storage) {

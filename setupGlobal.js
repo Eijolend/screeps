@@ -103,6 +103,9 @@ var setupPrototypes = function(){
             mem.homeRoom = this.room.name;
         }
         var returnValue = this.std_createCreep(body,name,mem);
+		if(!(returnValue < 0)){
+			_.set(this.room.memory,"roomManager.lastUpdated."+TASK_FILL,undefined);
+		}
 		return returnValue
 	};
 

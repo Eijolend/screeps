@@ -1,7 +1,7 @@
 "use strict";
 
 const creepLoop = require("creepLoop");
-const respawn = require ("respawn");
+const roomManager = require ("roomManager");
 const defenseManager = require("defenseManager");
 
 require("setupGlobal")(); //global constants and modified prototypes
@@ -27,7 +27,7 @@ module.exports.loop = function(){
 	}
 	var myrooms = _.filter(Game.rooms, (r) => r.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN}).length > 0 || r.memory.remoteRoom == true);
 	for(var room of myrooms){
-		respawn.run(room);
+		roomManager.run(room);
 	}
 
 	for(var name in Game.creeps){
