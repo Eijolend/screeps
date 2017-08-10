@@ -1,6 +1,6 @@
 "use strict";
 
-const roomManager = require("roomManager");
+const expansionManager = require("expansionManager");
 
 var getTarget = function(task){
     var myobject = Game.getObjectById(task.id);
@@ -190,7 +190,7 @@ var hunt = function(creep,controller){
 var scout = function(creep,target){
 	creep.moveTo(target);
 	if(creep.room.name == creep.task.roomName){
-		var status = roomManager.remoteUpdate(creep.room.name, creep.memory.homeRoom);
+		var status = expansionManager.remoteUpdate(creep.room.name, creep.memory.homeRoom);
 		if(status == OK){
 			creep.role = ROLE_RECYCLER;
 			creep.task = undefined;

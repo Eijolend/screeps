@@ -1,19 +1,20 @@
 URGENT:
+*Tower logic:
+	-> Tower filling should be a separate task from filling
+	-> Towers should be prioritized in an emergency and civilians should help fill them in an emergency.
+
 
 soon:
-*Towers should be prioritized in an emergency and civilians should help fill them in an emergency.
-*Rewrite filltasks to choose closest task.
+*centralize repairTasks as well
 
 eventually:
 *go over whole task system again and try to standardize things more
-*repair tasks would really benefit from a centralized list that is updated sparingly
 *recycler role alternatives, if there is no valid spawn rather than failsafe in roleCivilian
+*find a way to avoid energy starving when too many civilians are present
 
 observe:
-*find a way to avoid energy starving when too many civilians are present
- (should be okay because runners calculate tasks first)
 *getting task in runners and civilians from storage should recalculate if storage is empty
  (should be solved now that a successful withdraw action resets the task)
 
 maybe:
-*integrate military creeps fully with task system
+*integrate military creeps fully with task system (or actually, just take them out of the task system)
