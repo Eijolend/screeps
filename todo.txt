@@ -1,11 +1,10 @@
 URGENT:
 *Tower logic:
-	-> Tower filling should be a separate task from filling
+	-> Tower filling should probably be a separate task from filling
 	-> Towers should be prioritized in an emergency and civilians should help fill them in an emergency.
-
+*centralize repairWall tasks as well
 
 soon:
-*centralize repairTasks as well
 
 eventually:
 *go over whole task system again and try to standardize things more

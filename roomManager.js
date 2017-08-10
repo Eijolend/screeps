@@ -15,6 +15,12 @@ var recalcTasks = function(room){
 		var taskList = calcTasks.calcFillTasks(room,creepsByTask);
 		setTaskList(room,TASK_FILL,taskList);
 	}
+	if( !(Game.time - _.get(room.memory,"roomManager.lastUpdated."+TASK_REPAIR) < 500) ){
+        creepsByTask = creepsByTask != undefined ? creepsByTask : _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
+		var taskList = calcTasks.calcRepairTasks(room,creepsByTask);
+		taskList = _(taskList).sortBy("repairNeeded").reverse().value();
+		setTaskList(room,TASK_REPAIR,taskList);
+	}
 }
 
 module.exports = {
