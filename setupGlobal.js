@@ -34,6 +34,7 @@ var setupConsts = function(){
 	global.TASK_SCOUT = "scout";
 	global.TASK_REMOTE_GET_ENERGY = "remoteGetEnergy"
 	global.TASK_CLAIM = "claim";
+	global.TASK_MINE_MINERAL = "mineMineral";
 	global.TASK_GET = "get";
 	// global.TASK_COLONIZE = "colonize";
 }
