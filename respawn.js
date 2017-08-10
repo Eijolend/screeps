@@ -97,6 +97,17 @@ var bodies = {
 			body.push(...template);
 		}
 		return body
+	},
+
+	mineralMiner : function(maxEnergy){
+		var template = [WORK,WORK,MOVE];
+		var intervalEnergy = cost(template);
+		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),16); //do not exceed 50 bodyparts
+		var body = [];
+		for(var i=0;i<n;i++){
+			body.push(...template);
+		}
+		return body
 	}
 }
 
@@ -120,12 +131,19 @@ module.exports = {
 			var hostiles = room.find(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username) }).length;
 			hunter_target=Math.ceil(hostiles/2);
 		}
+		var terminalManager_target = 0;
+		if(room.controller.level >= 6){
+			//runner_target = 1;
+			terminalManager_target = 1;
+		}
 
 		var creepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.pos.roomName == room.name),'memory.role'); //this also counts spawning creeps
 		var miners = creepsByRole.miner != undefined ? creepsByRole.miner.length : 0;
 		var runners = creepsByRole.runner != undefined ? creepsByRole.runner.length : 0;
 		var civilians = creepsByRole.civilian != undefined ? creepsByRole.civilian.length : 0;
 		var hunters = creepsByRole.hunter != undefined ? creepsByRole.hunter.length : 0;
+		var mineralMiners = creepsByRole.mineralMiner != undefined ? creepsByRole.mineralMiner.length : 0;
+		var terminalManagers = creepsByRole.terminalManager != undefined ? creepsByRole.terminalManager.length : 0;
 
 		if(room.memory.requestList === undefined){ //checking this every tick is a waste
 			room.memory.requestList = [];
@@ -160,6 +178,12 @@ module.exports = {
 		}
 		else if(civilians < civilian_target) {
 			spawn.createCreep(bodies.civilian(maxEnergy),undefined,{role:ROLE_CIVILIAN});
+		}
+		else if(room.controller.level >= 6 && room.find(FIND_STRUCTURES,{filter:(s) => s.structureType == STRUCTURE_EXTRACTOR}).length > 0 && mineral.ticksToRegeneration === undefined && mineralMiners < 1){
+			spawn.createCreep(bodies.mineralMiner(maxEnergy),undefined,{role:ROLE_MINERAL_MINER});
+		}
+		else if(terminalManagers < terminalManager_target){
+			spawn.createCreep(bodies.runner(maxEnergy),undefined,{role:ROLE_TERMINAL_MANAGER});
 		}
 		else{
 			//spawn colonists

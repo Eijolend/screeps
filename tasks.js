@@ -24,6 +24,14 @@ var mine = function(creep,target){
 	}
 }
 
+var mineMineral = function(creep,target){
+	if(target.mineralAmount == 0){
+		creep.role = ROLE_RECYCLER;
+		return;
+	}
+	mine(creep,target);
+}
+
 var build = function(creep,target){
 	creep.build(target);
 	if(!creep.pos.inRangeTo(target,3)){
@@ -320,6 +328,9 @@ module.exports = {
 					break;
 				case TASK_CLAIM:
 					claim(creep,target);
+					break;
+				case TASK_MINE_MINERAL:
+					mineMineral(creep,target);
 					break;
 			}
 		}
