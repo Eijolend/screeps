@@ -136,6 +136,7 @@ module.exports = {
 			//runner_target = 1;
 			terminalManager_target = 1;
 		}
+		var mineral = room.find(FIND_MINERALS)[0];
 
 		var creepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.pos.roomName == room.name),'memory.role'); //this also counts spawning creeps
 		var miners = creepsByRole.miner != undefined ? creepsByRole.miner.length : 0;
