@@ -40,7 +40,8 @@ var build = function(creep,target){
 }
 
 var fill = function(creep,target){
-    var status = creep.transfer(target,RESOURCE_ENERGY);
+    var resourceType = creep.task.resourceType == undefined ? RESOURCE_ENERGY : creep.task.resourceType;
+    var status = creep.transfer(target,resourceType);
 	if(status == OK || status == ERR_FULL){
         creep.task = undefined;
     }
@@ -58,6 +59,17 @@ var pickup = function(creep,target){
 
 var getEnergy = function(creep,target){
 	var status = creep.withdraw(target,RESOURCE_ENERGY);
+	if(status == OK || status == ERR_NOT_ENOUGH_RESOURCES){
+		creep.task = undefined;
+	}
+	if(!creep.pos.isNearTo(target)){
+		creep.moveTo(target);
+	}
+}
+
+var get = function(creep,target){
+    var resourceType = creep.task.resourceType == undefined ? RESOURCE_ENERGY : creep.task.resourceType;
+    var status = creep.withdraw(target,resourceType);
 	if(status == OK || status == ERR_NOT_ENOUGH_RESOURCES){
 		creep.task = undefined;
 	}
@@ -332,6 +344,9 @@ module.exports = {
 				case TASK_MINE_MINERAL:
 					mineMineral(creep,target);
 					break;
+                case TASK_GET:
+                    get(creep,target);
+                    break;
 			}
 		}
 	}

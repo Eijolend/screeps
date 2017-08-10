@@ -15,8 +15,6 @@ var setupConsts = function(){
 	global.ROLE_SCOUT = "scout";
 	global.ROLE_CLAIMER = "claimer";
 	global.ROLE_COLONIST = "colonist";
-	global.ROLE_MINERAL_MINER = "mineralMiner";
-	global.ROLE_TERMINAL_MANAGER = "terminalManager";
 	global.TASK_BUILD = "build";
 	global.TASK_MINE = "mine";
 	global.TASK_FILL = "fill";
@@ -34,7 +32,7 @@ var setupConsts = function(){
 	global.TASK_SCOUT = "scout";
 	global.TASK_REMOTE_GET_ENERGY = "remoteGetEnergy"
 	global.TASK_CLAIM = "claim";
-	global.TASK_MINE_MINERAL = "mineMineral";
+	global.TASK_GET = "get";
 	// global.TASK_COLONIZE = "colonize";
 }
 
