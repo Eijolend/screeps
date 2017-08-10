@@ -19,7 +19,7 @@ module.exports = {
 		var mineMineralCreeps = _.groupBy(creepsByTask[TASK_MINE_MINERAL] || [], 'task.id');
 		var mineral = room.find(FIND_MINERALS)[0];
 		var mineraltask = setupTask(TASK_MINE_MINERAL,mineral);
-		mineraltask.assigned = (mineMineralCreeps[source.id] || []).length
+		mineraltask.assigned = (mineMineralCreeps[mineral.id] || []).length
 		mineraltask.containerId = (mineral.pos.findInRange(FIND_STRUCTURES,1,{filter: (s)=> s.structureType == STRUCTURE_CONTAINER})[0] || []).id; //is undefined if no container
 		taskList.push(mineraltask);
 		return taskList;
