@@ -22,7 +22,7 @@ module.exports = {
 				var remoteminetask = setupTask(TASK_REMOTE_MINE, source);
 				if(homeRoom.storage){
 					var steps = PathFinder.search(homeRoom.storage.pos,{pos:source.pos,range:1},{swampcost : 1}).path.length;
-					remotemintask.steps = steps;
+					remoteminetask.steps = steps;
 					remoteminetask.carryNeeded = this.calcCarryNeeded(source.energyCapacity,steps);
 				}
 				remoteRoom.memory.sources.push(remoteminetask);
