@@ -242,7 +242,7 @@ module.exports = {
 						return;
 					}
 					var taskRemoteRunners = _.filter(remoteRunners, (c) => c.memory.assocTask.id == remoteminetask.id);
-					var numRemoteCarry = _.sumBy(taskRemoteRunners, (c) => c.getActiveBodyparts(CARRY));
+					var numRemoteCarry = _.sum(taskRemoteRunners, (c) => c.getActiveBodyparts(CARRY));
 					var roomCarry = _.countBy(bodies.remoteRunner(maxEnergy), _.identity)[CARRY];
 					var targetCarry = remoteminetask.carryNeeded || roomCarry;
 					if(numRemoteCarry < targetCarry){
