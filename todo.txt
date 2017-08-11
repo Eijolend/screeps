@@ -3,6 +3,8 @@ URGENT:
 	-> Tower filling should probably be a separate task from filling
 	-> Towers should be prioritized in an emergency and civilians should help fill them in an emergency.
 *centralize repairWall tasks as well
+*optimize remote runners: 
+	global.CARRY_PARTS = (capacity, steps) => Math.ceil(capacity / ENERGY_REGEN_TIME * 2 * steps / CARRY_CAPACITY);
 
 soon:
 
