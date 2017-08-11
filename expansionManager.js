@@ -3,6 +3,10 @@
 const setupTask = require("utils").setupTask;
 
 module.exports = {
+	calcCarryNeeded : function(capacity,steps){
+		return Math.ceil(capacity / ENERGY_REGEN_TIME * 2 * steps / CARRY_CAPACITY);
+	},
+
 	remoteUpdate : function(remoteRoomName,homeRoomName){
 		let homeRoom = Game.rooms[homeRoomName];
 		if(!Game.rooms[remoteRoomName]){
@@ -16,7 +20,11 @@ module.exports = {
 			remoteRoom.memory.sources = [];
 			for(var source of remoteRoom.find(FIND_SOURCES)){
 				var remoteminetask = setupTask(TASK_REMOTE_MINE, source);
-				remoteRoom.memory.sources.push(remoteminetask)
+				if(homeRoom.storage){
+					var steps = PathFinder.search(homeRoom.storage.pos,{pos:source.pos,range:1},{swampcost : 1}).path.length;
+					remoteminetask.carryNeeded = this.calcCarryNeeded(source.energyCapacity,steps);
+				}
+				remoteRoom.memory.sources.push(remoteminetask);
 			}
 			return OK;
 		}
@@ -32,6 +40,16 @@ module.exports = {
         homeRoom.memory.remoteRooms.push(remoteRoomName);
         this.remoteUpdate(remoteRoomName,homeRoomName);
 	},
+
+	remoteUpdateAll : function(){ //useful when something was changed about updating logic
+		for(var roomName in Game.rooms){
+			if(Memory.rooms[roomName].remoteRooms){
+				for(var remoteRoomName of Memory.rooms[roomName].remoteRooms){
+					this.remoteUpdate(remoteRoomName,roomName);
+				}
+			}
+		}
+	}
 
 	colonizeRoom : function(colonyRoomName, homeRoomName, spawnPosX, spawnPosY, waypoint){
 		var waypoint = waypoint;
