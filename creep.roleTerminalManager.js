@@ -41,7 +41,7 @@ module.exports = {
 				var mineral = creep.room.find(FIND_MINERALS)[0];
 		        var mineralType = mineral.mineralType;
 				var mineralContainer = mineral.pos.findInRange(FIND_STRUCTURES,1,{filter:(s)=>s.structureType == STRUCTURE_CONTAINER})[0];
-				if(mineralContainer != undefined && creep.room.terminal != undefined && mineralContainer.store[mineralType] >= creep.carryCapacity){
+				if(mineralContainer != undefined && creep.room.terminal != undefined && mineralContainer.store[mineralType] >= (mineral.ticksToRegeneration === undefined ? 0 : creep.carryCapacity)){
 					creep.task = setupTask(TASK_GET, mineralContainer);
 					creep.task.resourceType = mineralType;
 					return OK;
