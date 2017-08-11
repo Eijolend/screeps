@@ -44,11 +44,13 @@ module.exports = {
 				}
 			}
 			else{
-				if(creep.ticksToLive < 200 || creep.hits < creep.hitsMax){
+				var assocTask = creep.memory.assocTask;
+				var recycleLimit = 4*assocTask.steps || 200;
+				if(creep.ticksToLive < recycleLimit || creep.hits < creep.hitsMax){
 					creep.role = ROLE_RECYCLER;
 				}
 				else{
-					creep.task = JSON.parse(JSON.stringify(creep.memory.assocTask));
+					creep.task = JSON.parse(JSON.stringify(assocTask));
 					creep.task.type = TASK_REMOTE_GET_ENERGY;
 				}
 			}

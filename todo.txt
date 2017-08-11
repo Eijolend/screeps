@@ -2,19 +2,18 @@ URGENT:
 *Tower logic:
 	-> Tower filling should probably be a separate task from filling
 	-> Towers should be prioritized in an emergency and civilians should help fill them in an emergency.
-*optimize remote runners:
-	global.CARRY_PARTS = (capacity, steps) => Math.ceil(capacity / ENERGY_REGEN_TIME * 2 * steps / CARRY_CAPACITY);
 
 soon:
 
 eventually:
 *go over whole task system again and try to standardize things more
+*integrate military creeps fully with task system (or actually, just take them out of the task system)
 *recycler role alternatives, if there is no valid spawn rather than failsafe in roleCivilian
 *find a way to avoid energy starving when too many civilians are present
+*optimize remoteRunners even more exactly
 
 observe:
 *getting task in runners and civilians from storage should recalculate if storage is empty
  (should be solved now that a successful withdraw action resets the task)
 
 maybe:
-*integrate military creeps fully with task system (or actually, just take them out of the task system)

@@ -88,6 +88,17 @@ var bodies = {
 		return body
 	},
 
+	remoteRunnerByCarry : function(numCarry){
+		var template = [CARRY,CARRY,MOVE];
+		var n = Math.floor(numCarry/2);
+		var body = [];
+		for(var i=0;i<n;i++){
+			body.push(CARRY,CARRY,MOVE);
+		}
+		body.push(CARRY,WORK,MOVE);
+		return body;
+	},
+
 	colonist : function(maxEnergy){
 		var template = [WORK,CARRY,MOVE,MOVE];
 		var intervalEnergy = cost(template);
@@ -231,24 +242,40 @@ module.exports = {
 						return;
 					}
 					var taskRemoteRunners = _.filter(remoteRunners, (c) => c.memory.assocTask.id == remoteminetask.id);
-					var numRemoteRunners = taskRemoteRunners != undefined ? taskRemoteRunners.length : 0;
-					var remoteRunner_target = 1;
-					if(remoteminetask.roomName in Game.rooms){
-						var mySource = tasks.getTarget(remoteminetask);
-						var myContainer = mySource.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
-						var myDropped = mySource.pos.findInRange(FIND_DROPPED_RESOURCES,1,{filter: (r) => r.resourceType == RESOURCE_ENERGY})[0];
-						var myEnergy = ( myContainer != undefined ? myContainer.store.energy : 0 ) + ( myDropped != undefined ? myDropped.amount : 0 );
-						if(myContainer == undefined){
-							remoteRunner_target = 0;
+					var numRemoteCarry = _.sumBy(taskRemoteRunners, (c) => c.getActiveBodyparts(CARRY));
+					var roomCarry = _.countBy(bodies.remoteRunner(maxEnergy), _.identity)[CARRY];
+					var targetCarry = remoteminetask.carryNeeded || roomCarry;
+					if(numRemoteCarry < targetCarry){
+						var carryPerCreep;
+						if(targetCarry > roomCarry){
+							var numCreeps = Math.ceil(targetCarry/roomCarry);
+							carryPerCreep = Math.ceil(targetCarry/numCreeps);
 						}
 						else{
-							remoteRunner_target = 1 + Math.floor(myEnergy/2000);
+							carryPerCreep = targetCarry;
 						}
+						spawn.createCreep(bodies.remoteRunnerByCarry(carryPerCreep),undefined,{role: ROLE_REMOTE_RUNNER, assocTask : remoteminetask});
 					}
-					if(numRemoteRunners < remoteRunner_target){
-						spawn.createCreep(bodies.remoteRunner(maxEnergy),undefined,{role: ROLE_REMOTE_RUNNER, assocTask : remoteminetask});
-						return;
-					}
+
+
+					// var numRemoteRunners = taskRemoteRunners != undefined ? taskRemoteRunners.length : 0;
+					// var remoteRunner_target = 1;
+					// if(remoteminetask.roomName in Game.rooms){
+					// 	var mySource = tasks.getTarget(remoteminetask);
+					// 	var myContainer = mySource.pos.findInRange(FIND_STRUCTURES,1,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})[0];
+					// 	var myDropped = mySource.pos.findInRange(FIND_DROPPED_RESOURCES,1,{filter: (r) => r.resourceType == RESOURCE_ENERGY})[0];
+					// 	var myEnergy = ( myContainer != undefined ? myContainer.store.energy : 0 ) + ( myDropped != undefined ? myDropped.amount : 0 );
+					// 	if(myContainer == undefined){
+					// 		remoteRunner_target = 0;
+					// 	}
+					// 	else{
+					// 		remoteRunner_target = 1 + Math.floor(myEnergy/2000);
+					// 	}
+					// }
+					// if(numRemoteRunners < remoteRunner_target){
+					// 	spawn.createCreep(bodies.remoteRunner(maxEnergy),undefined,{role: ROLE_REMOTE_RUNNER, assocTask : remoteminetask});
+					// 	return;
+					// }
 				}
 
 
