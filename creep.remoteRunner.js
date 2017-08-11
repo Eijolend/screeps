@@ -46,7 +46,7 @@ module.exports = {
 			else{
 				var assocTask = creep.memory.assocTask;
 				var recycleLimit = 4*assocTask.steps || 200;
-				if(creep.ticksToLive < recycleLimit || creep.hits < creep.hitsMax){
+				if(creep.room.name == creep.memory.homeRoom && (creep.ticksToLive < recycleLimit || creep.hits < creep.hitsMax)){
 					creep.role = ROLE_RECYCLER;
 				}
 				else{
