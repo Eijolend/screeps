@@ -56,8 +56,6 @@ module.exports = {
     },
 
     getRepairingTask : function(creep){
-		var room = creep.room
-		var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
         var repairList = creep.room.memory.tasks[TASK_REPAIR];
         var myIndex = _.findIndex(repairList, (t) => t.repairNeeded > 0);
         if(myIndex != -1){
@@ -68,11 +66,10 @@ module.exports = {
     },
 
     getWallRepairingTask : function(creep){
-		var room = creep.room
-		var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
-		var repairWallList = calcTasks.calcRepairWallTasks(room,creepsByTask);
+		var repairWallList = creep.room.memory.tasks[TASK_REPAIR_WALL];
 		var myIndex = _.findIndex(repairWallList, (t) => t.repairNeeded > 0);
         if(myIndex != -1){
+			repairWallList[myIndex].repairNeeded -= creep.carry.energy;
             creep.task=repairWallList[myIndex];
             return OK;
         }
