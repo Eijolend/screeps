@@ -49,7 +49,7 @@ module.exports = {
 				}
 			}
 		}
-	}
+	},
 
 	colonizeRoom : function(colonyRoomName, homeRoomName, spawnPosX, spawnPosY, waypoint){
 		var waypoint = waypoint;
