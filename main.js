@@ -3,6 +3,7 @@
 const creepLoop = require("creepLoop");
 const roomManager = require ("roomManager");
 const defenseManager = require("defenseManager");
+const marketManager = require("marketManager");
 
 require("setupGlobal")(); //global constants and modified prototypes
 
@@ -33,6 +34,10 @@ module.exports.loop = function(){
 	for(var name in Game.creeps){
   		var creep = Game.creeps[name];
   		creepLoop.run(creep);
+	}
+
+	if(Game.time % 50 == 0){
+		marketManager.run();
 	}
 
 	if(Game.spawns.Spawn1.hits < Game.spawns.Spawn1.hitsMax){

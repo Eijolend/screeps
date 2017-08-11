@@ -34,6 +34,10 @@ module.exports = {
 				}
 			}
 			else{
+				if(creep.ticksToLive < 50){
+                    creep.role = ROLE_RECYCLER;
+					return;
+                }
 				var mineral = creep.room.find(FIND_MINERALS)[0];
 		        var mineralType = mineral.mineralType;
 				var mineralContainer = mineral.pos.findInRange(FIND_STRUCTURES,1,{filter:(s)=>s.structureType == STRUCTURE_CONTAINER})[0];
