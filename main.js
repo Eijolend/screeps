@@ -13,7 +13,7 @@ const profiler = require("screeps-profiler");
 profiler.registerObject(creepLoop, "creepLoop");
 profiler.registerObject(roomManager, "roomManager");
 profiler.registerObject(defenseManager,"defenseManager");
-profiler.registerObject(markteManager,"marketManager");
+profiler.registerObject(marketManager,"marketManager");
 
 profiler.enable();
 module.exports.loop = function(){
