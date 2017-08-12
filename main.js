@@ -4,12 +4,13 @@ const creepLoop = require("creepLoop");
 const roomManager = require ("roomManager");
 const defenseManager = require("defenseManager");
 const marketManager = require("marketManager");
+const profiler = require("screeps-profiler");
 
 require("setupGlobal")(); //global constants and modified prototypes
 
 global.playerWhiteList = [];
 
-const profiler = require("screeps-profiler");
+
 profiler.registerObject(creepLoop, "creepLoop");
 profiler.registerObject(roomManager, "roomManager");
 profiler.registerObject(defenseManager,"defenseManager");
@@ -34,7 +35,7 @@ module.exports.loop = function(){
 		for(var roomName in Game.rooms){
 			defenseManager.run(Game.rooms[roomName]);
 		}
-		var myrooms = _.filter(Game.rooms, (r) => r.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN}).length > 0 || r.memory.remoteRoom == true);
+		var myrooms = _.filter(Game.rooms, (r) => r.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN}).length > 0);
 		for(var room of myrooms){
 			roomManager.run(room);
 		}
