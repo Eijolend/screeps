@@ -219,6 +219,7 @@ module.exports = {
 					var remoteHunters = remoteCreepsByRole.hunter != undefined ? remoteCreepsByRole.hunter.length : 0;
 					if(hunters < 2){
 						spawn.createCreep(bodies.hunter(maxEnergy/2),undefined,{role:ROLE_HUNTER});
+						return;
 					}
 				}
 				var reservers = remoteCreepsByRole.reserver != undefined ? remoteCreepsByRole.reserver.length : 0;
