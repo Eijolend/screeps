@@ -272,8 +272,11 @@ var remoteGetEnergy = function(creep,target){
 		else if(dropped.length){
 			pickup(creep,dropped[0]);
 		}
-		else{
+		else if (myContainer != undefined){
 			getEnergy(creep,myContainer);
+		}
+		else{
+			creep.moveTo(target,{range:2});
 		}
 	}
 }
