@@ -15,6 +15,7 @@ const roleClaimer = require("creep.roleClaimer");
 const roleColonist = require("creep.roleColonist");
 const roleMineralMiner = require("creep.roleMineralMiner");
 const roleTerminalManager = require("creep.roleTerminalManager");
+const roleLaborant = require("creep.roleLaborant");
 
 module.exports = {
     run : function(creep){
@@ -63,6 +64,8 @@ module.exports = {
                 break;
             case ROLE_TERMINAL_MANAGER:
                 roleTerminalManager.run(creep);
+            case ROLE_LABORANT:
+                roleLaborant.run(creep);
         }
         tasks.run(creep);
     }
