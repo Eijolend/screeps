@@ -225,12 +225,14 @@ module.exports = {
 				var reservers = remoteCreepsByRole.reserver != undefined ? remoteCreepsByRole.reserver.length : 0;
 				if(reservers < 1){
 					//var reservetask = Memory.rooms[remoteRoomName].controller;
-					var reservetask = _.get(Memory, "rooms." + remoteRoomName + ".controller", {})
-					var controllerId = reservetask.id;
-					var controller = Game.getObjectById(controllerId);
-					if(controller == null || !controller.reservation || controller.reservation.ticksToEnd < 500){
-						spawn.createCreep(bodies.reserver(maxEnergy),undefined,{role:ROLE_RESERVER, task : reservetask});
-						return;
+					var reservetask = _.get(Memory, "rooms." + remoteRoomName + ".controller", null)
+					if(reservetask != null){ //this might be null if the remoteRoom is initialized but not scouted yet
+						var controllerId = reservetask.id;
+						var controller = Game.getObjectById(controllerId);
+						if(controller == null || !controller.reservation || controller.reservation.ticksToEnd < 500){
+							spawn.createCreep(bodies.reserver(maxEnergy),undefined,{role:ROLE_RESERVER, task : reservetask});
+							return;
+						}
 					}
 				}
 				var remoteMiners = remoteCreepsByRole.remoteMiner;

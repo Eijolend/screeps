@@ -9,9 +9,9 @@ module.exports = {
         Memory.marketManager.push({'resourceType' : resourceType, 'amount' : amount, 'roomName' : roomName});
     },
 
-    handleOverflow : function(terminal){
+    handleOverflow : function(){
         var terminals = _.filter(Game.structures, (s) => s.structureType == STRUCTURE_TERMINAL);
-        for(terminal of terminals){
+        for(var terminal of terminals){
             var overflow = _.sum(terminal.store) - terminal.store.energy - 200000;
             if(overflow > 0){
                 var maxResource = _.max(_.keys(terminal.store), (k) => terminal.store[k]);
@@ -24,6 +24,11 @@ module.exports = {
         if(Memory.marketManager && Memory.marketManager[0] != undefined){
             var myTransfer = Memory.marketManager.shift();
             var deals = Game.market.getAllOrders((x) => x.type == ORDER_BUY && x.resourceType == myTransfer.resourceType && x.amount > 100);
+            if(deals.length == 0){
+                Game.notify("Deals array was empty for: " + JSON.stringify(myTransfer), 5)
+                Memory.marketManager.push(myTransfer);
+                return;
+            }
             var dealByPrice = _.groupBy(deals,'price');
             deals = dealByPrice[_.max(_.keys(dealByPrice))];
             var myDeal = deals[_.min(_.keys(deals), (k) => Game.market.calcTransactionCost(100,deals[k].roomName,myTransfer.roomName))];
