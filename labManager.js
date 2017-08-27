@@ -14,8 +14,8 @@ module.exports = {
         }
         if(room.terminal && labs.length >= 3){
             var terminal = room.terminal;
-            for(dx of [-1,0,1]){
-                for(dy of [-1,0,1]){
+            for(var dx of [-1,0,1]){
+                for(var dy of [-1,0,1]){
                     var mypos = {x: terminal.pos.x + dx, y: terminal.pos.y + dy, roomName: room.name};
                     if(labs[0].pos.getRangeTo(mypos) == 1 && labs[1].pos.getRangeTo(mypos) == 1 && labs[2].pos.getRangeTo(mypos) == 1){
                         room.memory.labManager.pos = mypos;
