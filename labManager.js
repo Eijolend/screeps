@@ -9,7 +9,7 @@ module.exports = {
         }
         var labs = room.find(FIND_MY_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_LAB});
         room.memory.labManager.labs = [];
-        for(lab of labs){
+        for(var lab of labs){
             room.memory.labManager.labs.push({id:lab.id});
         }
         if(room.terminal && labs.length >= 3){
