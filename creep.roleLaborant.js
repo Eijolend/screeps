@@ -33,7 +33,7 @@ module.exports = {
             return OK;
         }
         if(!creep.memory.setup){
-            creep.task = setupTask(TASK_SETUP_LABS,creep);
+            creep.task = setupTask(TASK_SETUP_LABS,creep); //if there are no orders TASK_SETUP_LABS will lead to the laborant orderly leaving their workplace
             return OK;
         }
         creep.memory.task = setupTask(TASK_LABORANT,creep);

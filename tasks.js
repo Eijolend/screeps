@@ -310,7 +310,20 @@ var setupLabs = function(creep){
     }
     var orders = creep.room.memory.labManager.orders;
     var order = {};
-    if(orders.length >  0){order = orders[0]};
+    if(orders.length >  0){
+		order = orders[0]
+	}
+	else{ //if there are no orders left, orderly leave your workspace
+		if(_.sum(creep.carry) > 0){
+			creep.task.resourceType = _.findKey(creep.carry,(x) => x > 0);
+			fill(creep,creep.room.terminal);
+		}
+		else{
+			creep.role = ROLE_RECYCLER;
+		}
+		return;
+	}
+
     if(!creep.pos.isEqualTo(creep.room.memory.labManager.pos)){
         creep.moveTo(new RoomPosition(creep.room.memory.labManager.pos.x,creep.room.memory.labManager.pos.y,creep.room.memory.labManager.pos.roomName));
     }
