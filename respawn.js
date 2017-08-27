@@ -149,6 +149,17 @@ module.exports = {
 		}
 		var mineral = room.find(FIND_MINERALS)[0];
 
+		var laborant_target = 0;
+		if(room.controller.level >=6 && room.terminal){
+			var labs = [];
+	        for(var lab of _.get(room.memory, "labManager.labs",[]) ){
+	            labs.push(Game.getObjectById(lab.id));
+	        }
+			if(_.get(room.memory, "labManager.orders.length",0) > 0 || _.filter(labs, (x) => x.mineralAmount > 0).length > 0 ){
+				laborant_target = 1;
+			}
+		}
+
 		var creepsByRole = _.groupBy(_.filter(Game.creeps,(c) => c.pos.roomName == room.name),'memory.role'); //this also counts spawning creeps
 		var miners = creepsByRole.miner != undefined ? creepsByRole.miner.length : 0;
 		var runners = creepsByRole.runner != undefined ? creepsByRole.runner.length : 0;
@@ -156,6 +167,7 @@ module.exports = {
 		var hunters = creepsByRole.hunter != undefined ? creepsByRole.hunter.length : 0;
 		var mineralMiners = creepsByRole.mineralMiner != undefined ? creepsByRole.mineralMiner.length : 0;
 		var terminalManagers = creepsByRole.terminalManager != undefined ? creepsByRole.terminalManager.length : 0;
+		var laborants = creepsByRole.laborant != undefined ? creepsByRole.laborant.length : 0;
 
 		if(room.memory.requestList === undefined){ //checking this every tick is a waste
 			room.memory.requestList = [];
@@ -196,6 +208,9 @@ module.exports = {
 		}
 		else if(terminalManagers < terminalManager_target){
 			spawn.createCreep(bodies.runner(maxEnergy),undefined,{role:ROLE_TERMINAL_MANAGER});
+		}
+		else if(laborants < laborant_target){
+			spawn.createCreep([MOVE,CARRY],undefined,{role:ROLE_LABORANT});
 		}
 		else{
 			//spawn colonists

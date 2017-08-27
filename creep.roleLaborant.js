@@ -16,10 +16,30 @@ module.exports = {
             return;
         }
         var labs = [];
-        for(lab of creep.room.memory.labManager.labs){
+        for(var lab of creep.room.memory.labManager.labs){
             labs.push(Game.getObjectById(lab.id));
         }
-        // more logic goes here
+		//now actual logic starts
+        if(labs[0].mineralType){
+			creep.task = setupTask(TASK_EMPTY_LAB,labs[0]);
+			return OK;
+        }
+        if(labs[1].mineralType){
+            creep.task = setupTask(TASK_EMPTY_LAB,labs[1]);
+            return OK;
+        }
+        if(labs[2].mineralType){
+            creep.task = setupTask(TASK_EMPTY_LAB,labs[2]);
+            return OK;
+        }
+        if(!creep.memory.setup){
+            creep.task = setupTask(TASK_SETUP_LABS,creep);
+            return OK;
+        }
+        creep.memory.task = setupTask(TASK_LABORANT,creep);
+		creep.task.timeStamp = Game.time; //for multiple labblocks, here we should also specify which blocks
+        creep.memory.setup = false;
+		return OK;
     },
 
     run : function(creep){

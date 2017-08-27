@@ -1,6 +1,7 @@
 "use strict";
 
 const expansionManager = require("expansionManager");
+const labManager = require("labManager");
 
 var getTarget = function(task){
     var myobject = Game.getObjectById(task.id);
@@ -288,6 +289,110 @@ var claim = function(creep,target){
 	}
 }
 
+var emptyLab = function(creep,lab){
+	if(_.sum(creep.carry) > 0){
+		creep.task.resourceType = _.findKey(creep.carry,(x) => x > 0);
+		fill(creep,creep.room.terminal);
+	}
+	else if(target.mineralAmount == 0){
+		creep.task = undefined;
+	}
+	else{
+		creep.task.resourceType = lab.mineralType;
+		get(creep,lab);
+	}
+}
+
+var setupLabs = function(creep){
+	if(!creep.room.memory.labManager.pos){
+        labManager.init(creep.room);
+        return;
+    }
+    var orders = creep.room.memory.labManager.orders;
+    var order = {};
+    if(orders.length >  0){order = orders[0]};
+    if(!creep.pos.isEqualTo(creep.room.memory.labManager.pos)){
+        creep.moveTo(new RoomPosition(creep.room.memory.labManager.pos.x,creep.room.memory.labManager.pos.y,creep.room.memory.labManager.pos.roomName));
+    }
+    else if(!creep.carry[order.input1] || creep.carry[order.input1] < Math.min(10,order.amount)){
+        creep.withdraw(creep.room.terminal,order.input1, Math.min(10,order.amount));
+    }
+    else if(!creep.carry[order.input2] || creep.carry[order.input2] < Math.min(5,order.amount)){
+        creep.withdraw(creep.room.terminal,order.input2, Math.min(5,order.amount));
+    }
+    else{
+        creep.memory.setup = true;
+        creep.task = undefined;
+	}
+}
+
+var laborant = function(creep){
+	var orders = creep.room.memory.labManager.orders;
+    var order = {};
+    if(orders.length > 0){order = orders[0]};
+    if(order.amount <= 0){
+        orders.shift();
+        creep.memory.task = undefined;
+        return;
+    }
+    var labs = [];
+    for(var lab of creep.room.memory.labManager.labs){
+        labs.push(Game.getObjectById(lab.id)); //probably could cut some calls here
+    }
+    const A = order.input1;
+    const B = order.input2;
+    const C = order.output;
+    switch ((Game.time - creep.task.timeStamp) % 10){
+        case 0:
+            if(creep.ticksToLive < 15){
+                creep.task = undefined;
+                return;
+            }
+            creep.withdraw(labs[0],C);
+            if( (labs[0].mineralType != undefined && labs[0].mineralType != C) || labs[1].mineralType || labs[2].mineralType){
+                creep.task = undefined; //if something went wrong, clean up labs before starting over
+                return;
+            }
+            break;
+        case 1:
+            creep.transfer(labs[0],A,Math.min(10,order.amount));
+            break;
+        case 2:
+            creep.transfer(labs[1],B,Math.min(5,order.amount));
+            break;
+        case 3:
+            if(labs[2].runReaction(labs[0],labs[1]) == OK){
+                order.amount -= 5;
+            }
+            creep.withdraw(creep.room.terminal,B,Math.min(15,order.amount));
+            break;
+        case 4:
+            creep.withdraw(labs[2],C);
+            break;
+        case 5:
+            creep.transfer(labs[2],B,Math.min(10,order.amount));
+            break;
+        case 6:
+            if(labs[1].runReaction(labs[0],labs[2]) == OK){
+                order.amount -= 5;
+            }
+            creep.withdraw(creep.room.terminal,A,Math.min(15,order.amount));
+            break;
+        case 7:
+            creep.withdraw(labs[1],C);
+            break;
+        case 8:
+            creep.transfer(labs[1],A,Math.min(5,order.amount));
+            break;
+        case 9:
+            if(labs[0].runReaction(labs[1],labs[2]) == OK){
+                order.amount -= 5;
+            }
+            creep.transfer(creep.room.terminal,C);
+            break;
+	}
+}
+
 module.exports = {
 	run: function(creep){
 		if (creep.task != undefined){
@@ -350,6 +455,15 @@ module.exports = {
                 case TASK_GET:
                     get(creep,target);
                     break;
+				case TASK_EMPTY_LAB:
+					emptyLab(creep,target);
+					break;
+				case TASK_SETUP_LABS:
+					setupLabs(creep);
+					break;
+				case TASK_LABORANT:
+					laborant(creep);
+					break;
 			}
 		}
 	}

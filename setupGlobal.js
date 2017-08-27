@@ -37,6 +37,9 @@ var setupConsts = function(){
 	global.TASK_CLAIM = "claim";
 	global.TASK_MINE_MINERAL = "mineMineral";
 	global.TASK_GET = "get";
+	global.TASK_EMPTY_LAB = "emptyLab";
+	global.TASK_SETUP_LABS = "setupLabs";
+	global.TASK_LABORANT = "laborant";
 	// global.TASK_COLONIZE = "colonize";
 }
 
