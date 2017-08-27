@@ -54,3 +54,4 @@ module.exports = {
         this.addChain(input2,amount,roomName);
         this.addOrder(input1,input2,output,amount,roomName);
     }
+}
