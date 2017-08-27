@@ -308,7 +308,7 @@ var setupLabs = function(creep){
         labManager.init(creep.room);
         return;
     }
-    var orders = creep.room.memory.labManager.orders;
+    var orders = _.get(creep.room.memory,"labManager.orders",[]);
     var order = {};
     if(orders.length >  0){
 		order = orders[0]
