@@ -294,7 +294,7 @@ var emptyLab = function(creep,lab){
 		creep.task.resourceType = _.findKey(creep.carry,(x) => x > 0);
 		fill(creep,creep.room.terminal);
 	}
-	else if(target.mineralAmount == 0){
+	else if(lab.mineralAmount == 0){
 		creep.task = undefined;
 	}
 	else{
