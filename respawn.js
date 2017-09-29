@@ -119,6 +119,19 @@ var bodies = {
 			body.push(...template);
 		}
 		return body
+	},
+
+	upgrader : function(maxEnergy){
+		var body = [];
+		for(var i=0;i<10;i++){
+			body.push(MOVE);
+		}
+		for(var i=0;i<15;i++){
+			body.push(WORK);
+		}
+		for(var i=0;i<5;i++){
+			body.push(CARRY);
+		}
 	}
 }
 
@@ -134,8 +147,13 @@ module.exports = {
 		var miner_target = room.find(FIND_SOURCES).length;
 		var runner_target = 2;
 		var civilian_target = 6;
+		var upgrader_target = 0;
 		if(room.controller.level > 3){
 			civilian_target = Math.max(Math.min(Math.ceil(30/(bodies.civilian(maxEnergy).length/3)),7),2) + ( room.storage != undefined ? Math.floor(room.storage.store.energy/200000) : 0 );
+		}
+		if(room.controller.level == 8){
+			civilian_target = 2;
+			upgrader_target = 1;
 		}
 		var hunter_target = 0;
 		if(room.memory.underAttack){
@@ -168,6 +186,7 @@ module.exports = {
 		var mineralMiners = creepsByRole.mineralMiner != undefined ? creepsByRole.mineralMiner.length : 0;
 		var terminalManagers = creepsByRole.terminalManager != undefined ? creepsByRole.terminalManager.length : 0;
 		var laborants = creepsByRole.laborant != undefined ? creepsByRole.laborant.length : 0;
+		var upgraders = creepsByRole.upgrader != undefined ? creepsByRole.upgrader.length : 0;
 
 		if(room.memory.requestList === undefined){ //checking this every tick is a waste
 			room.memory.requestList = [];
@@ -199,6 +218,9 @@ module.exports = {
 		}
 		else if(hunters < hunter_target){
 			spawn.createCreep(bodies.hunter(maxEnergy),undefined,{role:ROLE_HUNTER});
+		}
+		else if(upgraders < upgrader_target){
+			spawn.createCreep(bodies.upgrader(maxEnergy),undefined,{role:ROLE_UPGRADER});
 		}
 		else if(civilians < civilian_target) {
 			spawn.createCreep(bodies.civilian(maxEnergy),undefined,{role:ROLE_CIVILIAN});

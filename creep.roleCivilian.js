@@ -6,7 +6,7 @@ const calcTasks = require("calcTasks");
 module.exports = {
 	getGettingTask : function(creep){
         //here the prioritization of one source is missing
-		var room = creep.room
+		var room = creep.room;
 		var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
         var getEnergyTasks = calcTasks.calcGetEnergyTasks(room,creepsByTask);
         var myIndex = -1;
@@ -34,7 +34,7 @@ module.exports = {
     },
 
     getBuildingTask : function(creep){
-		var room = creep.room
+		var room = creep.room;
 		var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
         var buildList = calcTasks.calcBuildTasks(room,creepsByTask);
         var myIndex = _.findIndex(buildList, (t) => t.progressLeft > 0);
@@ -45,7 +45,7 @@ module.exports = {
     },
 
     getUpgradingTask : function(creep){
-		var room = creep.room
+		var room = creep.room;
 		var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
         var upgradeList = calcTasks.calcUpgradeTasks(room,creepsByTask);
         var myIndex = _.findIndex(upgradeList, (t) => true);
@@ -76,7 +76,7 @@ module.exports = {
     },
 
 	getMiningTask : function(creep){
-		var room = creep.room
+		var room = creep.room;
 		var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
 		var mineTasks = calcTasks.calcMineTasks(room,creepsByTask);
 		var myIndex = _.min(_.keys(mineTasks), function(k) { return mineTasks[k].assigned;})

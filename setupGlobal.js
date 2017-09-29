@@ -18,6 +18,7 @@ var setupConsts = function(){
 	global.ROLE_MINERAL_MINER = "mineralMiner";
 	global.ROLE_TERMINAL_MANAGER = "terminalManager";
 	global.ROLE_LABORANT = "laborant";
+	global.ROLE_UPGRADER = "upgrader";
 	global.TASK_BUILD = "build";
 	global.TASK_MINE = "mine";
 	global.TASK_FILL = "fill";
