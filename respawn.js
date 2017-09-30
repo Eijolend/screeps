@@ -28,7 +28,7 @@ var bodies = {
 	runner : function(maxEnergy){
 		var template = [CARRY,MOVE];
 		var intervalEnergy=cost(template);
-		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),10); //currently hardcapped at 10
+		var n = Math.min(Math.floor(maxEnergy/intervalEnergy),20); //currently hardcapped at 20
 		var body = [];
 		for(var i=0;i<n;i++){
 			body.push(CARRY,MOVE);
@@ -219,7 +219,7 @@ module.exports = {
 		else if(hunters < hunter_target){
 			spawn.createCreep(bodies.hunter(maxEnergy),undefined,{role:ROLE_HUNTER});
 		}
-		else if(upgraders < upgrader_target){
+		else if(upgraders < upgrader_target || (upgraders == upgrader_target && _.get(creepsByRole,ROLE_UPGRADER,[{}])[0].ticksToLive < (bodies.upgrader(maxEnergy).length * 3 + 30) )){ //there must be a better way to filter for ticksToLive
 			spawn.createCreep(bodies.upgrader(maxEnergy),undefined,{role:ROLE_UPGRADER});
 		}
 		else if(civilians < civilian_target) {

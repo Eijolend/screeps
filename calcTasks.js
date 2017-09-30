@@ -29,6 +29,9 @@ module.exports = {
 		var taskList = [];
 		var getEnergyCreeps = _.groupBy(creepsByTask[TASK_GET_ENERGY] || [], 'task.id');
 		for (var container of room.find(FIND_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_CONTAINER})){
+			if(container.pos.isNearTo(room.controller)){ //the upgrader's container should not be emptied
+				continue;
+			}
 			var containertask = setupTask(TASK_GET_ENERGY,container);
 			containertask.amountAvailable = (container.store.energy || 0) - _.sum( (getEnergyCreeps[container.id] || []), (c) => c.carryCapacity - c.carry.energy);
 			taskList.push(containertask);
@@ -53,20 +56,30 @@ module.exports = {
 	},
 
 	calcFillTasks : function(room,creepsByTask){
-		//this should account for towers as well
+		//prioritization is not solved yet
 		var taskList = [];
 		var fillCreeps = _.groupBy(creepsByTask[TASK_FILL] || [], 'task.id');
 		for (var spex of room.find(FIND_MY_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_SPAWN || s.structureType == STRUCTURE_EXTENSION})){
 			var spextask = setupTask(TASK_FILL,spex);
 			spextask.amountNeeded = spex.energyCapacity - spex.energy - _.sum( (fillCreeps[spex.id] || []), 'carry.energy');
+			spextask.structureType = spex.structureType;
 			taskList.push(spextask);
 		}
-		//doing towers second guarantees spawns and extension are prioritized, but this ignores tower too much on higher levels I think
+		//the order of adding them to the tasklist might be used for something, but currently it is just sorted afterwards
 		for (var tower of room.find(FIND_MY_STRUCTURES,{filter: (s) => s.structureType == STRUCTURE_TOWER})){
 			var towertask = setupTask(TASK_FILL,tower);
 			towertask.amountNeeded = tower.energyCapacity - tower.energy - _.sum( (fillCreeps[tower.id] || []), 'carry.energy');
+			towertask.structureType = tower.structureType;
 			taskList.push(towertask);
 		}
+		var upgradeContainer = room.controller.pos.findInRange(FIND_STRUCTURES,1,{filter:(s) => s.structureType == STRUCTURE_CONTAINER})[0];
+		if(upgradeContainer != undefined){
+			var containertask = setupTask(TASK_FILL,upgradeContainer);
+			containertask.amountNeeded = upgradeContainer.storeCapacity - (upgradeContainer.store.energy || 0 ) - _.sum( (fillCreeps[upgradeContainer.id] || []), 'carry.energy');
+			containertask.structureType = upgradeContainer.structureType;
+			taskList.push(containertask);
+		}
+
 		return taskList;
 	},
 

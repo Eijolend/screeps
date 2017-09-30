@@ -81,7 +81,17 @@ var get = function(creep,target){
 
 var upgrade = function(creep,target){
 	creep.upgradeController(target);
-	if(!creep.pos.inRangeTo(target,3)){
+    var myContainer = Game.getObjectById(_.get(creep, "task.containerId", undefined))
+    if(myContainer != null){
+        creep.moveTo(myContainer);
+        if(creep.carry.energy <=30){
+            creep.withdraw(myContainer,RESOURCE_ENERGY);
+            if(creep.carryCapacity > myContainer.store.energy){
+                _.set(creep.room.memory,"roomManager.lastUpdated."+TASK_FILL,undefined);
+            }
+        }
+    }
+	else if(!creep.pos.inRangeTo(target,3)){
 		creep.moveTo(target);
 	}
 }
