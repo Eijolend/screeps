@@ -1,13 +1,13 @@
 URGENT:
-*code that checks if enough resources are available for what is ordered form labs (also see below)
-*code that automatically distributes resources between terminals if they are needed for the labs (maybe add to labManager module, although a generic redistribution module, where other modules can request things might be better);
-*Restructure spawning for RCL 8 rooms to have a dedicated upgrader instead of lots of civilians (maybe even before that)
 *Tower logic:
 	-> Tower filling should probably be a separate task from filling
 	-> Towers should be prioritized in an emergency and civilians should help fill them in an emergency.
 
 soon:
 *rethink a possibility for targetless tasks (currently laborants simply target themselves instead of the position where they should be)
+*implement gradual permission system for contact with other players
+*code that checks if enough resources are available for what is ordered form labs (also see below)
+*code that automatically distributes resources between terminals if they are needed for the labs (maybe add to labManager module, although a generic redistribution module, where other modules can request things might be better);
 
 eventually:
 *go over whole task system again and try to standardize things more
@@ -17,6 +17,7 @@ eventually:
 *optimize remoteRunners even more exactly
 
 observe:
+*dedicated upgrader for RCL 8 rooms should be working (think about doing the same for lower RCL)
 *getting task in runners and civilians from storage should recalculate if storage is empty
  (should be solved now that a successful withdraw action resets the task)
 

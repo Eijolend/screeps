@@ -121,7 +121,7 @@ module.exports = {
                 if(check != OK && repairWallCreeps.length < 1){ //should allow more creeps to repair in emergency
                     check = this.getWallRepairingTask(creep);
                 }
-                if(check != OK && creep.rooms[creep.memory.homeRoom].controller.level < 8){
+                if(check != OK && Game.rooms[creep.memory.homeRoom].controller.level < 8){
                     check = this.getUpgradingTask(creep);
                 }
             }

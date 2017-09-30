@@ -29,9 +29,6 @@ module.exports = {
 					creep.task = setupTask(TASK_FILL,creep.room.terminal);
 					return OK;
 				}
-				else{
-					roleRunner.run(creep);
-				}
 			}
 			else{
 				if(creep.ticksToLive < 50){
@@ -39,17 +36,17 @@ module.exports = {
 					return;
                 }
 				var mineral = creep.room.find(FIND_MINERALS)[0];
-		        var mineralType = mineral.mineralType;
-				var mineralContainer = mineral.pos.findInRange(FIND_STRUCTURES,1,{filter:(s)=>s.structureType == STRUCTURE_CONTAINER})[0];
-				if(mineralContainer != undefined && creep.room.terminal != undefined && mineralContainer.store[mineralType] >= (mineral.ticksToRegeneration !== undefined ? 1 : creep.carryCapacity)){
-					creep.task = setupTask(TASK_GET, mineralContainer);
-					creep.task.resourceType = mineralType;
-					return OK;
-				}
-				else{
-					roleRunner.run(creep);
+				if(mineral != undefined){
+					var mineralType = mineral.mineralType;
+					var mineralContainer = mineral.pos.findInRange(FIND_STRUCTURES,1,{filter:(s)=>s.structureType == STRUCTURE_CONTAINER})[0];
+					if(mineralContainer != undefined && creep.room.terminal != undefined && mineralContainer.store[mineralType] >= (mineral.ticksToRegeneration !== undefined ? 1 : creep.carryCapacity)){
+						creep.task = setupTask(TASK_GET, mineralContainer);
+						creep.task.resourceType = mineralType;
+						return OK;
+					}
 				}
 			}
+			roleRunner.run(creep); //even more else
 		}
 
 	}
