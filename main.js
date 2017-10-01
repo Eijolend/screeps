@@ -50,7 +50,7 @@ module.exports.loop = function(){
 		}
 
 		if(Game.spawns.Spawn1.hits < Game.spawns.Spawn1.hitsMax){
-			startRoom.controller.activateSafeMode();
+			Game.spawns.Spawn1.room.controller.activateSafeMode();
 		}
 
 		// if(Game.time % 1000 == 0){
