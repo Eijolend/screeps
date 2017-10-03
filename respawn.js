@@ -147,7 +147,7 @@ module.exports = {
 
 		var miner_target = room.find(FIND_SOURCES).length;
 		var runner_target = 2;
-		var civilian_target = 6;
+		var civilian_target = 8;
 		var upgrader_target = 0;
 		if(room.controller.level > 3){
 			civilian_target = Math.max(Math.min(Math.ceil(30/(bodies.civilian(maxEnergy).length/3)),7),2) + ( room.storage != undefined ? Math.floor(room.storage.store.energy/200000) : 0 );
@@ -275,7 +275,7 @@ module.exports = {
 				}
 				var remoteMiners = remoteCreepsByRole.remoteMiner;
 				var remoteRunners = _.filter(Game.creeps,(c) => c.role == ROLE_REMOTE_RUNNER && c.memory.assocTask && c.memory.assocTask.roomName == remoteRoomName);
-				for (var remoteminetask of _.get(Memory, "rooms." + remoteRoomName + ".sources", {})){
+				for (var remoteminetask of _.get(Memory, "rooms." + remoteRoomName + ".sources", [])){
 					var taskRemoteMiners = _.filter(remoteMiners, (c) => c.task.id == remoteminetask.id && (c.ticksToLive > c.memory.travelTime + 30 || c.spawning) );
 					var numRemoteMiners = taskRemoteMiners != undefined ? taskRemoteMiners.length : 0;
 					if(numRemoteMiners < 1){
