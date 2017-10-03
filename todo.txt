@@ -20,6 +20,7 @@ eventually:
 
 observe:
 *dedicated upgrader for RCL 8 rooms should be working (think about doing the same for lower RCL)
+*runner prioritization in an energy shortage might be too severe
 *getting task in runners and civilians from storage should recalculate if storage is empty
  (should be solved now that a successful withdraw action resets the task)
 
