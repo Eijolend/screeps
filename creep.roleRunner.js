@@ -23,7 +23,7 @@ module.exports = {
             return OK;
         }
         //this should now prioritize runners in an energy shortage (observe if this isn't too much)
-        myIndex = _.findIndex(getEnergyTasks,(t) => t.amountAvailable >= ( (_.get(creep.room,"storage.store.energy",0) < 10*creep.carryCapacity)? 0 : (creep.carryCapacity - creep.carry.energy) ) );
+        myIndex = _.findIndex(getEnergyTasks,(t) => t.amountAvailable >= ( (_.get(creep.room,"storage.store.energy",0) < 10*creep.carryCapacity)? 1 : (creep.carryCapacity - creep.carry.energy) ) );
         if(myIndex != -1){
             creep.task=getEnergyTasks[myIndex];
             return OK;
