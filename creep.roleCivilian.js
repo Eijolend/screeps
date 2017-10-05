@@ -45,7 +45,7 @@ module.exports = {
     },
 
     getUpgradingTask : function(creep){
-		var room = creep.room;
+		var room = _.get(Game.rooms, creep.memory.homeRoom, creep.room);
 		var creepsByTask = _(Game.creeps).filter( (c) => c.task && c.task.roomName == room.name).groupBy('task.type').value();
         var upgradeList = calcTasks.calcUpgradeTasks(room,creepsByTask);
         var myIndex = _.findIndex(upgradeList, (t) => true);

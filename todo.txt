@@ -6,6 +6,7 @@ URGENT:
 	-> Towers should be prioritized in an emergency and civilians should help fill them in an emergency.
 
 soon:
+*implement a solid system for creeps staying in homeRoom if they get lost in an other room
 *rethink a possibility for targetless tasks (currently laborants simply target themselves instead of the position where they should be)
 *implement gradual permission system for contact with other players
 *code that checks if enough resources are available for what is ordered form labs (also see below)
