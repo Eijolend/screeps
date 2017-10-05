@@ -1,5 +1,5 @@
 URGENT:
-*runners should be prioritized a bit if there is an energy shortage!!!!!
+*OMG INVADERS CAN KITE!!! BUILD HUNTERS WITH RANGED ATTACK!!!
 *remoterunner pathfinding to not ignore roads over big swamps
 *Tower logic:
 	-> Tower filling should probably be a separate task from filling

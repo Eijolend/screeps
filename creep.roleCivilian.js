@@ -56,7 +56,7 @@ module.exports = {
     },
 
     getRepairingTask : function(creep){
-        var repairList = creep.room.memory.tasks[TASK_REPAIR];
+        var repairList = _.get(creep.room.memory,"tasks." + TASK_REPAIR,[]);
         var myIndex = _.findIndex(repairList, (t) => t.repairNeeded > 0);
         if(myIndex != -1){
 			repairList[myIndex].repairNeeded -= creep.carry.energy;
@@ -66,7 +66,7 @@ module.exports = {
     },
 
     getWallRepairingTask : function(creep){
-		var repairWallList = creep.room.memory.tasks[TASK_REPAIR_WALL];
+		var repairWallList = _.get(creep.room.memory,"tasks." + TASK_REPAIR_WALL,[]);
 		var myIndex = _.findIndex(repairWallList, (t) => t.repairNeeded > 0);
         if(myIndex != -1){
 			repairWallList[myIndex].repairNeeded -= creep.carry.energy;
