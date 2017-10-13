@@ -1,6 +1,5 @@
 URGENT:
 *OMG INVADERS CAN KITE!!! BUILD HUNTERS WITH RANGED ATTACK!!!
-*remoterunner pathfinding to not ignore roads over big swamps
 *Tower logic:
 	-> Tower filling should probably be a separate task from filling
 	-> Towers should be prioritized in an emergency and civilians should help fill them in an emergency.
@@ -11,6 +10,8 @@ soon:
 *implement gradual permission system for contact with other players
 *code that checks if enough resources are available for what is ordered form labs (also see below)
 *code that automatically distributes resources between terminals if they are needed for the labs (maybe add to labManager module, although a generic redistribution module, where other modules can request things might be better);
+*laborants get stuck in setupLab and don't properly exit if one ingredient runs out
+*counting error for laborants - is there a possiblity that == OK is called more than once a tick?
 
 eventually:
 *go over whole task system again and try to standardize things more
@@ -18,6 +19,8 @@ eventually:
 *recycler role alternatives, if there is no valid spawn rather than failsafe in roleCivilian
 *find a way to avoid energy starving when too many civilians are present
 *optimize remoteRunners even more exactly
+*number of carry parts needed for remote mines is not calculated properly if there is no storage yet, we have to update all manually
+*remoterunner pathfinding to not ignore roads over big swamps
 
 observe:
 *dedicated upgrader for RCL 8 rooms should be working (think about doing the same for lower RCL)
