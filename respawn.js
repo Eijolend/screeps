@@ -50,11 +50,11 @@ var bodies = {
 	hunter : function(maxEnergy){
 		var toughTemplate = [TOUGH,MOVE];
 		var toughCost = cost(toughTemplate);
-		var attackTemplate = [ATTACK,MOVE];
+		var attackTemplate = [ATTACK,MOVE,RANGED_ATTACK,MOVE];
 		var attackCost = cost(attackTemplate);
-		var toughNo = Math.min(Math.floor(maxEnergy/12/toughCost),6); //at most 1/12 of energy should go towards TOUGH parts
+		var toughNo = Math.min(Math.floor(maxEnergy/12/toughCost),7); //at most 1/12 of energy should go towards TOUGH parts
 		var energyLeft = maxEnergy - toughNo * toughCost;
-		var attackNo = Math.min(Math.floor(energyLeft/attackCost),19); //no more than 50 body parts
+		var attackNo = Math.min(Math.floor(energyLeft/attackCost),9); //no more than 50 body parts
 		var body = [];
 		for(var i=0;i<toughNo;i++){
 			body.push(TOUGH);

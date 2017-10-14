@@ -199,6 +199,9 @@ var guard = function(creep){ //like raid, but with a maximal engagement range
 
 var hunt = function(creep,controller){
 	var target = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS,{filter: (c) => !_.contains(playerWhiteList,c.owner.username)});
+	if(target != undefined && creep.pos.inRangeTo(target,3)){
+		creep.rangedAttack(target);
+	}
 	if (creep.attack(target) == ERR_NOT_IN_RANGE){
 		creep.moveTo(target);
 	}
