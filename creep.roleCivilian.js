@@ -90,6 +90,20 @@ module.exports = {
 		}
 	},
 
+	getTowerFillingTask : function(creep){
+		var deliverList = creep.room.memory.tasks[TASK_FILL];
+		var myIndex = _.findIndex(deliverList, (x) => x.structureType == STRUCTURE_TOWER && x.amountNeeded >= 200);
+		if(myIndex != -1){
+			deliverList[myIndex].amountNeeded -= creep.carry.energy;
+            creep.task=deliverList[myIndex];
+            creep.room.memory.tasks[TASK_FILL] = deliverList;
+            return OK;
+		}
+		else{
+			return;
+		}
+	},
+
     run : function(creep){
         if(creep.memory.working && creep.carry.energy == 0) {
             creep.memory.working = false;
@@ -112,6 +126,9 @@ module.exports = {
 				if(upgradeCreeps.length < 1 && Game.rooms[creep.memory.homeRoom].controller.ticksToDowngrade < 5000){ //is missing some safety checks
                     check = this.getUpgradingTask(creep);
                 }
+				if(check != OK && creep.room.memory.underAttack){
+					check = this.getTowerFillingTask(creep);
+				}
                 if(check != OK){
                     check = this.getBuildingTask(creep);
                 }

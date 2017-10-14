@@ -1,7 +1,4 @@
 URGENT:
-*Tower logic:
-	-> Tower filling should probably be a separate task from filling
-	-> Towers should be prioritized in an emergency and civilians should help fill them in an emergency.
 
 soon:
 *implement a solid system for creeps staying in homeRoom if they get lost in an other room
@@ -22,6 +19,8 @@ eventually:
 *remoterunner pathfinding to not ignore roads over big swamps
 
 observe:
+*runners should now prioritize towers (might be too severely prioritized)
+*civilians will help filling towers in an emergency
 *dedicated upgrader for RCL 8 rooms should be working (think about doing the same for lower RCL)
 *runner prioritization in an energy shortage might be too severe
 *getting task in runners and civilians from storage should recalculate if storage is empty

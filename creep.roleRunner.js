@@ -45,7 +45,14 @@ module.exports = {
         //prioritizing logic is needed here, so towers are prioritized appropriately in an emergency
         var deliverList = creep.room.memory.tasks[TASK_FILL];
         deliverList = _.sortBy(deliverList, (x) => creep.pos.getRangeTo(x)); //so they deliver to closest first
-        var myIndex = _.findIndex(deliverList, (x) => x.structureType == STRUCTURE_CONTAINER && x.amountNeeded >= 1000);
+		var myIndex = _.findIndex(deliverList, (x) => x.structureType == STRUCTURE_TOWER && x.amountNeeded >= 400);
+		if(myIndex != -1){
+			deliverList[myIndex].amountNeeded -= creep.carry.energy;
+            creep.task=deliverList[myIndex];
+            creep.room.memory.tasks[TASK_FILL] = deliverList
+            return OK;
+		}
+        myIndex = _.findIndex(deliverList, (x) => x.structureType == STRUCTURE_CONTAINER && x.amountNeeded >= 1000);
         if(myIndex != -1){ //maybe this prioritization is too much, but we'll see
             deliverList[myIndex].amountNeeded -= creep.carry.energy;
             creep.task=deliverList[myIndex];
