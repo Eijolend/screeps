@@ -6,7 +6,6 @@ soon:
 *implement gradual permission system for contact with other players
 *code that checks if enough resources are available for what is ordered form labs (also see below)
 *code that automatically distributes resources between terminals if they are needed for the labs (maybe add to labManager module, although a generic redistribution module, where other modules can request things might be better);
-*laborants get stuck in setupLab and don't properly exit if one ingredient runs out
 *counting error for laborants - is there a possiblity that == OK is called more than once a tick?
 
 eventually:
