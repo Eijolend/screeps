@@ -45,6 +45,10 @@ module.exports = {
 						return OK;
 					}
 				}
+				if(_.get(creep.room, "terminal.store.energy", 0) > 55000){
+					creep.task = setupTask(TASK_GET_ENERGY,creep.room.terminal);
+					return OK;
+				}
 			}
 			roleRunner.run(creep); //even more else
 		}

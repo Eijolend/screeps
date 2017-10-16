@@ -4,6 +4,7 @@ const creepLoop = require("creepLoop");
 const roomManager = require ("roomManager");
 const defenseManager = require("defenseManager");
 const marketManager = require("marketManager");
+const tempcode = require("tempcode");
 const profiler = require("screeps-profiler");
 
 require("setupGlobal")(); //global constants and modified prototypes
@@ -53,9 +54,7 @@ module.exports.loop = function(){
 			Game.spawns.Spawn1.room.controller.activateSafeMode();
 		}
 
-		// if(Game.time % 1000 == 0){
-		// 	Game.spawns.Spawn1.room.requestCreep([TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE],undefined,{role:ROLE_RAIDER , myflag:"blockade", raidMode:"guard"});
-		// 	Game.spawns.Spawn1.room.requestCreep([TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE],undefined,{role:ROLE_RAIDER , myflag:"blockade", raidMode:"guard"});
-		// }
+		tempcode.run();
+
 	});
 }

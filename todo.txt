@@ -6,7 +6,9 @@ soon:
 *implement gradual permission system for contact with other players
 *code that checks if enough resources are available for what is ordered form labs (also see below)
 *code that automatically distributes resources between terminals if they are needed for the labs (maybe add to labManager module, although a generic redistribution module, where other modules can request things might be better);
+*related to the above: a cleaner way for managing energy to be stored in the terminal
 *counting error for laborants - is there a possiblity that == OK is called more than once a tick?
+*something causes labManagers to sometimes get an upgrade task - no clue why or how.
 
 eventually:
 *go over whole task system again and try to standardize things more
