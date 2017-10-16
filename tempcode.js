@@ -9,7 +9,7 @@ module.exports = {
 		var room = Game.spawns.Spawn1.room;
 		var helproom = Game.rooms["W2N58"];
 
-		if(Game.time % 50 == 1 && _.get(room,"terminal.store.energy" >= 50000) && _.get(helproom,"terminal.store.energy",0) < 100000){
+		if(Game.time % 50 == 1 && _.get(room,"terminal.store.energy",0) >= 50000 && _.get(helproom,"terminal.store.energy",0) < 100000){
 			room.terminal.send(RESOURCE_ENERGY,25000,helproom.name);
 		}
 
