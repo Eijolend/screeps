@@ -33,7 +33,8 @@ module.exports = {
             return OK;
         }
         if(!creep.memory.setup && _.sum(creep.carry) > 0){
-            creep.transfer(creep.room.terminal,_.findKey(creep.carry,(x) => x > 0));
+            creep.task = setupTask(TASK_FILL,creep.room.terminal);
+            creep.task.resourceType = _.findKey(creep.carry,(x) => x > 0);
             return OK;
         }
         if(!creep.memory.setup){
