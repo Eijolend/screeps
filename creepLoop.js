@@ -65,10 +65,13 @@ module.exports = {
                 break;
             case ROLE_TERMINAL_MANAGER:
                 roleTerminalManager.run(creep);
+                break;
             case ROLE_LABORANT:
                 roleLaborant.run(creep);
+                break;
             case ROLE_UPGRADER:
                 roleUpgrader.run(creep);
+                break;
         }
         tasks.run(creep);
     }

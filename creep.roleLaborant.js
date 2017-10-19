@@ -32,6 +32,10 @@ module.exports = {
             creep.task = setupTask(TASK_EMPTY_LAB,labs[2]);
             return OK;
         }
+        if(!creep.memory.setup && _.sum(creep.carry) > 0){
+            creep.transfer(creep.room.terminal,_.findKey(creep.carry,(x) => x > 0));
+            return OK;
+        }
         if(!creep.memory.setup){
             creep.task = setupTask(TASK_SETUP_LABS,creep); //if there are no orders TASK_SETUP_LABS will lead to the laborant orderly leaving their workplace
             return OK;

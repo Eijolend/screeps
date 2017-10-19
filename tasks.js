@@ -327,8 +327,8 @@ var setupLabs = function(creep){
 	}
     var orders = _.get(creep.room.memory,"labManager.orders",[]);
     var order = {};
-    if(orders.length >  0){
-		order = orders[0]
+    if(orders.length > 0){
+		order = orders[0];
 	}
 	else{ //if there are no orders left, orderly leave your workspace
 		if(_.sum(creep.carry) > 0){
