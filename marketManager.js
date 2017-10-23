@@ -25,7 +25,7 @@ module.exports = {
             var myTransfer = Memory.marketManager.shift();
             var deals = Game.market.getAllOrders((x) => x.type == ORDER_BUY && x.resourceType == myTransfer.resourceType && x.amount > 100);
             if(deals.length == 0){
-                Game.notify("Deals array was empty for: " + JSON.stringify(myTransfer), 5)
+                Game.notify("Deals array was empty for: " + JSON.stringify(myTransfer), 30)
                 Memory.marketManager.push(myTransfer);
                 return;
             }
