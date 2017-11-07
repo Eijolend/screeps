@@ -91,7 +91,7 @@ module.exports = {
 	},
 
 	getTowerFillingTask : function(creep){
-		var deliverList = creep.room.memory.tasks[TASK_FILL];
+		var deliverList = _.get(creep.room.memory, "tasks."+ TASK_FILL,[]);
 		var myIndex = _.findIndex(deliverList, (x) => x.structureType == STRUCTURE_TOWER && x.amountNeeded >= 200);
 		if(myIndex != -1){
 			deliverList[myIndex].amountNeeded -= creep.carry.energy;
