@@ -6,11 +6,15 @@
 
 module.exports = {
 	run : function(){
-		var room = Game.spawns.Spawn1.room;
+		var sendrooms = [Game.rooms["W9N58"],Game.rooms["W8N59"],Game.rooms["W6N58"]];
 		var helproom = Game.rooms["W2N58"];
-
-		if(Game.time % 50 == 1 && _.get(room,"storage.store.energy",0) > 600000 && _.get(room,"terminal.store.energy",0) >= 50000 && _.get(helproom,"terminal.store.energy",0) < 100000){
-			room.terminal.send(RESOURCE_ENERGY,25000,helproom.name);
+		if(Game.time % 50 ==1){
+			for(var room of sendrooms){
+				if(_.get(room,"storage.store.energy",0) > 600000 && _.get(room,"terminal.store.energy",0) >= 50000 && _.get(helproom,"terminal.store.energy",0) < 100000){
+					room.terminal.send(RESOURCE_ENERGY,25000,helproom.name);
+					break; //so only one room sends at a time to avoid stupid cases
+				}
+			}
 		}
 
 		// if(Game.time % 1000 == 0){
