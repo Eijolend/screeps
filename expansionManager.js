@@ -58,7 +58,7 @@ module.exports = {
 			waypoint = [];
 		}
 		_.set(Memory, "rooms." + colonyRoomName + ".spawnpos", {x:spawnPosX,y:spawnPosY});
-		_.set(Memory, "rooms." + colonyRoomName + ".waypoint", waypoint);
+		_.set(Memory, "rooms." + colonyRoomName + ".waypoint", waypoint); //this is probably not the best place to store this info
 
 		let homeRoom = Game.rooms[homeRoomName];
 		if(!homeRoom.memory.colonies){
@@ -67,6 +67,6 @@ module.exports = {
 		homeRoom.memory.colonies.push(colonyRoomName);
 
 		var claimtask = setupTask(TASK_CLAIM, new RoomPosition(25,25,colonyRoomName));
-		Game.rooms[homeRoomName].requestCreep([CLAIM,MOVE],undefined,{role:ROLE_CLAIMER,task:claimtask,myColony : colonyRoomName});
+		Game.rooms[homeRoomName].requestCreep([CLAIM,MOVE],undefined,{role:ROLE_CLAIMER,task:claimtask,myColony : colonyRoomName, waypoint: _.get(Memory,"rooms." + colonyRoomName + ".waypoint",[]) });
 	}
 }

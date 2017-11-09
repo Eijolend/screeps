@@ -243,7 +243,7 @@ module.exports = {
 			for(var colony of room.memory.colonies){
 				var colonists = _.filter(Game.creeps,(c) => c.role == ROLE_COLONIST && c.memory.myColony == colony);
 				if(colonists.length < 1){
-					spawn.createCreep(bodies.colonist(maxEnergy),undefined,{role:ROLE_COLONIST, myColony : colony});
+					spawn.createCreep(bodies.colonist(maxEnergy),undefined,{role:ROLE_COLONIST, myColony : colony, waypoint : _.get(Memory.rooms, colony + ".waypoint", [])});
 					return;
 				}
 			}

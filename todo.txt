@@ -18,6 +18,7 @@ eventually:
 *optimize remoteRunners even more exactly
 *number of carry parts needed for remote mines is not calculated properly if there is no storage yet, we have to update all manually
 *remoterunner pathfinding to not ignore roads over big swamps
+*the new colonyroom memory is probably not the right place to store waypoint information for colonists
 
 observe:
 *runners should now prioritize towers (might be too severely prioritized)
