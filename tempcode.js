@@ -6,8 +6,8 @@
 
 module.exports = {
 	run : function(){
-		var sendrooms = [Game.rooms["W9N58"],Game.rooms["W8N59"],Game.rooms["W6N58"]];
-		var helproom = Game.rooms["W2N58"];
+		var sendrooms = [Game.rooms["W9N58"],Game.rooms["W8N59"],Game.rooms["W6N58"], Game.rooms["W7N56"]];
+		var helproom = Game.rooms["E4N59"];
 		if(Game.time % 50 ==1){
 			for(var room of sendrooms){
 				if(_.get(room,"storage.store.energy",0) > 600000 && _.get(room,"terminal.store.energy",0) >= 50000 && _.get(helproom,"terminal.store.energy",0) < 100000){
