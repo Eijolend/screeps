@@ -4,6 +4,7 @@ const creepLoop = require("creepLoop");
 const roomManager = require ("roomManager");
 const defenseManager = require("defenseManager");
 const marketManager = require("marketManager");
+const planManager = require("planManager");
 const tempcode = require("tempcode");
 const profiler = require("screeps-profiler");
 
@@ -53,6 +54,8 @@ module.exports.loop = function(){
 		if(Game.spawns.Spawn1.hits < Game.spawns.Spawn1.hitsMax){
 			Game.spawns.Spawn1.room.controller.activateSafeMode();
 		}
+
+		planManager.run();
 
 		tempcode.run();
 

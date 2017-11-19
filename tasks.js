@@ -494,6 +494,8 @@ module.exports = {
 				case TASK_LABORANT:
 					laborant(creep);
 					break;
+				case TASK_SPECIAL: //explicitly not handled by the task system
+					break;
 			}
 		}
 	}

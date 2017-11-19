@@ -19,6 +19,7 @@ var setupConsts = function(){
 	global.ROLE_TERMINAL_MANAGER = "terminalManager";
 	global.ROLE_LABORANT = "laborant";
 	global.ROLE_UPGRADER = "upgrader";
+	global.ROLE_PLAN = "plan";
 	global.TASK_BUILD = "build";
 	global.TASK_MINE = "mine";
 	global.TASK_FILL = "fill";
@@ -41,6 +42,7 @@ var setupConsts = function(){
 	global.TASK_EMPTY_LAB = "emptyLab";
 	global.TASK_SETUP_LABS = "setupLabs";
 	global.TASK_LABORANT = "laborant";
+	global.TASK_SPECIAL = "special";
 	// global.TASK_COLONIZE = "colonize";
 }
 
